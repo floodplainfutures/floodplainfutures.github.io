@@ -5,7 +5,7 @@ const speciesItems = document.querySelectorAll('.species-list li');
 /*
 API PLACEHOLDER (to be activated later)
 
-const EBIRD_API_KEY = "YOUR_API_KEY";
+const EBIRD_API_KEY = "qnd5fjt43a8iY";
 const REGION = "US-CA-113";
 
 // fetch(`https://api.ebird.org/v2/obs/region/recent/${REGION}`, {
