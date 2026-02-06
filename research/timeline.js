@@ -93,58 +93,64 @@
   }
 
   function fetchFloodData() {
-    // USGS Station 11453000: Yolo Bypass near Woodland, CA
-    // Parameter 00060: Discharge (cubic feet per second)
-    // Date range: 2004-01-01 to 2026-02-05 (current date)
-    var url = "https://waterservices.usgs.gov/nwis/dv/?format=json&sites=11453000&parameterCd=00060&startDT=2004-01-01&endDT=2026-02-05";
-    
-    return fetch(url).then(function(res){ 
-      return res.json(); 
-    }).then(function(json){
-      // Check if data exists
-      if(!json.value || !json.value.timeSeries || !json.value.timeSeries[0]){
-        console.error('No flood data available from USGS');
-        return [0,0,0,0,0,0,0,0,0,0,0,0];
-      }
-      
-      var values = json.value.timeSeries[0].values[0].value;
-      console.log('Fetched ' + values.length + ' flood data points from USGS station 11453000 (Yolo Bypass near Woodland)');
-      
-      // Initialize arrays to store monthly totals and counts
-      var totals = [];
-      var counts = [];
-      for(var i=0;i<12;i++){ 
-        totals[i]=0; 
-        counts[i]=0; 
-      }
-      
-      // Sum up all values by month across all years (2004-2026)
-      for(var i=0;i<values.length;i++){
-        var date = new Date(values[i].dateTime);
-        var monthIndex = date.getMonth(); // 0=Jan, 1=Feb, etc.
-        var discharge = parseFloat(values[i].value);
-        
-        if(!isNaN(discharge) && discharge >= 0){ 
-          totals[monthIndex] += discharge; 
-          counts[monthIndex]++; 
+  // USGS Station 11453000: Yolo Bypass near Woodland, CA
+  // Parameter 00065: Gage height (ft)
+  // Date range: Jan 1 2025 → Jan 1 2026 (IV data, RDB format)
+
+  var url =
+    "https://nwis.waterservices.usgs.gov/nwis/iv/?sites=11453000&agencyCd=USGS&startDT=2025-01-01T00:00:00.000-08:00&endDT=2026-01-01T23:59:59.999-08:00&parameterCd=00065&format=rdb";
+
+  return fetch(url)
+    .then(function (res) {
+      return res.text(); // RDB is plain text, not JSON
+    })
+    .then(function (text) {
+      var lines = text.split("\n");
+
+      // Initialize monthly totals
+      var totals = new Array(12).fill(0);
+      var counts = new Array(12).fill(0);
+
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+
+        // Skip comments and headers
+        if (!line || line[0] === "#" || line.indexOf("agency_cd") === 0) continue;
+
+        var cols = line.split("\t");
+
+        // RDB columns (relevant):
+        // [2] = datetime
+        // [4] = value
+        var date = new Date(cols[2]);
+        var value = parseFloat(cols[4]);
+
+        if (!isNaN(value)) {
+          var month = date.getMonth();
+          totals[month] += value;
+          counts[month]++;
         }
       }
-      
-      // Calculate monthly averages
+
+      // Monthly averages
       var result = [];
-      for(var i=0;i<12;i++){ 
-        result[i] = counts[i] ? totals[i]/counts[i] : 0; 
+      for (var m = 0; m < 12; m++) {
+        result[m] = counts[m] ? totals[m] / counts[m] : 0;
       }
-      
-      console.log('Monthly average discharge (cfs) for Yolo Bypass (2004-2026):', result);
+
+      console.log(
+        "Monthly average gage height (ft), 2025–2026:",
+        result
+      );
+
       return result;
-      
-    }).catch(function(error){
-      console.error('Error fetching Yolo Bypass flood data:', error);
-      // Return zeros if fetch fails
+    })
+    .catch(function (error) {
+      console.error("Error fetching flood data:", error);
       return [0,0,0,0,0,0,0,0,0,0,0,0];
     });
-  }
+}
+
 
   function updateSidebarStyles(){
     var items = speciesList.querySelectorAll('li');
@@ -166,24 +172,24 @@
 
   function render() {
     clearChildren(svg);
-    var baselineFlood = HEIGHT*0.75;
-    var baselineBirds = HEIGHT*0.75;
+    var baselineFlood = HEIGHT*0.95;  // Move baseline to bottom (95% down)
+    var baselineBirds = HEIGHT*0.95;  // Move baseline to bottom (95% down)
 
     // FLOOD
     var floodNorm = normalize(floodByMonth);
     var floodPathEl = document.createElementNS('http://www.w3.org/2000/svg','path');
     var step = WIDTH / (floodNorm.length-1);
-    var d = 'M 0 ' + (baselineFlood - floodNorm[0]*HEIGHT*0.45);
+    var d = 'M 0 ' + (baselineFlood - floodNorm[0]*HEIGHT*0.85);  // Use 85% of height for scaling
     for(var i=1;i<floodNorm.length;i++){
       var x0 = (i-1)*step;
-      var y0 = baselineFlood - floodNorm[i-1]*HEIGHT*0.45;
+      var y0 = baselineFlood - floodNorm[i-1]*HEIGHT*0.85;
       var x1 = i*step;
-      var y1 = baselineFlood - floodNorm[i]*HEIGHT*0.45;
+      var y1 = baselineFlood - floodNorm[i]*HEIGHT*0.85;
       var cx = (x0+x1)/2;
       var cy = (y0+y1)/2;
       d += ' Q '+x0+' '+y0+' '+cx+' '+cy;
     }
-    d += ' T '+WIDTH+' '+(baselineFlood - floodNorm[floodNorm.length-1]*HEIGHT*0.45);
+    d += ' T '+WIDTH+' '+(baselineFlood - floodNorm[floodNorm.length-1]*HEIGHT*0.85);
     d += ' L '+WIDTH+' '+baselineFlood+' L 0 '+baselineFlood+' Z';
     floodPathEl.setAttribute('d',d);
     floodPathEl.setAttribute('fill','var(--blackblue)');
@@ -197,7 +203,7 @@
       var birdNorm = [];
       for(var i=0;i<birdData.length;i++) birdNorm.push(birdData[i]/100);
       var path = document.createElementNS('http://www.w3.org/2000/svg','path');
-      path.setAttribute('d', wavePath(birdNorm, HEIGHT*0.55, baselineBirds, false));
+      path.setAttribute('d', wavePath(birdNorm, HEIGHT*0.85, baselineBirds, false));  // Use 85% of height
       path.setAttribute('fill','none');
       path.setAttribute('stroke', speciesColors[key]);
       path.setAttribute('stroke-width', focusedSpecies?3:2);

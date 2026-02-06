@@ -17,7 +17,7 @@
   <header class="timeline-header">
     <a href="../index.html" class="back-link">&lt; back to home</a>
     <h1>flooding vs bird populations @ the yolo basin</h1>
-    <p>seasonal flooding and bird presence, averaged by month</p>
+    <p>seasonal flooding and bird presence, averaged by month (2004–2026)</p>
   </header>
 
   <section class="timeline-visual">
@@ -30,7 +30,28 @@
 
     <!-- OVERLAID WAVES -->
     <div class="timeline-layer wave-stack">
-      <svg class="wave-svg" viewBox="0 0 1200 120" preserveAspectRatio="none"></svg>
+      <!-- Y-AXIS LABELS -->
+      <div class="y-axis">
+        <div class="y-axis-label">100%</div>
+        <div class="y-axis-label">75%</div>
+        <div class="y-axis-label">50%</div>
+        <div class="y-axis-label">25%</div>
+        <div class="y-axis-label">0%</div>
+      </div>
+      
+      <svg class="wave-svg" viewBox="0 0 1200 500" preserveAspectRatio="none"></svg>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--blackblue);"></div>
+        <span>flood outflow (normalized)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--pink);"></div>
+        <span>bird observation frequency</span>
+      </div>
     </div>
 
     <!-- ZOOM -->
@@ -40,11 +61,10 @@
     max="12"
     value="12"
     class="zoom-slider"
+    aria-label="Zoom timeline"
     />
-    <!-- accesibility -->
+    <!-- accessibility -->
     <div class="zoom-readout" aria-live="polite"></div>
-
-
 
   </section>
 
@@ -54,17 +74,15 @@
   </aside>
 
   <footer class="timeline-footer">
-  <p>
-    <strong>Data sources:</strong> 
-    Bird observations from <a href="https://ebird.org/barchart?byr=2004&eyr=2026&bmo=1&emo=12&r=L443535" target="_blank" rel="noopener noreferrer">eBird (2004–2026)</a>; 
-    Water flow data from <a href="https://waterservices.usgs.gov" target="_blank" rel="noopener noreferrer">USGS National Water Information System</a>.
-  </p>
+    <p>
+        <strong>Data sources:</strong> 
+        Bird observations from <a href="https://ebird.org/barchart?byr=2004&eyr=2026&bmo=1&emo=12&r=L443535" target="_blank" rel="noopener noreferrer">eBird (2004–2026)</a>; 
+        Water flow data from <a href="https://waterdata.usgs.gov/monitoring-location/USGS-11453000/" target="_blank" rel="noopener noreferrer">USGS National Water Information System, Station 11453000</a>.
+    </p>
+    <p> <em>Note: Both datasets are normalized to 0-100% scale for visual comparison. Bird data shows observation frequency; flood data shows average daily discharge in cubic feet per second (cfs).</em></p>
 </footer>
 
 </main>
-
-
-
 
 </body>
 </html>
