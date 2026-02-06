@@ -1,49 +1,44 @@
-(function () {
+(function() {
   'use strict';
   console.log('timeline.js loaded');
 
-  const svg = document.querySelector('.wave-svg');
-  const speciesList = document.querySelector('.species-list');
-  const zoomSlider = document.querySelector('.zoom-slider');
-  const zoomReadout = document.querySelector('.zoom-readout');
-  const axis = document.querySelector('.timeline-axis');
-  const visual = document.querySelector('.timeline-layer');
+  // ELEMENTS
+  var svg = document.getElementsByClassName('wave-svg')[0]; // main SVG
+  var speciesList = document.getElementsByClassName('species-list')[0]; // sidebar list
+  var zoomSlider = document.getElementsByClassName('zoom-slider')[0]; // zoom input
+  var zoomReadout = document.getElementsByClassName('zoom-readout')[0]; // zoom text
+  var axis = document.getElementsByClassName('timeline-axis')[0]; // months axis
+  var visual = document.getElementsByClassName('timeline-layer')[0]; // SVG container
 
-  const WIDTH = 1200;
-  const HEIGHT = 500;
+  // CONSTANTS
+  var WIDTH = 1200;
+  var HEIGHT = 500;
+  var MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
 
-  const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+  // STATE
+  var floodByMonth = [];
+  var focusedSpecies = null;
+  var zoomMonths = 12;
+  var startMonth = 0;
+  var hoverViz = false;
 
-  /* =========================
-     STATE
-  ========================= */
-
-  let floodByMonth = [];
-  let focusedSpecies = null;
-  let zoomMonths = 12;
-  let startMonth = 0;
-  let hoverViz = false;
-
-  /* =========================
-     DATA
-  ========================= */
-
-  const birdsBySpecies = {
-    "snow-goose":            [60,39,24,6,3,1,1,4,10,15,40,63],
-    "ross's-goose":          [14,12,20,13,10,6,6,8,6,5,8,2],
+  // DATA
+  var birdsBySpecies = {
+    "snow-goose": [60,39,24,6,3,1,1,4,10,15,40,63],
+    "ross's-goose": [14,12,20,13,10,6,6,8,6,5,8,2],
     "greater-white-fronted": [62,65,68,61,50,57,53,57,45,48,47,51],
-    "sandhill-crane":        [8,13,12,0,0,0,0,0,7,22,15,9],
-    "canada-goose":          [55,52,48,40,30,22,20,25,35,45,50,58],
-    "northern-pintail":      [70,68,60,45,30,15,10,12,25,50,65,72],
-    "mallard":               [65,60,55,50,45,40,38,42,48,55,60,66],
-    "american-wigeon":       [62,58,52,44,35,25,20,22,33,50,58,64],
-    "green-winged-teal":     [66,62,58,50,38,28,22,26,40,55,62,68],
-    "great-egret":           [12,18,30,45,55,60,58,55,40,25,15,10],
-    "great-blue-heron":      [30,35,40,45,48,50,48,46,44,38,34,32],
-    "white-faced-ibis":      [5,8,15,35,55,60,58,50,30,15,8,5]
+    "sandhill-crane": [8,13,12,0,0,0,0,0,7,22,15,9],
+    "canada-goose": [55,52,48,40,30,22,20,25,35,45,50,58],
+    "northern-pintail": [70,68,60,45,30,15,10,12,25,50,65,72],
+    "mallard": [65,60,55,50,45,40,38,42,48,55,60,66],
+    "american-wigeon": [62,58,52,44,35,25,20,22,33,50,58,64],
+    "green-winged-teal": [66,62,58,50,38,28,22,26,40,55,62,68],
+    "great-egret": [12,18,30,45,55,60,58,55,40,25,15,10],
+    "great-blue-heron": [30,35,40,45,48,50,48,46,44,38,34,32],
+    "white-faced-ibis": [5,8,15,35,55,60,58,50,30,15,8,5]
   };
 
-  const speciesColors = {
+  var speciesColors = {
     "snow-goose": "var(--yellow)",
     "ross's-goose": "#9fd3c7",
     "greater-white-fronted": "#5fa8d3",
@@ -58,198 +53,182 @@
     "white-faced-ibis": "var(--red)"
   };
 
-  /* =========================
-     HELPERS
-  ========================= */
-
-  function clearSVG() {
-    svg.innerHTML = '';
-  }
-
-  function normalize(data) {
-    const max = Math.max(...data);
-    return data.map(v => max ? v / max : 0);
+  // HELPERS
+  function clearChildren(parent) { while(parent.firstChild) parent.removeChild(parent.firstChild); }
+  function normalize(data) { 
+    var max = Math.max.apply(null, data);
+    var result = [];
+    for(var i=0;i<data.length;i++) result.push(max ? data[i]/max : 0);
+    return result;
   }
 
   function wavePath(data, yScale, baselineY, fill) {
-    const step = WIDTH / (data.length - 1);
-    let d = `M 0 ${baselineY}`;
-
-    data.forEach((v, i) => {
-      const x = i * step;
-      const y = baselineY - v * yScale;
-      d += ` L ${x} ${y}`;
-    });
-
-    if (fill) {
-      d += ` L ${WIDTH} ${baselineY} Z`;
+    var step = WIDTH / (data.length-1);
+    var d = 'M 0 ' + (baselineY - data[0]*yScale);
+    for(var i=1;i<data.length;i++){
+      var x0 = (i-1)*step;
+      var y0 = baselineY - data[i-1]*yScale;
+      var x1 = i*step;
+      var y1 = baselineY - data[i]*yScale;
+      var cx = (x0+x1)/2;
+      var cy = (y0+y1)/2;
+      d += ' Q ' + x0 + ' ' + y0 + ' ' + cx + ' ' + cy;
     }
-
+    d += ' T ' + WIDTH + ' ' + (baselineY - data[data.length-1]*yScale);
+    if(fill) d += ' L ' + WIDTH + ' ' + baselineY + ' L 0 ' + baselineY + ' Z';
     return d;
   }
 
-  /* =========================
-     AXIS
-  ========================= */
-
   function renderAxis() {
-    axis.innerHTML = '';
-    axis.style.gridTemplateColumns = `repeat(${zoomMonths}, 1fr)`;
-
-    MONTHS.slice(startMonth, startMonth + zoomMonths).forEach(m => {
-      const span = document.createElement('span');
-      span.textContent = m;
+    clearChildren(axis);
+    axis.style.gridTemplateColumns = 'repeat(' + zoomMonths + ',1fr)';
+    for(var i=startMonth;i<startMonth+zoomMonths;i++){
+      var span = document.createElement('span');
+      span.appendChild(document.createTextNode(MONTHS[i]));
       axis.appendChild(span);
-    });
+    }
   }
-
-  /* =========================
-     FLOOD DATA (USGS)
-  ========================= */
 
   function fetchFloodData() {
-    const url =
-      "https://waterservices.usgs.gov/nwis/dv/?" +
-      "format=json" +
-      "&sites=11453000" +
-      "&parameterCd=00060" +
-      "&startDT=2002-01-01" +
-      "&endDT=2026-12-31";
-
-    return fetch(url)
-      .then(res => res.json())
-      .then(json => {
-        const values = json.value.timeSeries[0].values[0].value;
-        const totals = Array(12).fill(0);
-        const counts = Array(12).fill(0);
-
-        values.forEach(d => {
-          const m = new Date(d.dateTime).getMonth();
-          const v = parseFloat(d.value);
-          if (!isNaN(v)) {
-            totals[m] += v;
-            counts[m]++;
-          }
-        });
-
-        return totals.map((t, i) => counts[i] ? t / counts[i] : 0);
-      });
+    var url = "https://waterservices.usgs.gov/nwis/dv/?format=json&sites=11453000&parameterCd=00060&startDT=2002-01-01&endDT=2026-12-31";
+    return fetch(url).then(function(res){ return res.json(); }).then(function(json){
+      var values = json.value.timeSeries[0].values[0].value;
+      var totals = [];
+      var counts = [];
+      for(var i=0;i<12;i++){ totals[i]=0; counts[i]=0; }
+      for(var i=0;i<values.length;i++){
+        var date = new Date(values[i].dateTime);
+        var v = parseFloat(values[i].value);
+        if(!isNaN(v)){ totals[date.getMonth()]+=v; counts[date.getMonth()]++; }
+      }
+      var result = [];
+      for(var i=0;i<12;i++){ result[i] = counts[i]? totals[i]/counts[i] : 0; }
+      return result;
+    });
   }
 
-  /* =========================
-     RENDER
-  ========================= */
+  function updateSidebarStyles(){
+    var items = speciesList.getElementsByTagName('li');
+    for(var i=0;i<items.length;i++){
+      var item = items[i];
+      var nameSpan = item.getElementsByTagName('span')[1];
+      if(item.getAttribute('data-species')===focusedSpecies){
+        nameSpan.innerHTML = '<strong style="text-decoration: underline;">'+nameSpan.textContent+'</strong>';
+      } else {
+        nameSpan.innerHTML = nameSpan.textContent;
+      }
+      if(item.getAttribute('data-species')===focusedSpecies){
+        item.className = 'active';
+      } else {
+        item.className = '';
+      }
+    }
+  }
 
   function render() {
-    clearSVG();
+    clearChildren(svg);
+    var baselineFlood = HEIGHT*0.75;
+    var baselineBirds = HEIGHT*0.75;
 
-    const baselineFlood = HEIGHT * 0.75;
-    const baselineBirds = HEIGHT * 0.75;
+    // FLOOD
+    var floodNorm = normalize(floodByMonth);
+    var floodPathEl = document.createElementNS('http://www.w3.org/2000/svg','path');
+    var step = WIDTH / (floodNorm.length-1);
+    var d = 'M 0 ' + (baselineFlood - floodNorm[0]*HEIGHT*0.45);
+    for(var i=1;i<floodNorm.length;i++){
+      var x0 = (i-1)*step;
+      var y0 = baselineFlood - floodNorm[i-1]*HEIGHT*0.45;
+      var x1 = i*step;
+      var y1 = baselineFlood - floodNorm[i]*HEIGHT*0.45;
+      var cx = (x0+x1)/2;
+      var cy = (y0+y1)/2;
+      d += ' Q '+x0+' '+y0+' '+cx+' '+cy;
+    }
+    d += ' T '+WIDTH+' '+(baselineFlood - floodNorm[floodNorm.length-1]*HEIGHT*0.45);
+    d += ' L '+WIDTH+' '+baselineFlood+' L 0 '+baselineFlood+' Z';
+    floodPathEl.setAttribute('d',d);
+    floodPathEl.setAttribute('fill','var(--blackblue)');
+    floodPathEl.setAttribute('opacity','1');
+    svg.appendChild(floodPathEl);
 
-    /* FLOOD */
-    const floodNorm = normalize(floodByMonth);
-    const floodPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    floodPath.setAttribute(
-      'd',
-      wavePath(floodNorm, HEIGHT * 0.45, baselineFlood, true)
-    );
-    floodPath.setAttribute('fill', 'var(--blackblue)');
-    floodPath.setAttribute('opacity', '1');
-    svg.appendChild(floodPath);
-
-    /* BIRDS */
-    Object.keys(birdsBySpecies).forEach(key => {
-      if (focusedSpecies && focusedSpecies !== key) return;
-
-      const birdNorm = birdsBySpecies[key].map(v => v / 100);
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-
-      path.setAttribute(
-        'd',
-        wavePath(birdNorm, HEIGHT * 0.55, baselineBirds, false)
-      );
-      path.setAttribute('fill', 'none');
+    // BIRDS
+    for(var key in birdsBySpecies){
+      if(focusedSpecies && focusedSpecies!==key) continue;
+      var birdData = birdsBySpecies[key];
+      var birdNorm = [];
+      for(var i=0;i<birdData.length;i++) birdNorm.push(birdData[i]/100);
+      var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d', wavePath(birdNorm, HEIGHT*0.55, baselineBirds, false));
+      path.setAttribute('fill','none');
       path.setAttribute('stroke', speciesColors[key]);
-      path.setAttribute('stroke-width', focusedSpecies ? 3 : 2);
-      path.setAttribute('opacity', focusedSpecies ? 0.95 : 0.45);
+      path.setAttribute('stroke-width', focusedSpecies?3:2);
+      path.setAttribute('opacity', focusedSpecies?0.95:0.45);
+      path.setAttribute('data-species', key);
+      path.style.cursor = 'pointer';
+
+      (function(k, p){
+        p.addEventListener('click', function(e){ e.stopPropagation(); focusedSpecies = (focusedSpecies===k)? null : k; updateSidebarStyles(); render(); });
+        p.addEventListener('mouseenter', function(){ p.setAttribute('opacity',1); });
+        p.addEventListener('mouseleave', function(){ 
+          var op = focusedSpecies ? (focusedSpecies===k?0.95:0) : 0.45; 
+          p.setAttribute('opacity', op); 
+        });
+      })(key, path);
 
       svg.appendChild(path);
-    });
+    }
 
     applyView();
   }
 
-  function applyView() {
-    const visibleWidth = (WIDTH / 12) * zoomMonths;
-    const offsetX = (WIDTH / 12) * startMonth;
+  
 
-    svg.setAttribute('viewBox', `${offsetX} 0 ${visibleWidth} ${HEIGHT}`);
-
+  function applyView(){
+    var visibleWidth = (WIDTH/12)*zoomMonths;
+    var offsetX = (WIDTH/12)*startMonth;
+    svg.setAttribute('viewBox', offsetX+' 0 '+visibleWidth+' '+HEIGHT);
     renderAxis();
-
-    zoomReadout.textContent =
-      `showing ${MONTHS[startMonth]}–${MONTHS[startMonth + zoomMonths - 1]} (${zoomMonths} months)`;
+    zoomReadout.innerHTML = 'showing '+MONTHS[startMonth]+'–'+MONTHS[startMonth+zoomMonths-1]+' ('+zoomMonths+' months)<br><span>drag slider to zoom in, scroll up and down to pan</span>';
   }
 
-  /* =========================
-     INTERACTION
-  ========================= */
-
-  zoomSlider.addEventListener('input', e => {
-    zoomMonths = +e.target.value;
-    startMonth = Math.min(startMonth, 12 - zoomMonths);
-    applyView();
-  });
-
-  visual.addEventListener('mouseenter', () => hoverViz = true);
-  visual.addEventListener('mouseleave', () => hoverViz = false);
-
-  window.addEventListener('wheel', e => {
-    if (!hoverViz) return;
+  // INTERACTIONS
+  zoomSlider.addEventListener('input', function(e){ zoomMonths=+e.target.value; startMonth=Math.min(startMonth,12-zoomMonths); applyView(); });
+  visual.addEventListener('mouseenter', function(){ hoverViz=true; });
+  visual.addEventListener('mouseleave', function(){ hoverViz=false; });
+  window.addEventListener('wheel', function(e){
+    if(!hoverViz) return;
     e.preventDefault();
-
-    startMonth += e.deltaY > 0 ? 1 : -1;
-    startMonth = Math.max(0, Math.min(12 - zoomMonths, startMonth));
-
+    startMonth += e.deltaY>0?1:-1;
+    if(startMonth<0) startMonth=0;
+    if(startMonth>12-zoomMonths) startMonth=12-zoomMonths;
     applyView();
-  }, { passive: false });
+  }, false);
 
-  /* =========================
-     SIDEBAR
-  ========================= */
-
-  speciesList.innerHTML = '';
-
-  Object.keys(birdsBySpecies).forEach(key => {
-    const li = document.createElement('li');
-    li.dataset.species = key;
+  // SIDEBAR
+  for(var key in birdsBySpecies){
+    var li = document.createElement('li');
+    li.setAttribute('data-species', key);
     li.style.color = speciesColors[key];
-
-    const icon = document.createElement('span');
-    icon.className = 'species-icon';
-    icon.style.backgroundImage = `url("images/birds/${key}.jpg")`;
-
-    const name = document.createElement('span');
-    name.textContent = key.replace(/-/g, ' ');
-
-    li.append(icon, name);
+    var icon = document.createElement('span');
+    icon.className='species-icon';
+    icon.style.backgroundImage='url("images/birds/'+key+'.jpg")';
+    var name = document.createElement('span');
+    name.appendChild(document.createTextNode(key.replace(/-/g,' ')));
+    li.appendChild(icon);
+    li.appendChild(name);
     speciesList.appendChild(li);
 
-    li.addEventListener('click', () => {
-      focusedSpecies = focusedSpecies === key ? null : key;
-      document.querySelectorAll('.species-list li')
-        .forEach(el => el.classList.toggle('active', el === li && focusedSpecies));
-      render();
-    });
+    (function(k, l){
+      l.addEventListener('click', function(){ focusedSpecies = (focusedSpecies===k)? null:k; updateSidebarStyles(); render(); });
+    })(key, li);
+  }
+
+  // CLICK OUTSIDE LINE RESET
+  svg.addEventListener('click', function(e){
+    if(!e.target.getAttribute('data-species')){ focusedSpecies=null; updateSidebarStyles(); render(); }
   });
 
-  /* =========================
-     INIT
-  ========================= */
-
-  fetchFloodData().then(data => {
-    floodByMonth = data;
-    render();
-  });
+  // INIT
+  fetchFloodData().then(function(data){ floodByMonth = data; render(); });
 
 })();
