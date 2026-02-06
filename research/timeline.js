@@ -3,12 +3,12 @@
   console.log('timeline.js loaded');
 
   // ELEMENTS
-  var svg = document.getElementsByClassName('wave-svg')[0]; // main SVG
-  var speciesList = document.getElementsByClassName('species-list')[0]; // sidebar list
-  var zoomSlider = document.getElementsByClassName('zoom-slider')[0]; // zoom input
-  var zoomReadout = document.getElementsByClassName('zoom-readout')[0]; // zoom text
-  var axis = document.getElementsByClassName('timeline-axis')[0]; // months axis
-  var visual = document.getElementsByClassName('timeline-layer')[0]; // SVG container
+  var svg = document.querySelector('.wave-svg'); // main SVG
+  var speciesList = document.querySelector('.species-list'); // sidebar list
+  var zoomSlider = document.querySelector('.zoom-slider'); // zoom input
+  var zoomReadout = document.querySelector('.zoom-readout'); // zoom text
+  var axis = document.querySelector('.timeline-axis'); // months axis
+  var visual = document.querySelector('.timeline-layer'); // SVG container
 
   // CONSTANTS
   var WIDTH = 1200;
@@ -54,7 +54,10 @@
   };
 
   // HELPERS
-  function clearChildren(parent) { while(parent.firstChild) parent.removeChild(parent.firstChild); }
+  function clearChildren(parent) { 
+    while(parent.firstChild) parent.removeChild(parent.firstChild); 
+  }
+  
   function normalize(data) { 
     var max = Math.max.apply(null, data);
     var result = [];
@@ -90,28 +93,64 @@
   }
 
   function fetchFloodData() {
-    var url = "https://waterservices.usgs.gov/nwis/dv/?format=json&sites=11453000&parameterCd=00060&startDT=2002-01-01&endDT=2026-12-31";
-    return fetch(url).then(function(res){ return res.json(); }).then(function(json){
+    // USGS Station 11453000: Yolo Bypass near Woodland, CA
+    // Parameter 00060: Discharge (cubic feet per second)
+    // Date range: 2004-01-01 to 2026-02-05 (current date)
+    var url = "https://waterservices.usgs.gov/nwis/dv/?format=json&sites=11453000&parameterCd=00060&startDT=2004-01-01&endDT=2026-02-05";
+    
+    return fetch(url).then(function(res){ 
+      return res.json(); 
+    }).then(function(json){
+      // Check if data exists
+      if(!json.value || !json.value.timeSeries || !json.value.timeSeries[0]){
+        console.error('No flood data available from USGS');
+        return [0,0,0,0,0,0,0,0,0,0,0,0];
+      }
+      
       var values = json.value.timeSeries[0].values[0].value;
+      console.log('Fetched ' + values.length + ' flood data points from USGS station 11453000 (Yolo Bypass near Woodland)');
+      
+      // Initialize arrays to store monthly totals and counts
       var totals = [];
       var counts = [];
-      for(var i=0;i<12;i++){ totals[i]=0; counts[i]=0; }
+      for(var i=0;i<12;i++){ 
+        totals[i]=0; 
+        counts[i]=0; 
+      }
+      
+      // Sum up all values by month across all years (2004-2026)
       for(var i=0;i<values.length;i++){
         var date = new Date(values[i].dateTime);
-        var v = parseFloat(values[i].value);
-        if(!isNaN(v)){ totals[date.getMonth()]+=v; counts[date.getMonth()]++; }
+        var monthIndex = date.getMonth(); // 0=Jan, 1=Feb, etc.
+        var discharge = parseFloat(values[i].value);
+        
+        if(!isNaN(discharge) && discharge >= 0){ 
+          totals[monthIndex] += discharge; 
+          counts[monthIndex]++; 
+        }
       }
+      
+      // Calculate monthly averages
       var result = [];
-      for(var i=0;i<12;i++){ result[i] = counts[i]? totals[i]/counts[i] : 0; }
+      for(var i=0;i<12;i++){ 
+        result[i] = counts[i] ? totals[i]/counts[i] : 0; 
+      }
+      
+      console.log('Monthly average discharge (cfs) for Yolo Bypass (2004-2026):', result);
       return result;
+      
+    }).catch(function(error){
+      console.error('Error fetching Yolo Bypass flood data:', error);
+      // Return zeros if fetch fails
+      return [0,0,0,0,0,0,0,0,0,0,0,0];
     });
   }
 
   function updateSidebarStyles(){
-    var items = speciesList.getElementsByTagName('li');
+    var items = speciesList.querySelectorAll('li');
     for(var i=0;i<items.length;i++){
       var item = items[i];
-      var nameSpan = item.getElementsByTagName('span')[1];
+      var nameSpan = item.querySelectorAll('span')[1];
       if(item.getAttribute('data-species')===focusedSpecies){
         nameSpan.innerHTML = '<strong style="text-decoration: underline;">'+nameSpan.textContent+'</strong>';
       } else {
@@ -202,7 +241,7 @@
     if(startMonth<0) startMonth=0;
     if(startMonth>12-zoomMonths) startMonth=12-zoomMonths;
     applyView();
-  }, false);
+  }, {passive: false});
 
   // SIDEBAR
   for(var key in birdsBySpecies){
