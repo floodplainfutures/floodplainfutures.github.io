@@ -1,20 +1,24 @@
 .back-link{
   position: fixed;
   top: 1rem;
+  left: 1rem;
   font-family: "DM Mono";
   font-size: 0.9rem;
   color: var(--pink);
   text-decoration: none;
+  z-index: 100;
 }
 
 .timeline-page{
   width: 100%;
-  min-height: 100vh; /* allow content to grow */
-  padding: 4rem 6rem;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: 4rem 6rem 2rem 6rem;
   display: grid;
   grid-template-columns: 1fr 220px;
-  grid-template-rows: auto 1fr auto; /* header / main / footer */
-  gap: 3rem;
+  grid-template-rows: auto 1fr auto;
+  gap: 2rem;
 }
 
 .timeline-header{
@@ -25,6 +29,7 @@
   font-family: "Montreal";
   font-size: 1.7rem;
   text-transform: lowercase;
+  margin-bottom: 0.25rem;
 }
 
 .timeline-header p{
@@ -36,7 +41,8 @@
 .timeline-visual{
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+  min-height: 0;
 }
 
 .timeline-axis{
@@ -47,7 +53,8 @@
 }
 
 .timeline-layer{
-  height: 500px;
+  flex: 1;
+  min-height: 0;
   position: relative;
   margin-left: 60px;
 }
@@ -91,11 +98,10 @@
 
 /* LEGEND */
 .legend{
-  margin-top: 1rem;
   display: flex;
   gap: 2rem;
   font-family: "DM Mono";
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .legend-item{
@@ -114,12 +120,19 @@
 .timeline-controls{
   border-left: 1px solid rgba(0,0,0,0.15);
   padding-left: 2rem;
+  overflow-y: auto;
+  max-height: 100%;
 }
 
 .timeline-controls h2{
   font-family: "Montreal";
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  background: var(--whitebeige);
+  padding-bottom: 0.5rem;
+  z-index: 10;
 }
 
 .species-list{
@@ -127,6 +140,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding-bottom: 1rem;
 }
 
 .species-list li{
@@ -151,6 +165,7 @@
   background-size: cover;
   background-position: center;
   box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+  flex-shrink: 0;
 }
 
 .species-list li:hover .species-icon{
@@ -187,18 +202,25 @@
 
 .zoom-readout{
   font-family: "DM Mono";
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 /* FOOTER */
 .timeline-footer {
   grid-column: 1 / -1; 
-  /* margin-top: 2rem; */
-  /* padding-top: 1.5rem; */
   font-family: "DM Mono";
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   opacity: 0.8;
   color: var(--blackblue);
+  line-height: 1.4;
+}
+
+.timeline-footer p{
+  margin: 0;
+}
+
+.timeline-footer p + p{
+  margin-top: 0.25rem;
 }
 
 .timeline-footer a {
@@ -208,4 +230,167 @@
 
 .timeline-footer a:hover {
   text-decoration: underline;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .timeline-page{
+    padding: 3.5rem 3rem 1.5rem 3rem;
+    gap: 1.5rem;
+  }
+
+  .timeline-header h1{
+    font-size: 1.4rem;
+  }
+
+  .timeline-header p{
+    font-size: 0.8rem;
+  }
+
+  .timeline-controls{
+    padding-left: 1.5rem;
+  }
+
+  .legend{
+    gap: 1rem;
+    font-size: 0.7rem;
+  }
+
+  .timeline-footer{
+    font-size: 0.65rem;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .back-link{
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .timeline-page{
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1.5rem;
+  }
+
+  .timeline-header h1{
+    font-size: 1.2rem;
+  }
+
+  .timeline-header p{
+    font-size: 0.75rem;
+  }
+
+  .timeline-visual{
+    order: 2;
+    gap: 0.75rem;
+  }
+
+  .timeline-controls{
+    order: 1;
+    border-left: none;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    padding-left: 0;
+    padding-bottom: 1rem;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .timeline-controls h2{
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    position: static;
+  }
+
+  .species-list{
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .species-list li{
+    font-size: 0.8rem;
+    gap: 0.4rem;
+  }
+
+  .species-icon{
+    width: 24px;
+    height: 24px;
+  }
+
+  .timeline-layer{
+    margin-left: 45px;
+  }
+
+  .y-axis{
+    left: -45px;
+    width: 40px;
+    font-size: 0.65rem;
+  }
+
+  .timeline-axis{
+    font-size: 0.7rem;
+  }
+
+  .legend{
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .zoom-slider{
+    width: 100%;
+  }
+
+  .zoom-readout{
+    font-size: 0.65rem;
+  }
+
+  .timeline-footer{
+    font-size: 0.6rem;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  .timeline-page{
+    padding: 2.5rem 1rem 1rem 1rem;
+  }
+
+  .timeline-header h1{
+    font-size: 1rem;
+  }
+
+  .timeline-header p{
+    font-size: 0.7rem;
+  }
+
+  .species-list li{
+    font-size: 0.75rem;
+  }
+
+  .species-icon{
+    width: 20px;
+    height: 20px;
+  }
+
+  .timeline-layer{
+    margin-left: 35px;
+  }
+
+  .y-axis{
+    left: -35px;
+    width: 32px;
+    font-size: 0.6rem;
+  }
+
+  .timeline-axis{
+    font-size: 0.65rem;
+  }
 }
