@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seasonal Flood + Bird Patterns</title>
+
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="timeline.css" />
+
+  <script src="timeline.js" defer></script>
+</head>
+
+<body class="lightbackground">
+
+<main class="timeline-page">
+
+  <header class="timeline-header">
+    <a href="index.html" class="back-link">&lt; back to home</a>
+    <h1>birds vs. flooding @ the yolo basin</h1>
+    <p>monthly averages</p>
+  </header>
+
+  <section class="timeline-visual">
+
+    <div class="timeline-axis">
+      <span>jan</span><span>feb</span><span>mar</span><span>apr</span>
+      <span>may</span><span>jun</span><span>jul</span><span>aug</span>
+      <span>sep</span><span>oct</span><span>nov</span><span>dec</span>
+    </div>
+
+    <!-- OVERLAID WAVES -->
+    <div class="timeline-layer wave-stack">
+      <svg class="wave-svg" viewBox="0 0 1200 120" preserveAspectRatio="none"></svg>
+    </div>
+
+    <!-- ZOOM -->
+    <input
+    type="range"
+    min="2"
+    max="12"
+    value="12"
+    class="zoom-slider"
+    />
+    <!-- accesibility -->
+    <div class="zoom-readout" aria-live="polite"></div>
+
+
+
+  </section>
+
+  <aside class="timeline-controls">
+    <h2>species</h2>
+    <ul class="species-list"></ul>
+  </aside>
+
+</main>
+
+</body>
+</html>
