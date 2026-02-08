@@ -274,6 +274,18 @@
   });
 
   // INIT
-  fetchFloodData().then(function(data){ floodByMonth = data; render(); });
+  fetchFloodData().then(function(data){ 
+    floodByMonth = data; 
+    render(); 
+    
+    // Hide loading message
+    var loadingMsg = document.querySelector('#dataLoadingMessage');
+    if (loadingMsg) {
+      loadingMsg.style.opacity = '0';
+      setTimeout(function() {
+        loadingMsg.style.display = 'none';
+      }, 500);
+    }
+  });
 
 })();
