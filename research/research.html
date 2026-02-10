@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Seasonal Flood + Bird Patterns</title>
+  <title>water + birds: a year in the yolo bypass</title>
 
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="timeline.css" />
@@ -12,80 +12,88 @@
 
 <body class="lightbackground">
 
-<!-- LOADING MESSAGE -->
-<div id="dataLoadingMessage" style="position: fixed; inset: 0; background: var(--whitebeige); display: flex; align-items: center; justify-content: center; z-index: 200; font-family: 'DM Mono'; font-size: 1rem; color: var(--pink); transition: opacity 0.5s ease;">
-  fetching flood data from USGS... this may take a moment
-</div>
+<main class="viz-page">
 
-<main class="timeline-page">
-
-  <header class="timeline-header">
-    <a href="../index.html" class="back-link">&lt; back to home</a>
-    <h1>flooding vs bird populations @ the yolo basin</h1>
-    <p>seasonal flooding and bird presence, averaged by month (2004–2026)</p>
+  <header class="viz-header">
+    <a href="../index.html" class="back-link">&lt; back</a>
+    <h1>water + birds: a year in the yolo bypass</h1>
+    <p class="subtitle">when water comes, so do the birds. here's the pattern.</p>
   </header>
 
-  <section class="timeline-visual">
-
-    <div class="timeline-axis">
-      <span>jan</span><span>feb</span><span>mar</span><span>apr</span>
-      <span>may</span><span>jun</span><span>jul</span><span>aug</span>
-      <span>sep</span><span>oct</span><span>nov</span><span>dec</span>
-    </div>
-
-    <!-- OVERLAID WAVES -->
-    <div class="timeline-layer wave-stack">
-      <!-- Y-AXIS LABELS -->
-      <div class="y-axis">
-        <div class="y-axis-label">100%</div>
-        <div class="y-axis-label">75%</div>
-        <div class="y-axis-label">50%</div>
-        <div class="y-axis-label">25%</div>
-        <div class="y-axis-label">0%</div>
+  <section class="viz-container">
+    
+    <!-- VISUAL STORY AREA -->
+    <div class="story-canvas">
+      
+      <!-- VISUALIZATION STAGE (12 month columns) -->
+      <div class="viz-stage" id="vizStage">
+        <!-- Populated by JS: 12 columns with water bars + bird stacks -->
       </div>
       
-      <svg class="wave-svg" viewBox="0 0 1200 500" preserveAspectRatio="none"></svg>
-    </div>
-
-    <!-- LEGEND -->
-    <div class="legend">
-      <div class="legend-item">
-        <div class="legend-color" style="background: var(--blackblue);"></div>
-        <span>flood outflow (normalized)</span>
+      <!-- MONTH LABELS -->
+      <div class="month-labels">
+        <span>jan</span><span>feb</span><span>mar</span><span>apr</span>
+        <span>may</span><span>jun</span><span>jul</span><span>aug</span>
+        <span>sep</span><span>oct</span><span>nov</span><span>dec</span>
       </div>
-      <div class="legend-item">
-        <div class="legend-color" style="background: var(--pink);"></div>
-        <span>bird observation frequency</span>
-      </div>
+      
     </div>
-
-    <!-- ZOOM -->
-    <input
-    type="range"
-    min="2"
-    max="12"
-    value="12"
-    class="zoom-slider"
-    aria-label="Zoom timeline"
-    />
-    <!-- accessibility -->
-    <div class="zoom-readout" aria-live="polite"></div>
-
+    
+    <!-- SIDEBAR -->
+    <aside class="viz-sidebar">
+      
+      <div class="sidebar-section">
+        <h3>pick a bird species</h3>
+        <p class="help">see when it shows up</p>
+        <div class="bird-picker" id="birdPicker"></div>
+        <button class="reset-btn" id="resetBtn">show all birds</button>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>how to read this</h3>
+        <div class="legend-simple">
+          <div class="legend-row">
+            <svg width="30" height="40">
+              <rect x="5" y="15" width="20" height="25" fill="#7292cb" stroke="#2e557c" stroke-width="2" rx="2"/>
+            </svg>
+            <span>height = water level<span class="tiny">taller = more flooding</span></span>
+          </div>
+          <div class="legend-row">
+            <svg width="30" height="40">
+              <path d="M 15 20 L 10 25 L 20 25 Z" fill="#f06896"/>
+              <path d="M 15 27 L 10 32 L 20 32 Z" fill="#f06896"/>
+            </svg>
+            <span>bird count<span class="tiny">more ^ = more birds</span></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>the pattern</h3>
+        <p class="explain">Water goes up → birds arrive<br>Water goes down → different birds arrive<br>No water → barely any birds</p>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>what you're seeing</h3>
+        <p class="technical">22 years of data (2004-2026):<br>
+        → Water: USGS flood sensors<br>
+        → Birds: eBird citizen science<br>
+        <span class="tiny">Both scaled to fit so you can see the relationship</span></p>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>why it matters</h3>
+        <p class="explain">The Yolo Bypass is flood control infrastructure. But when it floods, it accidentally becomes a massive bird habitat—recreating the seasonal wetlands that used to cover the Central Valley.</p>
+      </div>
+      
+    </aside>
+    
   </section>
 
-  <aside class="timeline-controls">
-    <h2>species</h2>
-    <ul class="species-list"></ul>
-  </aside>
-
-  <footer class="timeline-footer">
-    <p>
-        <strong>Data sources:</strong> 
-        Bird observations from <a href="https://ebird.org/barchart?byr=2004&eyr=2026&bmo=1&emo=12&r=L443535" target="_blank" rel="noopener noreferrer">eBird (2004–2026)</a>; 
-        Water flow data from <a href="https://waterdata.usgs.gov/monitoring-location/USGS-11453000/" target="_blank" rel="noopener noreferrer">USGS National Water Information System, Station 11453000</a>.
-    </p>
-    <p> <em>Note: Both datasets are normalized to 0-100% scale for visual comparison. Bird data shows observation frequency; flood data shows average daily discharge in cubic feet per second (cfs).</em></p>
-</footer>
+  <footer class="viz-footer">
+    <a href="https://waterdata.usgs.gov/monitoring-location/11453000/" target="_blank">USGS Station 11453000</a> • 
+    <a href="https://ebird.org/hotspot/L443535" target="_blank">eBird Yolo Bypass</a>
+  </footer>
 
 </main>
 

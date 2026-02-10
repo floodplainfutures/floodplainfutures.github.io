@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [{
+    "type": "Feature",
+    "properties": {
+      "name": "Yolo Bypass",
+      "source": "California Department of Water Resources"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[
+        [-121.67, 38.75],
+        [-121.55, 38.75],
+        [-121.52, 38.45],
+        [-121.65, 38.45],
+        [-121.67, 38.75]
+      ]]
+    }
+  }]
+}
