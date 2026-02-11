@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>water + birds: a year in the yolo bypass</title>
+
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="timeline_v1.css" />
+
+  <script src="timeline_v1.js" defer></script>
+</head>
+
+<body class="lightbackground">
+
+<main class="viz-page">
+
+  <header class="viz-header">
+    <a href="../index.html" class="back-link">&lt; back</a>
+    <h1>water + birds: a year in the yolo bypass</h1>
+    <p class="subtitle">when water comes, so do the birds. here's the pattern.</p>
+  </header>
+
+  <section class="viz-container">
+    
+    <!-- VISUAL STORY AREA -->
+    <div class="story-canvas">
+      
+      <!-- SVG CANVAS FOR WAVE -->
+      <svg id="waveSvg" class="wave-canvas">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+          </filter>
+        </defs>
+        <!-- Water wave path -->
+        <path id="waterWave" class="water-wave" />
+        <!-- Bird container -->
+        <g id="birdGroup" class="bird-group"></g>
+      </svg>
+      
+      <!-- MONTH LABELS -->
+      <div class="month-labels">
+        <span>jan</span><span>feb</span><span>mar</span><span>apr</span>
+        <span>may</span><span>jun</span><span>jul</span><span>aug</span>
+        <span>sep</span><span>oct</span><span>nov</span><span>dec</span>
+      </div>
+      
+    </div>
+    
+    <!-- SIDEBAR -->
+    <aside class="viz-sidebar">
+      
+      <div class="sidebar-section">
+        <h3>pick a bird species</h3>
+        <p class="help">see when it shows up</p>
+        <div class="bird-picker" id="birdPicker"></div>
+        <button class="reset-btn" id="resetBtn">show all birds</button>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>how to read this</h3>
+        <div class="legend-simple">
+          <div class="legend-row">
+            <div class="legend-color" style="background: var(--lightblue);"></div>
+            <span>blue wave = water flooding<span class="tiny">higher wave = more water</span></span>
+          </div>
+          <div class="legend-row">
+            <div class="legend-color" style="background: var(--pink);"></div>
+            <span>pink dots = birds<span class="tiny">more dots = more birds</span></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>the pattern</h3>
+        <p class="explain">Water flows in → birds flock to it<br>Water recedes → different birds arrive<br>No water → barely any birds</p>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>what you're seeing</h3>
+        <p class="technical">22 years of data (2004-2026):<br>
+        → Water: USGS flood sensors<br>
+        → Birds: eBird citizen science<br>
+        <span class="tiny">The wave flows left to right across the year</span></p>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>why it matters</h3>
+        <p class="explain">The Yolo Bypass is flood control infrastructure. But when it floods, it accidentally becomes a massive bird habitat—recreating the seasonal wetlands that used to cover the Central Valley.</p>
+      </div>
+      
+    </aside>
+    
+  </section>
+
+  <footer class="viz-footer">
+    <a href="https://waterdata.usgs.gov/monitoring-location/11453000/" target="_blank">USGS Station 11453000</a> • 
+    <a href="https://ebird.org/hotspot/L443535" target="_blank">eBird Yolo Bypass</a>
+  </footer>
+
+</main>
+
+</body>
+</html>

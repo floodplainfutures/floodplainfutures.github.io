@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>water + birds: a year in the yolo bypass</title>
+
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="timeline_v3.css" />
+
+  <script src="timeline_v3.js" defer></script>
+</head>
+
+<body class="lightbackground">
+
+<main class="viz-page">
+
+  <header class="viz-header">
+    <a href="../index.html" class="back-link">&lt; back</a>
+    <h1>water + birds: a year in the yolo bypass</h1>
+    <p class="subtitle">the seasonal clock: when water comes, so do the birds.</p>
+  </header>
+
+  <section class="viz-container">
+    
+    <!-- VISUAL STORY AREA -->
+    <div class="story-canvas">
+      
+      <!-- SVG CANVAS FOR RADIAL CHART -->
+      <svg id="clockSvg" class="clock-canvas">
+        <g id="clockGroup"></g>
+      </svg>
+      
+      <!-- CENTER LABEL -->
+      <div class="center-label">
+        <div class="year-text">2004–2026</div>
+        <div class="subtitle-text">yolo bypass</div>
+      </div>
+      
+    </div>
+    
+    <!-- SIDEBAR -->
+    <aside class="viz-sidebar">
+      
+      <div class="sidebar-section">
+        <h3>pick a bird species</h3>
+        <p class="help">see when it shows up</p>
+        <div class="bird-picker" id="birdPicker"></div>
+        <button class="reset-btn" id="resetBtn">show all birds</button>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>how to read this</h3>
+        <div class="legend-simple">
+          <div class="legend-row">
+            <div class="legend-color" style="background: var(--lightblue);"></div>
+            <span>blue wedges = water<span class="tiny">extends further = more flooding</span></span>
+          </div>
+          <div class="legend-row">
+            <div class="legend-color" style="background: var(--pink);"></div>
+            <span>pink dots = birds<span class="tiny">scattered in blue areas</span></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>the pattern</h3>
+        <p class="explain">The year spins around the circle. Winter months (top) see flooding and massive bird arrivals. Summer (bottom) is dry with few birds. The cycle repeats.</p>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>what you're seeing</h3>
+        <p class="technical">22 years of data (2004-2026):<br>
+        → Water: USGS flood sensors<br>
+        → Birds: eBird citizen science<br>
+        <span class="tiny">12 wedges = 12 months radiating from center</span></p>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>why it matters</h3>
+        <p class="explain">The Yolo Bypass is flood control infrastructure. But when it floods, it accidentally becomes a massive bird habitat—recreating the seasonal wetlands that used to cover the Central Valley.</p>
+      </div>
+      
+    </aside>
+    
+  </section>
+
+  <footer class="viz-footer">
+    <a href="https://waterdata.usgs.gov/monitoring-location/11453000/" target="_blank">USGS Station 11453000</a> • 
+    <a href="https://ebird.org/hotspot/L443535" target="_blank">eBird Yolo Bypass</a>
+  </footer>
+
+</main>
+
+</body>
+</html>
