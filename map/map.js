@@ -16,32 +16,12 @@
     });
     map.once('click', () => map.scrollWheelZoom.enable());
 
-    // Try different basemap options - uncomment the one you want:
-    
-    // Option 1: OpenStreetMap Standard (detailed streets, some color)
-    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     attribution: '&copy; OpenStreetMap contributors',
-    //     maxZoom: 19
-    // }).addTo(map);
-    
-    // Option 2: Stamen Toner (black & white, high contrast)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> &copy; <a href="https://carto.com">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 19
     }).addTo(map);
     
-    // Option 3: Stamen Toner Lite (softer black & white)
-    // L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png', {
-    //     attribution: '&copy; Stadia Maps, Stamen Design, OpenStreetMap',
-    //     maxZoom: 20
-    // }).addTo(map);
-    
-    // Option 4: CartoDB Positron (current - light gray)
-    // L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-    //     attribution: '&copy; OSM &copy; CARTO',
-    //     subdomains: 'abcd', maxZoom: 19
-    // }).addTo(map);
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
