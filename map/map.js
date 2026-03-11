@@ -288,12 +288,12 @@
 
     // WILDLIFE AREA KEY SITES (accurate coordinates)
     const sitesLayer = L.layerGroup([
-        L.marker([38.56175808082506, -121.63817642192132], { icon: pin('rgba(240,104,150,1)',20) })
-            .bindPopup('<b>Main Entrance</b><span>Yolo Bypass Wildlife Area</span>'),
-        L.marker([38.56373578901804, -121.63647676080996], { icon: pin('rgba(189,165,67,1)',18) })
-            .bindPopup('<b>Bat Tour Viewing Spot</b><span>Mexican free-tailed bat colony observation</span>'),
-        L.marker([38.56363743968578, -121.63530902018849], { icon: pin('rgba(46,85,124,1)',18) })
-            .bindPopup('<b>Main Parking Lot</b><span>Visitor parking area</span>')
+        // L.marker([38.56175808082506, -121.63817642192132], { icon: pin('rgba(240,104,150,1)',20) })
+        //     .bindPopup('<b>Main Entrance</b><span>Yolo Bypass Wildlife Area</span>'),
+        // L.marker([38.56373578901804, -121.63647676080996], { icon: pin('rgba(189,165,67,1)',18) })
+        //     .bindPopup('<b>Bat Tour Viewing Spot</b><span>Mexican free-tailed bat colony observation</span>'),
+        // L.marker([38.56363743968578, -121.63530902018849], { icon: pin('rgba(46,85,124,1)',18) })
+        //     .bindPopup('<b>Main Parking Lot</b><span>Visitor parking area</span>')
     ]);
 
     const layerMap = { basin: basinLayer, wildlife: wildlifeLayer, sites: sitesLayer, roads: roadsLayer };
