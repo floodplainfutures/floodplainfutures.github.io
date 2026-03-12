@@ -15,6 +15,7 @@
     // Skip loading screen entirely, skip begin button, go straight to open state
     if (hasVisited) {
         loading.classList.add('hidden');
+        myVideo.classList.add('visible');
         landing.classList.add('state-open');
 
         // play video immediately
