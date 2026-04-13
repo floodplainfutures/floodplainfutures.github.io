@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Floodplain Futures</title>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="styles.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 </head>
-<body>
+<body class="home-page">
 
     <!-- Loading Screen -->
     <div id="loadingScreen">
@@ -17,29 +15,27 @@
         <div id="loadingPercent">0%</div>
     </div>
 
-
     <!-- Video background -->
     <video id="myVideo" poster="images/formationflight.JPG" muted loop playsinline preload="auto">
         <source src="media/myVideo.mp4" type="video/mp4">
-        <p>Your browser doesn't support HTML5 video. 
+        <p>Your browser doesn't support HTML5 video.
         Here is a <a href="media/myVideo.mp4">link to the video</a> instead.</p>
     </video>
 
     <div id="landing" class="state-intro">
-    <div class="title-block">
-        <h1><span class="spark">✦</span>   Floodplain Futures</h1>
-        <button id="beginBtn" class="begin-link">
-        begin <span class="arrow">&#9758;</span>
-        </button>
-    </div>
+        <div class="title-block">
+            <h1><span class="spark">✦</span>   Floodplain Futures</h1>
+            <button id="beginBtn" class="begin-link">
+                begin <span class="arrow">&#9758;</span>
+            </button>
+        </div>
         <nav class="menu">
-            <a href="context/" class="cAbout">✦  context</a>
-            <a href="map/" class="cMap">✦  the basin</a>
-            <a href="research.html" class="cResearch">✦  systems</a>
-            <a href="observations/" class="cNotes">✦  observations</a>
+            <a href="context.html"      class="cAbout">✦  context</a>
+            <a href="map.html"          class="cMap">✦  the basin</a>
+            <a href="systems.html"      class="cResearch">✦  systems</a>
+            <a href="observations.html" class="cNotes">✦  observations</a>
         </nav>
     </div>
-
 
     <script src="scripts.js" defer></script>
 </body>

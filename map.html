@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>The Basin</title>
+    <title>The Basin — Floodplain Futures</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="map.css">
+    <link href="styles.css" rel="stylesheet">
 </head>
-<body>
+<body class="map-page">
 
 <header class="map-header">
     <span class="mh-item accent">✦&ensp;map</span>
@@ -19,23 +17,19 @@
     <div class="mh-divider hide-mobile"></div>
     <span class="mh-item hide-mobile">59,000 acres · Yolo County, CA</span>
     <div class="mh-spacer"></div>
-    <!-- mobile: toggle panel button -->
     <button class="panel-toggle-btn" id="panelToggle" aria-label="Toggle info panel">
         <span class="ptb-dot"></span>info
     </button>
-    <a href="../index.html" class="mh-back">← back</a>
+    <a href="index.html" class="mh-back">← back</a>
 </header>
 
 <div class="map-layout">
 
-    <!-- ── LEFT PANEL (desktop sidebar / mobile bottom drawer) ── -->
+    <!-- LEFT PANEL -->
     <aside class="map-panel" id="mapPanel">
-
-        <!-- mobile drag handle -->
         <div class="panel-drag-handle" id="dragHandle"></div>
 
         <h1 class="panel-title">the<br/>basin.</h1>
-
         <div class="panel-rule"></div>
 
         <div class="panel-stats">
@@ -102,10 +96,9 @@
                 <span class="cv">CR 32B, east of Davis</span>
             </div>
         </div>
-
     </aside>
 
-    <!-- ── MAP ── -->
+    <!-- MAP -->
     <div class="map-right">
         <div id="leafletMap"></div>
 
@@ -135,80 +128,9 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<!-- Leaflet map logic (GeoJSON, layers, coordinate readout) -->
 <script src="map.js"></script>
-<script>
-(function () {
-    'use strict';
-
-    const panel      = document.getElementById('mapPanel');
-    const toggleBtn  = document.getElementById('panelToggle');
-    const dragHandle = document.getElementById('dragHandle');
-
-    function isMobile() { return window.innerWidth <= 600; }
-
-    /* ── Toggle button ── */
-    toggleBtn.addEventListener('click', function () {
-        const open = panel.classList.toggle('panel-open');
-        toggleBtn.classList.toggle('active', open);
-        toggleBtn.textContent = open ? '✕ close' : '';
-        if (open) {
-            const dot = document.createElement('span');
-            dot.className = 'ptb-dot';
-            toggleBtn.prepend(dot);
-        }
-    });
-
-    /* ── Drag-to-dismiss on mobile ── */
-    let startY = 0, startOpen = false;
-
-    function onTouchStart(e) {
-        if (!isMobile()) return;
-        startY = e.touches[0].clientY;
-        startOpen = panel.classList.contains('panel-open');
-        panel.style.transition = 'none';
-    }
-    function onTouchMove(e) {
-        if (!isMobile() || !startOpen) return;
-        const dy = e.touches[0].clientY - startY;
-        if (dy > 0) panel.style.transform = 'translateY(' + dy + 'px)';
-    }
-    function onTouchEnd(e) {
-        if (!isMobile()) return;
-        panel.style.transition = '';
-        const dy = e.changedTouches[0].clientY - startY;
-        if (dy > 80) {
-            panel.classList.remove('panel-open');
-            toggleBtn.classList.remove('active');
-            panel.style.transform = '';
-        } else {
-            panel.style.transform = '';
-        }
-    }
-
-    dragHandle.addEventListener('touchstart', onTouchStart, { passive: true });
-    panel.addEventListener('touchmove',  onTouchMove,  { passive: true });
-    panel.addEventListener('touchend',   onTouchEnd,   { passive: true });
-
-    /* Close drawer when a layer row is tapped on mobile */
-    document.querySelectorAll('.layer-row').forEach(function (row) {
-        row.addEventListener('click', function () {
-            if (isMobile()) {
-                setTimeout(function () {
-                    panel.classList.remove('panel-open');
-                    toggleBtn.classList.remove('active');
-                }, 280);
-            }
-        });
-    });
-
-    /* Scroll wheel enable on first touch for map */
-    document.getElementById('leafletMap').addEventListener('touchstart', function () {
-        if (window._mapScrollEnabled) return;
-        window._mapScrollEnabled = true;
-    }, { passive: true });
-
-})();
-</script>
-
+<!-- Shared site scripts (panel toggle, seasonal conditions) -->
+<script src="scripts.js"></script>
 </body>
 </html>
