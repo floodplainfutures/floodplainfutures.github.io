@@ -1,6 +1,8 @@
-'use strict';
+
 
 (function () {
+    console.log('systems.js loaded');
+    'use strict';
 
 // ════════════════════════════════════════════════════════════════
 // DATA — all Yolo County or Yolo Basin sources only

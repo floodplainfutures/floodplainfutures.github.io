@@ -10,7 +10,9 @@
 ═══════════════════════════════════════════════════════════════ */
 
 (function () {
+    console.log('systems.js loaded');
     'use strict';
+
 
     const body = document.body;
 

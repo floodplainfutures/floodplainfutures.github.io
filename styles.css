@@ -14,6 +14,8 @@
 ═══════════════════════════════════════════════════════════════ */
 
 
+
+
 /* ─────────────────────────────────────────────────────────────
    1. TOKENS & FONTS
 ───────────────────────────────────────────────────────────── */
@@ -75,7 +77,9 @@ html, body {
 }
 
 /* Default: overflow locked (home page). Sub-pages override below. */
-html, body { overflow: hidden; }
+html, body { 
+    overflow: hidden; 
+}
 
 
 /* ─────────────────────────────────────────────────────────────
@@ -93,7 +97,9 @@ html, body { overflow: hidden; }
     opacity: 0;
     transition: opacity 1s ease;
 }
-#myVideo.visible { opacity: 1; }
+#myVideo.visible { 
+    opacity: 1; 
+}
 
 /* LOADING SCREEN */
 #loadingScreen {
@@ -259,7 +265,9 @@ html, body { overflow: hidden; }
     white-space: nowrap;
     letter-spacing: .02em;
 }
-.ff-header-back:hover { opacity: 1; color: var(--pink); }
+.ff-header-back:hover { 
+    opacity: 1; color: var(--pink); 
+}
 
 .ff-header-title {
     font-family: "DM Mono", monospace;
