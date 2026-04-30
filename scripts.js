@@ -89,9 +89,9 @@
 
     /* ───────────────────────────────────────────────────────────
        2. CONTEXT PAGE
+       (merged from context.js)
     ─────────────────────────────────────────────────────────── */
     if (body.classList.contains('context-page')) {
-        console.log("context loaded.");
 
         const nav      = document.getElementById('ctxNav');
         const progress = document.getElementById('ctxProgress');
@@ -99,19 +99,21 @@
         const sections = document.querySelectorAll('.ctx-section');
         const reveals  = document.querySelectorAll('[data-reveal]');
 
+        // Progress bar width
         function updateProgress() {
-            const scrollTop  = window.scrollY;
-            const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
-            const pct        = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct       = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
             if (progress) progress.style.width = pct + '%';
         }
 
+        // Add .scrolled to ctx-nav after user scrolls past the hero
         function updateNav() {
             if (!nav) return;
-            if (window.scrollY > 60) nav.classList.add('scrolled');
-            else nav.classList.remove('scrolled');
+            nav.classList.toggle('scrolled', window.scrollY > 60);
         }
 
+        // Highlight the section nav link that matches the current scroll position
         function updateActiveSection() {
             const mid = window.scrollY + window.innerHeight * 0.4;
             let currentId = '';
@@ -123,6 +125,7 @@
             });
         }
 
+        // Scroll-reveal for [data-reveal] elements
         const io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
@@ -131,15 +134,15 @@
                 }
             });
         }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
         reveals.forEach(function (el) { io.observe(el); });
 
+        // Smooth-scroll section nav links, offset for both fixed bars (48 + 38 = 86px)
         navLinks.forEach(function (link) {
             link.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(link.getAttribute('href'));
                 if (!target) return;
-                const top = target.getBoundingClientRect().top + window.scrollY - 64;
+                const top = target.getBoundingClientRect().top + window.scrollY - 86;
                 window.scrollTo({ top: top, behavior: 'smooth' });
             });
         });
@@ -150,6 +153,7 @@
             updateActiveSection();
         }, { passive: true });
 
+        // Run once on load
         updateProgress();
         updateNav();
         updateActiveSection();

@@ -10,17 +10,13 @@
 </head>
 <body class="map-page">
 
-<header class="map-header">
-    <span class="mh-item accent">✦&ensp;map</span>
-    <div class="mh-divider hide-mobile"></div>
-    <span class="mh-item hide-mobile">Yolo Basin</span>
-    <div class="mh-divider hide-mobile"></div>
-    <span class="mh-item hide-mobile">59,000 acres · Yolo County, CA</span>
-    <div class="mh-spacer"></div>
-    <button class="panel-toggle-btn" id="panelToggle" aria-label="Toggle info panel">
-        <span class="ptb-dot"></span>info
-    </button>
-    <a href="index.html" class="mh-back">← back</a>
+<header class="ff-header">
+    <a href="index.html" class="ff-header-back">← home</a>
+    <span class="ff-header-title">✦&ensp;the basin</span>
+    <nav class="ff-header-nav">
+        <a href="context.html" class="ff-header-nav-link">← context</a>
+        <a href="systems.html" class="ff-header-nav-link">systems →</a>
+    </nav>
 </header>
 
 <div class="map-layout">
@@ -65,11 +61,27 @@
                 <span class="layer-name">Yolo Bypass Wildlife Area</span>
                 <div class="l-toggle"></div>
             </div>
+                        <div class="layer-row active" data-layer="hunting">
+                <div class="l-swatch" style="background:#ef624480;border-color:#ef6244cc"></div>
+                <span class="layer-name">Yolo Bypass Hunting Area</span>
+                <div class="l-toggle"></div>
+            </div>
+            <div class="layer-row active" data-layer="nigirione">
+                <div class="l-swatch" style="background:#bda543ff;border-color:rgb(77, 67, 25)"></div>
+                <span class="layer-name">Conway Ranch - Nigiri Project</span>
+                <div class="l-toggle"></div>
+            </div>
+            <div class="layer-row active" data-layer="nigiritwo">
+                <div class="l-swatch" style="background:#f1b93f;border-color:#9b7728"></div>
+                <span class="layer-name">Knaggs Ranch - Nigiri Project</span>
+                <div class="l-toggle"></div>
+            </div>
             <div class="layer-row active" data-layer="roads">
                 <div class="l-swatch" style="background:#f0689680;border-color:#f06896cc"></div>
                 <span class="layer-name">I-80 / Yolo Causeway</span>
                 <div class="l-toggle"></div>
             </div>
+
         </div>
 
         <div class="annotation-card">
@@ -101,6 +113,10 @@
     <!-- MAP -->
     <div class="map-right">
         <div id="leafletMap"></div>
+
+        <button class="panel-toggle-btn" id="panelToggle" aria-label="Toggle info panel">
+            <span class="ptb-dot"></span>info
+        </button>
 
         <div class="map-tag">
             <span class="map-tag-big">YOLO</span>
@@ -134,3 +150,7 @@
 <script src="scripts.js"></script>
 </body>
 </html>
+
+
+<!-- left panel better match -->
+ <!-- make things more accessible -->

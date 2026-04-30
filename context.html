@@ -9,10 +9,16 @@
 </head>
 <body class="context-page">
 
-    <!-- SHARED HEADER -->
-    <nav class="ff-header" id="ctxNav">
-        <a href="index.html" class="ff-header-back">← floodplain futures</a>
-        <span class="ff-header-title" id="navTitle">context</span>
+    <header class="ff-header">
+        <a href="index.html" class="ff-header-back">← home</a>
+        <span class="ff-header-title">✦&ensp;context</span>
+        <nav class="ff-header-nav">
+            <a href="map.html" class="ff-header-nav-link">the basin →</a>
+        </nav>
+    </header>
+
+    <nav class="ctx-nav" id="ctxNav">
+        <span class="ctx-nav-title">context</span>
         <div class="ctx-nav-sections">
             <a href="#premise"  class="ctx-nav-link" data-section="premise">premise</a>
             <a href="#place"    class="ctx-nav-link" data-section="place">the place</a>
@@ -22,207 +28,254 @@
         </div>
     </nav>
 
-    <div class="ff-progress" id="ctxProgress"></div>
+    <div class="ctx-progress" id="ctxProgress"></div>
+
+    <section class="ctx-hero">
+
+        <div class="ctx-hero-photo">
+            <img src="images/context/hero.jpg" alt="Aerial view of the Yolo Basin floodplain in winter, fields flooded with birds in flight">
+        </div>
+
+        <div class="ctx-hero-text">
+            <div class="ctx-hero-meta">
+                <span class="ctx-label">MFA Design Thesis</span>
+                <span class="ctx-label-sep">·</span>
+                <span class="ctx-label">UC Davis · 2026</span>
+                <span class="ctx-label-sep">·</span>
+                <span class="ctx-label">Zahra Baxi</span>
+            </div>
+
+            <h1 class="ctx-hero-title">
+                <span class="ctx-hero-word"><span class="ctx-hero-word-inner">floodplain</span></span>
+                <span class="ctx-hero-word ctx-hero-word--accent"><span class="ctx-hero-word-inner">futures</span></span>
+            </h1>
+
+            <p class="ctx-hero-sub">
+                An interactive design project looking at the Yolo Basin as a working landscape where flooding, agriculture, and migration overlap rather than compete.
+            </p>
+        </div>
+
+    </section>
 
     <main class="ctx-main">
 
-        <!-- HERO -->
-        <header class="ctx-hero">
-            <div class="ctx-hero-meta">
-                <span class="ctx-label">MFA Design Thesis · UC Davis · 2026</span>
-                <span class="ctx-label">Zahra Baxi</span>
-            </div>
-            <h1 class="ctx-hero-title">
-                <span class="ctx-hero-line">floodplain</span>
-                <span class="ctx-hero-line ctx-hero-line--accent">futures</span>
-            </h1>
-            <p class="ctx-hero-sub">
-                An interactive design exploration of the Yolo Basin as a dynamic landscape shaped by flood infrastructure, migratory bird ecologies, and agriculture. This project visualizes how seasonal change transforms the basin, and how these overlapping systems can be better understood through interaction.
-            </p>
-            <div class="ctx-hero-rule"></div>
-        </header>
-
-        <!-- PREMISE -->
         <section class="ctx-section" id="premise" data-reveal>
             <div class="ctx-section-num">01</div>
             <div class="ctx-section-body">
                 <h2 class="ctx-section-title">premise</h2>
+
                 <div class="ctx-text-col">
                     <p class="ctx-lede">
-                        The Yolo Basin is not a static landscape, it is a system that expands, floods, feeds, and recedes with the seasons.
+                        Hi! I’m Zahra Baxi, an MFA Design student at UC Davis and a Davis Native. This project started from living just less than 15 minutes away from an amazing landscape that shifts between flood control, farmland, and wildlife habitat. I lived here for 20+ years without really understanding what was going on in that space and never truly visited until I started this thesis.
                     </p>
+
                     <p>
-                        Located just outside of Davis, California, the basin operates as both critical flood infrastructure and a productive agricultural landscape. During periods of heavy rain, water from the Sacramento River is diverted into the basin, transforming fields into temporary wetlands.
+                        The Yolo Basin is one of those places that doesn’t behave like a single system. In winter it becomes a managed floodplain. In spring and summer it returns to agriculture. Throughout the year it also functions as a critical stop along the Pacific Flyway for migrating birds.
                     </p>
+
                     <p>
-                        This seasonal flooding supports ecological processes along the Pacific Flyway, where migratory birds rely on the basin as a resting and feeding ground. At other times of year, the same land is cultivated for crops such as rice, creating a continuous cycle between water, habitat, and food production.
-                    </p>
-                    <p>
-                        Despite its complexity, these systems are often experienced separately rather than as an interconnected whole.
+                        I started this thesis by trying to understand how a place can be designed to hold all of these roles at once, and what gets lost when we only see it as infrastructure or only as nature.
                     </p>
                 </div>
-                <!-- <blockquote class="ctx-pullquote">
-                    <p>"The basin is a landscape in motion shaped as much by water and migration as by human design."</p>
-                    <cite>— Thesis framing</cite>
-                </blockquote> -->
+
+                <blockquote class="ctx-pullquote">
+                    <p>“The same ground can hold floodwater, food production, and migration, depending on how we choose to see it.”</p>
+                    <cite>field notes, Yolo Basin research</cite>
+                </blockquote>
+
                 <div class="ctx-text-col">
                     <p>
-                        This project begins from the premise that understanding the basin requires seeing these systems together, as a single, dynamic environment shaped by seasonal change.
+                        This project sits in between ecology, design, and systems thinking. It looks at how information design can help people understand a landscape that is constantly changing shape and purpose.
                     </p>
                 </div>
             </div>
         </section>
 
-        <div class="ff-divider"><span class="ff-divider-mark">✦</span></div>
+        <div class="ctx-divider" data-reveal><span class="ctx-divider-mark">✦</span></div>
 
-        <!-- PLACE -->
         <section class="ctx-section" id="place" data-reveal>
             <div class="ctx-section-num">02</div>
             <div class="ctx-section-body">
                 <h2 class="ctx-section-title">the place</h2>
-                <div class="ctx-stats">
+
+                <div class="ctx-stats" data-reveal>
                     <div class="ctx-stat">
                         <span class="ctx-stat-n">41 mi</span>
-                        <span class="ctx-stat-l">length of bypass</span>
+                        <span class="ctx-stat-l">bypass length</span>
                     </div>
                     <div class="ctx-stat">
                         <span class="ctx-stat-n">59,000</span>
-                        <span class="ctx-stat-l">acres total</span>
+                        <span class="ctx-stat-l">acres</span>
                     </div>
                     <div class="ctx-stat">
                         <span class="ctx-stat-n">200+</span>
-                        <span class="ctx-stat-l">bird species / year</span>
-                    </div>
-                    <div class="ctx-stat">
-                        <span class="ctx-stat-n">3.2 mi</span>
-                        <span class="ctx-stat-l">from Davis, CA</span>
+                        <span class="ctx-stat-l">bird species annually</span>
                     </div>
                 </div>
+
                 <div class="ctx-text-col">
                     <p class="ctx-lede">
-                        The Yolo Basin is a designed floodplain where infrastructure, ecology, and agriculture coexist.
+                        The Yolo Basin Wildlife Area sits just outside Davis and Sacramento, shaped by engineered flood control systems that redirect seasonal water from the Sacramento River.
                     </p>
+
                     <p>
-                        Stretching along the Sacramento Valley, the Yolo Bypass carries excess water away from urban areas during flood events. Structures like the Fremont Weir allow water to spill into the basin, reducing pressure on the Sacramento River.
+                        During wet months, the basin is intentionally flooded to relieve pressure on nearby cities. In dry months, the same land supports rice fields and other agricultural production. These shifts are not accidental, they are designed into the landscape.
                     </p>
+
                     <p>
-                        For much of the year, the basin appears dry and agricultural. During the wet season, these same fields transform into wetlands, supporting migratory birds traveling along the Pacific Flyway.
+                        Because of this cycle, the basin also becomes one of the most important wetland habitats in the region, supporting migratory birds traveling along the Pacific Flyway.
                     </p>
                 </div>
-                <div class="ctx-twocol">
+
+                <div class="ctx-twocol" data-reveal>
                     <div class="ctx-twocol-item">
                         <span class="ctx-twocol-label">infrastructure</span>
-                        <p>The basin diverts excess water from the Sacramento River to prevent flooding in nearby cities.</p>
+                        <p>The basin is part of a controlled flood system that protects surrounding cities from seasonal overflow.</p>
                     </div>
                     <div class="ctx-twocol-item">
                         <span class="ctx-twocol-label">ecology</span>
-                        <p>Seasonal flooding creates temporary wetlands that support diverse ecosystems.</p>
+                        <p>Flooded fields temporarily become wetlands that support fish, insects, and aquatic plants.</p>
                     </div>
                     <div class="ctx-twocol-item">
                         <span class="ctx-twocol-label">agriculture</span>
-                        <p>During dry months, the basin operates as productive farmland, especially for rice cultivation.</p>
+                        <p>Rice farming uses the same flood infrastructure during dry months, linking food production with water management.</p>
                     </div>
                     <div class="ctx-twocol-item">
                         <span class="ctx-twocol-label">migration</span>
-                        <p>The basin provides critical habitat for migratory birds along the Pacific Flyway.</p>
+                        <p>Hundreds of thousands of birds rely on the basin as seasonal habitat and resting ground.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="ff-divider"><span class="ff-divider-mark">✦</span></div>
+        <div class="ctx-divider" data-reveal><span class="ctx-divider-mark">✦</span></div>
 
-        <!-- QUESTION -->
         <section class="ctx-section" id="question" data-reveal>
             <div class="ctx-section-num">03</div>
             <div class="ctx-section-body">
                 <h2 class="ctx-section-title">the question</h2>
+
                 <div class="ctx-text-col">
-                    <p class="ctx-lede">If the basin is defined by change, how can it be understood and experienced?</p>
-                    <p>Flood, migration, and agriculture operate across time and scale, making them difficult to perceive in everyday experience.</p>
-                </div>
-                <div class="ctx-question">
-                    <span class="ctx-question-mark">?</span>
-                    <p class="ctx-question-text">
-                        How can interaction design make visible the seasonal systems of the Yolo Basin?
+                    <p class="ctx-lede">
+                        How do you design systems that help people understand a landscape that is not fixed, but constantly shifting between infrastructure, ecology, and agriculture?
+                    </p>
+
+                    <p>
+                        Most representations of floodplains separate these functions into categories. Flood control is engineering. Wetlands are ecology. Farms are agriculture. But in places like the Yolo Basin, these boundaries blur in practice.
                     </p>
                 </div>
+
+                <div class="ctx-question" data-reveal>
+                    <span class="ctx-question-mark">?</span>
+                    <p class="ctx-question-text">
+                        What happens when we design tools that show overlap instead of separation, and how does that change the way we value a landscape?
+                    </p>
+                </div>
+
                 <div class="ctx-text-col">
-                    <p>This project frames the basin as a design challenge: how to communicate complex environmental systems through interaction.</p>
+                    <p>
+                        This thesis explores whether interactive design can make these overlapping systems easier to see, and whether that visibility can shift how people relate to land that is usually treated as background infrastructure.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <div class="ff-divider"><span class="ff-divider-mark">✦</span></div>
+        <div class="ctx-divider" data-reveal><span class="ctx-divider-mark">✦</span></div>
 
-        <!-- METHOD -->
         <section class="ctx-section" id="method" data-reveal>
             <div class="ctx-section-num">04</div>
             <div class="ctx-section-body">
                 <h2 class="ctx-section-title">method</h2>
+
                 <div class="ctx-text-col">
-                    <p class="ctx-lede">This project uses interaction design to translate environmental systems into accessible experiences.</p>
+                    <p class="ctx-lede">
+                        This project combines field research, mapping, and interaction design to translate ecological systems into visual and digital form.
+                    </p>
+
+                    <p>
+                        I started by visiting the Yolo Basin during different seasons, documenting how the landscape changes visually and functionally over time. That fieldwork became the foundation for mapping and data collection.
+                    </p>
                 </div>
-                <ol class="ctx-steps">
+
+                <ol class="ctx-steps" data-reveal>
                     <li class="ctx-step">
                         <span class="ctx-step-num">01</span>
                         <div class="ctx-step-body">
-                            <strong>site research</strong>
-                            <p>Studying flood, ecological, and agricultural systems through maps and field observation.</p>
+                            <strong>field observation</strong>
+                            <p>Site visits across seasons to document flooding patterns, wildlife presence, and agricultural cycles.</p>
                         </div>
                     </li>
+
                     <li class="ctx-step">
                         <span class="ctx-step-num">02</span>
                         <div class="ctx-step-body">
-                            <strong>system mapping</strong>
-                            <p>Diagramming relationships between water, migration, and land use.</p>
+                            <strong>mapping systems</strong>
+                            <p>Translating environmental data into layered spatial maps that show overlapping land uses.</p>
                         </div>
                     </li>
+
                     <li class="ctx-step">
                         <span class="ctx-step-num">03</span>
                         <div class="ctx-step-body">
-                            <strong>prototyping</strong>
-                            <p>Designing interactive tools to explore seasonal change.</p>
+                            <strong>interaction design</strong>
+                            <p>Building an interactive experience that allows users to explore the basin as a changing system.</p>
                         </div>
                     </li>
+
                     <li class="ctx-step">
                         <span class="ctx-step-num">04</span>
                         <div class="ctx-step-body">
-                            <strong>iteration</strong>
-                            <p>Refining interactions for clarity, engagement, and accessibility.</p>
+                            <strong>visual translation</strong>
+                            <p>Designing visuals that connect scientific data with accessible storytelling.</p>
                         </div>
                     </li>
                 </ol>
+
+                <div class="ctx-text-col">
+                    <p>
+                        The goal is not to simplify the basin, but to make its complexity easier to approach without flattening what is actually happening there.
+                    </p>
+                </div>
             </div>
         </section>
 
-        <div class="ff-divider"><span class="ff-divider-mark">✦</span></div>
+        <div class="ctx-divider" data-reveal><span class="ctx-divider-mark">✦</span></div>
 
-        <!-- THESIS -->
         <section class="ctx-section ctx-section--last" id="thesis" data-reveal>
             <div class="ctx-section-num">05</div>
             <div class="ctx-section-body">
                 <h2 class="ctx-section-title">thesis</h2>
+
                 <div class="ctx-text-col">
-                    <p class="ctx-lede">The Yolo Basin is a dynamic system shaped by seasonal change.</p>
-                </div>
-                <div class="ctx-thesis-box">
-                    <span class="ctx-thesis-label">thesis statement</span>
-                    <p class="ctx-thesis-text">
-                        This thesis proposes that interaction design can reveal the interconnected systems of flood, migration, and agriculture within the Yolo Basin, reframing it as a living, adaptive landscape shaped by both infrastructure and ecology.
+                    <p class="ctx-lede">
+                        This thesis looks at how design can make ecological systems more legible without removing their complexity.
                     </p>
                 </div>
+
+                <div class="ctx-thesis-box" data-reveal>
+                    <span class="ctx-thesis-label">thesis statement</span>
+                    <p class="ctx-thesis-text">
+                        This project explores how interactive and information design can bridge ecological research and public understanding by translating the Yolo Basin into an accessible, layered system that reflects its overlapping roles as flood control infrastructure, agricultural land, and wildlife habitat.
+                    </p>
+                </div>
+
                 <div class="ctx-text-col">
-                    <p>By visualizing these systems together, the project highlights their interdependence and invites new ways of understanding environmental change.</p>
+                    <p>
+                        Using a systems-based design approach, the work focuses on making environmental data experiential rather than abstract, so people can understand how the basin operates over time rather than as a static map.
+                    </p>
+
+                    <p>
+                        The intention is not to resolve the contradictions in the landscape, but to show that they are the structure of it.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <footer class="ff-footer">
-            <div class="ff-footer-rule"></div>
-            <div class="ff-footer-inner">
-                <span class="ff-footer-credit">Floodplain Futures · Zahra Baxi · MFA Design 2026 · UC Davis</span>
-                <nav class="ff-footer-nav">
+        <footer class="ctx-footer" data-reveal>
+            <div class="ctx-footer-rule"></div>
+            <div class="ctx-footer-inner">
+                <span class="ctx-footer-credit">Floodplain Futures · Zahra Baxi · MFA Design 2026 · UC Davis</span>
+                <nav class="ctx-footer-nav">
                     <a href="index.html">← home</a>
                     <a href="map.html">the basin →</a>
                 </nav>
@@ -231,6 +284,6 @@
 
     </main>
 
-    <script src="scripts.js" defer></script>
+    <script src="scripts.js"></script>
 </body>
 </html>

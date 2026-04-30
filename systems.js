@@ -507,9 +507,62 @@ function clearWheelDetail() {
 }
 
 // ════════════════════════════════════════════════════════════════
-// BIRD CARDS
-// Image naming: bird-[slug].png in systems/images/
+// BIRD CARDS — with radial arc frequency display
 // ════════════════════════════════════════════════════════════════
+
+function makeRadialArc(freq, color) {
+    // Returns an SVG arc showing frequency as a partial circle + dot cluster
+    var ns = 'http://www.w3.org/2000/svg';
+    var size = 52;
+    var cx = size / 2, cy = size / 2, r = 20;
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+    svg.setAttribute('width', size); svg.setAttribute('height', size);
+
+    // Background circle
+    var bg = document.createElementNS(ns, 'circle');
+    bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
+    bg.setAttribute('fill', 'none');
+    bg.setAttribute('stroke', 'rgba(255,255,255,0.07)');
+    bg.setAttribute('stroke-width', '2');
+    svg.appendChild(bg);
+
+    // Arc
+    var pct = freq / 100;
+    var startAngle = -90;
+    var endAngle = startAngle + pct * 360;
+    function polarPt(deg, rad) {
+        var a = (deg * Math.PI) / 180;
+        return { x: cx + rad * Math.cos(a), y: cy + rad * Math.sin(a) };
+    }
+    var s = polarPt(startAngle, r);
+    var e = polarPt(endAngle, r);
+    var largeArc = pct > 0.5 ? 1 : 0;
+    var arcPath = document.createElementNS(ns, 'path');
+    arcPath.setAttribute('d',
+        'M ' + s.x + ' ' + s.y +
+        ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 1 ' + e.x + ' ' + e.y
+    );
+    arcPath.setAttribute('fill', 'none');
+    arcPath.setAttribute('stroke', color);
+    arcPath.setAttribute('stroke-width', '2.5');
+    arcPath.setAttribute('stroke-linecap', 'round');
+    arcPath.setAttribute('stroke-opacity', '0.8');
+    svg.appendChild(arcPath);
+
+    // Center text
+    var txt = document.createElementNS(ns, 'text');
+    txt.setAttribute('x', cx); txt.setAttribute('y', cy + 1);
+    txt.setAttribute('text-anchor', 'middle');
+    txt.setAttribute('dominant-baseline', 'middle');
+    txt.setAttribute('fill', 'rgba(255,255,255,0.7)');
+    txt.setAttribute('font-size', '9');
+    txt.setAttribute('font-family', 'DM Mono, monospace');
+    txt.textContent = freq + '%';
+    svg.appendChild(txt);
+
+    return svg;
+}
 
 function renderBirdGrid() {
     var grid = document.getElementById('birdGrid');
@@ -519,19 +572,26 @@ function renderBirdGrid() {
         var imgSrc = 'images/bird-' + b.slug + '.png';
         var altText = 'Illustration of a ' + b.name + ' at the Yolo Bypass Wildlife Area';
 
+        // Resolve actual color value for SVG (can't use CSS vars in SVG attributes)
+        var colorMap = {
+            'var(--lightblue)': '#7292cb',
+            'var(--yellow)': '#f1b93f',
+            'var(--olivegreen)': '#bda543',
+            'rgba(255,255,255,.4)': 'rgba(255,255,255,0.55)'
+        };
+        var resolvedColor = colorMap[b.color] || '#7292cb';
+
         var card = document.createElement('div');
         card.className = 'bird-card';
         card.dataset.season = b.season;
 
         card.innerHTML =
-            // Image slot — top of card
             '<div class="bird-card-img-slot" id="imgslot-' + b.slug + '">' +
             '<img src="' + imgSrc + '" alt="' + altText + '" class="bird-card-img" ' +
             'onload="this.parentElement.classList.remove(\'bird-img-missing\')" ' +
             'onerror="this.parentElement.classList.add(\'bird-img-missing\')">' +
             '<span class="bird-img-label">bird-' + b.slug + '.png</span>' +
             '</div>' +
-            // Card content
             '<div class="bird-card-content">' +
             '<div class="bird-card-header">' +
             '<span class="bird-card-num">' + b.num + '</span>' +
@@ -539,21 +599,31 @@ function renderBirdGrid() {
             '</div>' +
             '<div class="bird-card-name">' + b.name + '</div>' +
             '<div class="bird-card-sci">' + b.sci + '</div>' +
-            '<div class="bird-card-bar">' +
-            '<div class="bird-card-bar-fill" style="width:' + b.freq + '%;background:' + b.color + ';opacity:.65"></div>' +
+            // Radial arc + stat row
+            '<div class="bird-card-radial-row">' +
+            '<div class="bird-card-radial-svg" data-color="' + resolvedColor + '" data-freq="' + b.freq + '"></div>' +
+            '<div class="bird-card-stat-block">' +
+            '<div class="bird-card-stat-freq" style="color:' + resolvedColor + '">' + b.freq + '%</div>' +
+            '<div class="bird-card-stat-label">of checklists</div>' +
+            '<div class="bird-card-stat-peak">' + b.peak + '</div>' +
             '</div>' +
-            '<div class="bird-card-stat">On <strong>' + b.freq + '%</strong> of checklists  ·  ' + b.peak + '</div>' +
+            '</div>' +
             '<div class="bird-card-connection">' + b.connection + '</div>' +
             '</div>';
 
-        // Start image slots as missing until image proves it loads
         card.querySelector('.bird-card-img-slot').classList.add('bird-img-missing');
-
         grid.appendChild(card);
+    });
+
+    // Inject SVG arcs (after DOM insertion)
+    grid.querySelectorAll('.bird-card-radial-svg').forEach(function(slot) {
+        var freq = parseInt(slot.dataset.freq);
+        var color = slot.dataset.color;
+        var arcSvg = makeRadialArc(freq, color);
+        slot.appendChild(arcSvg);
     });
 }
 
-// Bird filter buttons
 document.querySelectorAll('.sys-bird-filter').forEach(function (btn) {
     btn.addEventListener('click', function () {
         document.querySelectorAll('.sys-bird-filter').forEach(function (b) { b.classList.remove('active'); });
@@ -566,24 +636,90 @@ document.querySelectorAll('.sys-bird-filter').forEach(function (btn) {
 });
 
 // ════════════════════════════════════════════════════════════════
-// RICE TABLE
+// RICE VISUAL TIMELINE (replaces boring table)
 // ════════════════════════════════════════════════════════════════
 
 function renderRiceTable() {
-    var tbody = document.getElementById('riceTableBody');
-    tbody.innerHTML = '';
-    RICE_TABLE.forEach(function (row) {
-        var tr = document.createElement('tr');
-        tr.innerHTML =
-            '<td class="year-col">' + row.year + '</td>' +
-            '<td class="acres-col"><strong>' + row.acres + '</strong></td>' +
-            '<td>' + row.prod + '</td>' +
-            '<td>' + row.value + '</td>' +
-            '<td>' + (row.flood
-                ? '<span class="flood-badge">Wet Year</span>'
-                : '<span class="drought-badge">Dry Year</span>') + '</td>' +
-            '<td>' + row.context + '</td>';
-        tbody.appendChild(tr);
+    // Replace the table with a visual timeline of rice data
+    var tableWrap = document.getElementById('riceTable');
+    if (!tableWrap) return;
+
+    // Create a new container, hide the old table
+    tableWrap.style.display = 'none';
+
+    var container = document.createElement('div');
+    container.className = 'rice-timeline';
+    container.id = 'riceTimeline';
+    tableWrap.parentNode.insertBefore(container, tableWrap);
+
+    var maxAcres = 36000;
+
+    // Sort chronologically
+    var rows = RICE_TABLE.slice().reverse(); // 2018→2023
+
+    rows.forEach(function(row) {
+        var acresNum = parseInt(row.acres.replace(/,/g,''));
+        var pct = acresNum / maxAcres;
+        var isFlood = row.flood;
+
+        var entry = document.createElement('div');
+        entry.className = 'rice-entry';
+
+        // Year badge
+        var yearBadge = document.createElement('div');
+        yearBadge.className = 'rice-year';
+        yearBadge.textContent = row.year;
+        entry.appendChild(yearBadge);
+
+        // Water indicator
+        var waterTag = document.createElement('div');
+        waterTag.className = 'rice-water-tag ' + (isFlood ? 'rice-wet' : 'rice-dry');
+        waterTag.textContent = isFlood ? '~ wet' : '⌀ dry';
+        entry.appendChild(waterTag);
+
+        // Main content
+        var content = document.createElement('div');
+        content.className = 'rice-content';
+
+        // Organic fill bar
+        var barWrap = document.createElement('div');
+        barWrap.className = 'rice-bar-wrap';
+
+        var bar = document.createElement('div');
+        bar.className = 'rice-bar-fill';
+        bar.style.width = Math.max(4, pct * 100) + '%';
+        bar.style.background = isFlood
+            ? 'linear-gradient(90deg, var(--olivegreen) 0%, rgba(189,165,67,0.4) 100%)'
+            : 'linear-gradient(90deg, rgba(189,165,67,0.3) 0%, rgba(189,165,67,0.08) 100%)';
+
+        // Bubble on bar end
+        var dot = document.createElement('div');
+        dot.className = 'rice-bar-dot';
+        dot.style.background = isFlood ? 'var(--olivegreen)' : 'rgba(189,165,67,0.4)';
+        bar.appendChild(dot);
+        barWrap.appendChild(bar);
+
+        // Numbers
+        var nums = document.createElement('div');
+        nums.className = 'rice-nums';
+        nums.innerHTML =
+            '<span class="rice-acres">' + row.acres + ' ac</span>' +
+            '<span class="rice-divider">·</span>' +
+            '<span class="rice-tons">' + row.prod + '</span>' +
+            '<span class="rice-divider">·</span>' +
+            '<span class="rice-value">' + row.value + '</span>';
+
+        content.appendChild(barWrap);
+        content.appendChild(nums);
+
+        // Context note
+        var ctx = document.createElement('div');
+        ctx.className = 'rice-context';
+        ctx.textContent = row.context;
+        content.appendChild(ctx);
+
+        entry.appendChild(content);
+        container.appendChild(entry);
     });
 }
 
@@ -596,5 +732,6 @@ renderLegend();
 renderWheel();
 renderBirdGrid();
 renderRiceTable();
+
 
 })();

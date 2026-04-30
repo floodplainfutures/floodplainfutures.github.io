@@ -20,7 +20,7 @@
    1. TOKENS & FONTS
 ───────────────────────────────────────────────────────────── */
 :root {
-    --whitebeige:  #ffffff;
+    --whitebeige:  #fffdf2;
     --blackblue:   #0f1b3d;
     --darkblue:    #2e557c;
     --lightblue:   #7292cb;
@@ -38,7 +38,7 @@
     --surface:     #17254f;
     --border:      rgba(255,255,255,.1);
     --border-strong: rgba(255,255,255,.18);
-    --ink:         #ffffff;
+    --ink:         #fffdf2;
     --ink-dim:     rgba(255,255,255,.55);
     --ink-faint:   rgba(255,255,255,.28);
 }
@@ -163,7 +163,19 @@ html, body {
 
 .spark {
     font-size: 2rem;
-    color: var(--yellow);
+    color: var(--pink);
+}
+
+.material-symbols-outlined {
+    font-size: 20px;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .begin-link {
@@ -290,6 +302,25 @@ html, body {
     white-space: nowrap;
 }
 
+/* Header prev/next nav */
+.ff-header-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    flex-shrink: 0;
+}
+.ff-header-nav-link {
+    font-family: "Montreal", sans-serif;
+    font-size: .82rem;
+    color: var(--whitebeige);
+    opacity: .3;
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: .02em;
+    transition: opacity .2s, color .2s;
+}
+.ff-header-nav-link:hover { opacity: 1; color: var(--pink); }
+
 /* Shared page footer */
 .ff-footer {
     padding: 4rem 6vw 5rem;
@@ -345,9 +376,15 @@ html, body {
 
 /* ─────────────────────────────────────────────────────────────
    5. CONTEXT PAGE
+   (merged from context.css)
 ───────────────────────────────────────────────────────────── */
 
-/* Unlock scrolling */
+/* Unlock scrolling — overrides the global overflow:hidden */
+html:has(body.context-page) {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+}
 body.context-page {
     overflow-y: auto;
     overflow-x: hidden;
@@ -356,16 +393,49 @@ body.context-page {
     color: var(--whitebeige);
     min-height: 100vh;
 }
-html:has(body.context-page) {
-    overflow-y: auto;
-    height: auto;
+
+/* ── PROGRESS BAR ── */
+.ctx-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--pink);
+    z-index: 1000;
+    transition: width .1s linear;
+    pointer-events: none;
 }
 
-/* context nav section links */
+/* ── SECTION NAV (sits below ff-header at top: 48px) ── */
+.ctx-nav {
+    position: fixed;
+    top: 48px; left: 0; right: 0;
+    z-index: 190;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2rem;
+    padding: 0 6vw;
+    height: 38px;
+    background: rgba(15,27,61,.92);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+.ctx-nav-title {
+    font-family: "DM Mono", monospace;
+    font-size: .58rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity .4s ease;
+    color: var(--whitebeige);
+    margin-right: auto;
+}
+.ctx-nav.scrolled .ctx-nav-title { opacity: .28; }
 .ctx-nav-sections {
     display: flex;
     gap: 1.8rem;
-    margin-left: auto;
 }
 .ctx-nav-link {
     font-family: "DM Mono", monospace;
@@ -374,7 +444,7 @@ html:has(body.context-page) {
     text-transform: uppercase;
     color: var(--whitebeige);
     text-decoration: none;
-    opacity: .22;
+    opacity: .55;
     transition: opacity .2s, color .2s;
     position: relative;
 }
@@ -387,66 +457,136 @@ html:has(body.context-page) {
     transform: scaleX(0);
     transition: transform .25s ease;
 }
-.ctx-nav-link:hover { opacity: .7; }
+.ctx-nav-link:hover { opacity: .8; }
 .ctx-nav-link:hover::after { transform: scaleX(1); }
-.ctx-nav-link.active { opacity: .8; color: var(--pink); }
+.ctx-nav-link.active { opacity: 1; color: var(--pink); }
 .ctx-nav-link.active::after { transform: scaleX(1); }
 
-/* MAIN */
-.ctx-main {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 6vw 0;
+/* ── HERO — full bleed, lives outside ctx-main ── */
+.ctx-hero {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: clip;
+    background: var(--blackblue);
 }
 
-/* HERO */
-.ctx-hero {
-    padding-top: 22vh;
-    padding-bottom: 8vh;
+.ctx-hero-photo {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
 }
+.ctx-hero-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+    display: block;
+}
+/* gradient: sky visible at top, fades to solid blackblue at bottom */
+.ctx-hero-photo::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(15,27,61,.2)  0%,
+        rgba(15,27,61,.3)  40%,
+        rgba(15,27,61,.75) 65%,
+        rgba(15,27,61,.97) 82%,
+        rgba(15,27,61,1)   100%
+    );
+}
+
+.ctx-hero-text {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 0 8vw 10vh;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(48px);
+    animation: heroRise .95s cubic-bezier(.22,1,.36,1) .2s forwards;
+}
+
+@keyframes heroRise {
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .ctx-hero-meta {
     display: flex;
-    gap: 3rem;
-    margin-bottom: 3rem;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 .ctx-label {
     font-family: "DM Mono", monospace;
-    font-size: .56rem;
+    font-size: .58rem;
     letter-spacing: .18em;
     text-transform: uppercase;
     color: var(--whitebeige);
-    opacity: .28;
+    opacity: .85;
 }
+.ctx-label-sep {
+    font-family: "DM Mono", monospace;
+    font-size: .58rem;
+    color: var(--whitebeige);
+    opacity: .4;
+}
+
+/* Word-rise reveal on hero title */
 .ctx-hero-title {
     font-family: "Montreal", sans-serif;
-    font-size: clamp(4rem, 11vw, 8.5rem);
+    font-size: clamp(4.5rem, 12vw, 10rem);
     font-weight: 400;
-    line-height: .92;
-    letter-spacing: -.04em;
+    line-height: .9;
+    letter-spacing: -.05em;
     text-transform: lowercase;
     color: var(--whitebeige);
     display: flex;
     flex-direction: column;
     margin-bottom: 2.5rem;
 }
-.ctx-hero-line { display: block; }
-.ctx-hero-line--accent { color: var(--pink); }
+.ctx-hero-word {
+    display: block;
+    overflow: hidden;
+    line-height: 1.05;
+}
+.ctx-hero-word-inner {
+    display: block;
+    opacity: 0;
+    transform: translateY(105%);
+    animation: wordRise .8s cubic-bezier(.22,1,.36,1) forwards;
+}
+.ctx-hero-word:nth-child(1) .ctx-hero-word-inner { animation-delay: .35s; }
+.ctx-hero-word:nth-child(2) .ctx-hero-word-inner { animation-delay: .52s; }
+@keyframes wordRise {
+    to { opacity: 1; transform: translateY(0); }
+}
+.ctx-hero-word--accent .ctx-hero-word-inner { color: var(--pink); }
+
 .ctx-hero-sub {
     font-family: "DM Mono", monospace;
-    font-size: clamp(.82rem, 1.1vw, .95rem);
+    font-size: clamp(.8rem, 1.1vw, .92rem);
     line-height: 1.85;
     color: var(--whitebeige);
-    opacity: .38;
-    max-width: 520px;
-    margin-bottom: 3.5rem;
-}
-.ctx-hero-rule {
-    height: 1px;
-    background: rgba(255,255,255,.08);
+    opacity: 0;
+    max-width: 500px;
+    animation: heroRise .9s cubic-bezier(.22,1,.36,1) .68s forwards;
 }
 
-/* SECTIONS */
+/* ── MAIN CONTENT ── */
+.ctx-main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 6vw;
+}
+
+/* ── SECTIONS ── */
 .ctx-section {
     display: grid;
     grid-template-columns: 60px 1fr;
@@ -455,7 +595,6 @@ html:has(body.context-page) {
     border-bottom: 1px solid rgba(255,255,255,.06);
 }
 .ctx-section--last { border-bottom: none; padding-bottom: 4rem; }
-
 .ctx-section-num {
     font-family: "DM Mono", monospace;
     font-size: .56rem;
@@ -476,7 +615,7 @@ html:has(body.context-page) {
     line-height: 1;
 }
 
-/* TEXT */
+/* ── TEXT ── */
 .ctx-text-col {
     display: flex;
     flex-direction: column;
@@ -496,7 +635,7 @@ html:has(body.context-page) {
     opacity: .75 !important;
 }
 
-/* PULL QUOTE */
+/* ── PULL QUOTE ── */
 .ctx-pullquote {
     border-left: 2px solid var(--pink);
     padding: 1rem 0 1rem 2rem;
@@ -520,7 +659,7 @@ html:has(body.context-page) {
     font-style: normal;
 }
 
-/* STATS */
+/* ── STATS ── */
 .ctx-stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -551,11 +690,10 @@ html:has(body.context-page) {
     opacity: .25;
 }
 
-/* TWO-COL GRID */
+/* ── TWO-COL ── */
 .ctx-twocol {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0;
     border-top: 1px solid rgba(255,255,255,.06);
     margin-top: 2.5rem;
 }
@@ -586,7 +724,7 @@ html:has(body.context-page) {
     opacity: .4;
 }
 
-/* QUESTION CALLOUT */
+/* ── QUESTION ── */
 .ctx-question {
     display: flex;
     align-items: flex-start;
@@ -614,21 +752,17 @@ html:has(body.context-page) {
     font-style: italic;
 }
 
-/* METHOD STEPS */
-.ctx-steps {
-    list-style: none;
-    border-top: 1px solid rgba(255,255,255,.07);
-    margin: 2.5rem 0;
-}
+/* ── METHOD STEPS ── */
+.ctx-steps { list-style: none; border-top: 1px solid rgba(255,255,255,.07); margin: 2.5rem 0; }
 .ctx-step {
     display: flex;
     gap: 2rem;
     align-items: baseline;
     padding: 1.4rem 0;
     border-bottom: 1px solid rgba(255,255,255,.05);
-    transition: background .2s;
+    transition: padding-left .2s;
 }
-.ctx-step:hover { background: rgba(255,255,255,.02); }
+.ctx-step:hover { padding-left: .4rem; }
 .ctx-step-num {
     font-family: "DM Mono", monospace;
     font-size: .56rem;
@@ -656,7 +790,7 @@ html:has(body.context-page) {
     opacity: .32;
 }
 
-/* THESIS BOX */
+/* ── THESIS BOX ── */
 .ctx-thesis-box {
     border: 1px solid rgba(240,104,150,.25);
     padding: 2.5rem;
@@ -681,7 +815,34 @@ html:has(body.context-page) {
     opacity: .8;
 }
 
-/* REVEAL ANIMATION */
+/* ── DIVIDER ── */
+.ctx-divider { display: flex; align-items: center; justify-content: center; padding: 0; }
+.ctx-divider-mark { font-size: 1rem; color: var(--yellow); opacity: .35; }
+
+/* ── FOOTER ── */
+.ctx-footer { padding-bottom: 5rem; }
+.ctx-footer-rule { height: 1px; background: rgba(255,255,255,.07); margin-bottom: 2rem; }
+.ctx-footer-inner { display: flex; justify-content: space-between; align-items: center; }
+.ctx-footer-credit {
+    font-family: "DM Mono", monospace;
+    font-size: .54rem;
+    letter-spacing: .1em;
+    color: var(--whitebeige);
+    opacity: .18;
+}
+.ctx-footer-nav { display: flex; gap: 2rem; }
+.ctx-footer-nav a {
+    font-family: "Montreal", sans-serif;
+    font-size: .82rem;
+    color: var(--whitebeige);
+    opacity: .28;
+    text-decoration: none;
+    transition: opacity .2s, color .2s;
+    letter-spacing: .02em;
+}
+.ctx-footer-nav a:hover { opacity: 1; color: var(--pink); }
+
+/* ── SCROLL REVEALS ── */
 [data-reveal] {
     opacity: 0;
     transform: translateY(24px);
@@ -691,6 +852,19 @@ html:has(body.context-page) {
 .ctx-section[data-reveal].visible .ctx-section-num   { transition-delay: .05s; }
 .ctx-section[data-reveal].visible .ctx-section-title { transition-delay: .1s; }
 .ctx-section[data-reveal].visible .ctx-text-col      { transition-delay: .15s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+    .ctx-section { grid-template-columns: 1fr; gap: 1rem; }
+    .ctx-section-num { text-align: left; padding-top: 0; }
+    .ctx-stats { grid-template-columns: 1fr 1fr; }
+    .ctx-stat { border-bottom: 1px solid rgba(255,255,255,.06); }
+    .ctx-twocol { grid-template-columns: 1fr; }
+    .ctx-twocol-item:nth-child(even) { padding-left: 0; border-left: none; }
+    .ctx-nav-sections { display: none; }
+    .ctx-footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .ctx-hero-text { padding: 0 6vw 8vh; }
+}
 
 
 /* ─────────────────────────────────────────────────────────────
@@ -756,18 +930,22 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
     display: none;
     align-items: center;
     gap: .45rem;
-    background: none;
+    background: rgba(255,253,242,.92);
     border: 1px solid var(--grid-strong);
     padding: .35rem .7rem;
     cursor: pointer;
     font-family: "DM Mono", monospace;
-    font-size: .68rem;
+    font-size: .65rem;
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--blackblue);
     opacity: .7;
     transition: opacity .2s, border-color .2s;
     white-space: nowrap;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 50;
 }
 .panel-toggle-btn:hover,
 .panel-toggle-btn.active { opacity: 1; border-color: var(--pink); color: var(--pink); }
@@ -883,7 +1061,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 }
 .layer-name {
     font-family: "DM Mono", monospace;
-    font-size: .6rem;
+    font-size: .8rem;
     letter-spacing: .06em;
     color: var(--blackblue);
     opacity: .65;
@@ -921,7 +1099,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 }
 .annotation-card p {
     font-family: "DM Mono", monospace;
-    font-size: .62rem;
+    font-size: .8rem;
     line-height: 1.75;
     color: var(--blackblue);
     opacity: .5;
@@ -1518,6 +1696,184 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-rice-note-inner { padding: 1.4rem 1.8rem; border: 1px solid rgba(189,165,67,.18); background: rgba(189,165,67,.03); }
 .sys-rice-note-inner p { font-family: "DM Mono", monospace; font-size: .72rem; line-height: 1.8; color: rgba(255,255,255,.45); }
 
+/* ─────────────────────────────────────────────────────────────
+   BUBBLE NETWORK CHART (Section 01 replacement)
+───────────────────────────────────────────────────────────── */
+#annualChart {
+    width: 100%;
+    aspect-ratio: 1000 / 520;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    margin-bottom: 1rem;
+}
+#annualChart svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.net-bubble {
+    transition: fill-opacity .25s;
+    cursor: pointer;
+}
+.sys-bubble-key {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: .5rem;
+    margin-bottom: 2rem;
+}
+.sys-bubble-key-label {
+    font-family: "DM Mono", monospace;
+    font-size: .48rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.18);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RADIAL BIRD FREQUENCY (Section 03 upgrade)
+───────────────────────────────────────────────────────────── */
+.bird-card-radial-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .4rem 0;
+}
+.bird-card-radial-svg {
+    flex-shrink: 0;
+}
+.bird-card-stat-block {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+.bird-card-stat-freq {
+    font-family: "Montreal", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: -.03em;
+    line-height: 1;
+}
+.bird-card-stat-label {
+    font-family: "DM Mono", monospace;
+    font-size: .46rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.2);
+}
+.bird-card-stat-peak {
+    font-family: "DM Mono", monospace;
+    font-size: .55rem;
+    line-height: 1.5;
+    color: rgba(255,255,255,.28);
+    margin-top: .2rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RICE VISUAL TIMELINE (Section 04 replacement)
+───────────────────────────────────────────────────────────── */
+.rice-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 2rem;
+}
+.rice-entry {
+    display: grid;
+    grid-template-columns: 60px 56px 1fr;
+    gap: 1.2rem;
+    align-items: start;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    transition: background .2s;
+}
+.rice-entry:hover {
+    background: rgba(255,255,255,.015);
+    margin: 0 -.8rem;
+    padding-left: .8rem;
+    padding-right: .8rem;
+}
+.rice-year {
+    font-family: "Montreal", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: -.04em;
+    color: white;
+    padding-top: .15rem;
+}
+.rice-water-tag {
+    font-family: "DM Mono", monospace;
+    font-size: .46rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .22rem .5rem;
+    border: 1px solid;
+    align-self: start;
+    margin-top: .4rem;
+    white-space: nowrap;
+}
+.rice-wet { color: var(--lightblue); border-color: var(--lightblue); }
+.rice-dry { color: rgba(255,255,255,.25); border-color: rgba(255,255,255,.12); }
+.rice-content {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+.rice-bar-wrap {
+    height: 6px;
+    background: rgba(255,255,255,.05);
+    border-radius: 3px;
+    overflow: visible;
+    position: relative;
+    margin-top: .6rem;
+}
+.rice-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    position: relative;
+    min-width: 4px;
+    transition: width .8s cubic-bezier(.22,1,.36,1);
+}
+.rice-bar-dot {
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--blackblue);
+}
+.rice-nums {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    flex-wrap: wrap;
+}
+.rice-acres {
+    font-family: "Montreal", sans-serif;
+    font-size: 1rem;
+    color: var(--olivegreen);
+    letter-spacing: -.02em;
+}
+.rice-divider {
+    color: rgba(255,255,255,.15);
+    font-family: "DM Mono", monospace;
+}
+.rice-tons, .rice-value {
+    font-family: "DM Mono", monospace;
+    font-size: .62rem;
+    letter-spacing: .04em;
+    color: rgba(255,255,255,.35);
+}
+.rice-context {
+    font-family: "DM Mono", monospace;
+    font-size: .6rem;
+    line-height: 1.72;
+    color: rgba(255,255,255,.28);
+    max-width: 520px;
+}
+
 /* CONNECTION */
 .sys-connection { border-bottom: none; }
 .sys-connection-grid { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: center; margin-bottom: 2.5rem; }
@@ -1783,6 +2139,30 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     font-size: .65rem;
     color: var(--ink-faint);
 }
+
+.observation-photos {
+  gap: 1rem;
+}
+
+.observation-photos img {
+  width: 100%;
+}
+
+.observation-photos figure {
+  margin: 0;
+}
+
+.observation-photos figcaption {
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+  color: #555;
+}
+
+.film-caption {
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
 
 /* MOBILE INDEX DRAWER */
 .mob-index-overlay {
