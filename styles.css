@@ -1613,11 +1613,21 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-bird-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: 1fr;
     gap: 1px;
     background: rgba(255,255,255,.06);
     margin-bottom: 2rem;
+    align-items: stretch;
 }
-.bird-card { background: var(--blackblue); padding: 0; display: flex; flex-direction: column; transition: background .2s; }
+.bird-card {
+    background: var(--blackblue);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    transition: background .2s;
+    min-width: 0;
+    overflow: hidden;
+}
 .bird-card:hover { background: rgba(255,255,255,.025); }
 .bird-card.hidden { display: none; }
 .bird-card-img-slot {
@@ -1630,6 +1640,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 .bird-card-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .bird-img-missing .bird-card-img { display: none; }
@@ -1647,8 +1658,8 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
     pointer-events: none;
 }
 .bird-card-img-slot:not(.bird-img-missing) .bird-img-label { opacity: 0; }
-.bird-card-content { padding: 1.4rem; display: flex; flex-direction: column; gap: .65rem; flex: 1; }
-.bird-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; }
+.bird-card-content { padding: 1.4rem; display: flex; flex-direction: column; gap: .65rem; flex: 1; min-width: 0; overflow: hidden; }
+.bird-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; flex-shrink: 0; }
 .bird-card-num { font-family: "DM Mono", monospace; font-size: .5rem; letter-spacing: .14em; color: rgba(255,255,255,.18); }
 .bird-card-season { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .12em; text-transform: uppercase; padding: .16rem .48rem; border: 1px solid currentColor; flex-shrink: 0; }
 .season-winter   { color: var(--lightblue); }
@@ -1662,7 +1673,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .bird-card-bar-fill { position: absolute; top: 0; left: 0; bottom: 0; border-radius: 1px; transition: width .8s cubic-bezier(.22,1,.36,1); }
 .bird-card-stat { font-family: "DM Mono", monospace; font-size: .56rem; letter-spacing: .05em; color: rgba(255,255,255,.28); }
 .bird-card-stat strong { font-weight: 400; color: rgba(255,255,255,.6); }
-.bird-card-connection { font-family: "DM Mono", monospace; font-size: .62rem; line-height: 1.72; color: rgba(255,255,255,.36); border-top: 1px solid rgba(255,255,255,.05); padding-top: .7rem; margin-top: .2rem; }
+.bird-card-connection { font-family: "DM Mono", monospace; font-size: .62rem; line-height: 1.72; color: rgba(255,255,255,.36); border-top: 1px solid rgba(255,255,255,.05); padding-top: .7rem; margin-top: .2rem; overflow: hidden; word-break: break-word; }
 
 /* RICE TABLE */
 .sys-table-wrap { overflow-x: auto; margin-bottom: 2rem; }
@@ -2344,3 +2355,119 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     .sys-section { padding: 2.5rem 4vw; }
     .sys-hero { padding: 4vh 4vw; }
 }
+/* ════════════════════════════════════════════════════════════════
+   BIRD AUDIO PLAYER
+════════════════════════════════════════════════════════════════ */
+
+.bird-audio-wrap {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    margin-top: auto;
+    padding-top: .9rem;
+    border-top: 1px solid rgba(255,255,255,.07);
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+.bird-audio-btn {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    color: rgba(255,255,255,.6);
+    padding: .38rem .65rem .38rem .55rem;
+    cursor: pointer;
+    transition: background .2s, border-color .2s, color .2s;
+    flex-shrink: 0;
+    line-height: 1;
+}
+.bird-audio-btn:hover {
+    background: rgba(255,255,255,.1);
+    border-color: rgba(255,255,255,.22);
+    color: white;
+}
+.bird-audio-btn.playing {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.2);
+    color: white;
+}
+
+.bird-audio-icon { display: flex; align-items: center; flex-shrink: 0; }
+.icon-play  { display: block; }
+.icon-pause { display: none; }
+.bird-audio-btn.playing .icon-play  { display: none; }
+.bird-audio-btn.playing .icon-pause { display: block; }
+
+.bird-audio-bars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 16px;
+    flex-shrink: 0;
+}
+.bird-audio-bars .bar {
+    display: block;
+    width: 2px;
+    border-radius: 1px;
+    background: rgba(255,255,255,.25);
+    transition: background .3s;
+}
+.bar.b1 { height: 5px; }
+.bar.b2 { height: 9px; }
+.bar.b3 { height: 13px; }
+.bar.b4 { height: 7px; }
+.bar.b5 { height: 4px; }
+
+.bird-audio-btn.playing .bar {
+    animation-duration: .9s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+}
+.bird-audio-btn.playing .bar.b1 { animation-name: xcwave1; animation-delay: 0s; }
+.bird-audio-btn.playing .bar.b2 { animation-name: xcwave2; animation-delay: .12s; }
+.bird-audio-btn.playing .bar.b3 { animation-name: xcwave3; animation-delay: .06s; }
+.bird-audio-btn.playing .bar.b4 { animation-name: xcwave2; animation-delay: .18s; }
+.bird-audio-btn.playing .bar.b5 { animation-name: xcwave1; animation-delay: .09s; }
+
+@keyframes xcwave1 { from { height: 3px; } to { height: 10px; } }
+@keyframes xcwave2 { from { height: 5px; } to { height: 15px; } }
+@keyframes xcwave3 { from { height: 8px; } to { height: 16px; } }
+
+.bird-audio-meta {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    min-width: 0;
+    overflow: hidden;
+}
+.bird-audio-id {
+    font-family: "DM Mono", monospace;
+    font-size: .52rem;
+    letter-spacing: .1em;
+    color: rgba(255,255,255,.45);
+    text-decoration: none;
+    transition: color .2s;
+}
+.bird-audio-id:hover { color: rgba(255,255,255,.8); }
+.bird-audio-credit {
+    font-family: "DM Mono", monospace;
+    font-size: .46rem;
+    letter-spacing: .03em;
+    color: rgba(255,255,255,.2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.bird-xc-link,
+.bird-cc-link {
+    color: rgba(255,255,255,.3);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: rgba(255,255,255,.12);
+    transition: color .2s;
+}
+.bird-xc-link:hover,
+.bird-cc-link:hover { color: rgba(255,255,255,.65); }

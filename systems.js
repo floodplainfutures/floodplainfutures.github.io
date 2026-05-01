@@ -1,8 +1,6 @@
-
-
 (function () {
-    console.log('systems.js loaded');
     'use strict';
+    console.log('systems.js loaded');
 
 // ════════════════════════════════════════════════════════════════
 // DATA — all Yolo County or Yolo Basin sources only
@@ -12,25 +10,20 @@
  FLOOD — days Fremont Weir overtopped into Yolo Basin per water year (Nov–Mar)
  Source: CA Dept. of Water Resources / Delta Stewardship Council
  URL: viewperformance.deltacouncil.ca.gov/pm/yolo-bypass-inundation
- The weir overtops when Sacramento River flow reaches the crest (~33.5 ft).
- The 6,000 cfs threshold is the point where wildlife managers consider
- the basin meaningfully flooded for bird habitat purposes.
 */
 var FLOOD = {
     2018: 42,
     2019: 31,
     2020: 18,
-    2021: 0,    // drought — weir did not overtop
-    2022: 0,    // extreme drought
-    2023: 73    // nine atmospheric rivers
+    2021: 0,
+    2022: 0,
+    2023: 73
 };
 
 /*
  BIRDS — eBird checklists submitted per year
  Source: Cornell Lab of Ornithology, eBird Hotspot L443535 (Vic Fazio Yolo Wildlife Area)
  URL: ebird.org/hotspot/L443535
- Checklists are a direct count of birding trips recorded at this location.
- The 2020 increase reflects a national jump in birding during the pandemic.
 */
 var BIRDS = {
     2018: 812,
@@ -46,8 +39,6 @@ var BIRDS = {
  Source: Yolo County Dept. of Agriculture, Weights & Measures
          Annual Crop & Livestock Reports 2018–2023
  URL: yolocounty.gov/government/general-government-departments/agriculture/crop-statistics
- All figures are Yolo County only. 2022 drought caused many farmers to fallow fields.
- Commissioner's 2023 report noted water supply "reliable" and rice acreage "significantly increased."
 */
 var RICE = {
     2018: { acres: 22800,  tons: 67400,  value: 18.4 },
@@ -60,9 +51,6 @@ var RICE = {
 
 var YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
 
-/*
- RICE TABLE ROWS — with plain-language context notes
-*/
 var RICE_TABLE = [
     { year: 2023, acres: '29,974', prod: '128,000 tons', value: '$54.3M', flood: true,
       context: 'A wet winter brought water back. The Ag Commissioner called it a reliable water year. Rice acreage went up more than 200% from 2022.' },
@@ -81,136 +69,82 @@ var RICE_TABLE = [
 /*
  BIRDS DATA — top 10 species at Yolo Bypass Wildlife Area
  Sources: eBird L443535, Napa Solano Audubon, Yolo Bird Alliance (2018)
+ Bird call recordings: Xeno-Canto (xeno-canto.org) — Creative Commons licensed
  Frequency = approximate % of eBird checklists at this hotspot the species appears on.
- Image naming convention: bird-[slug].png — place in systems/images/
 */
 var BIRDS_DATA = [
     {
-        num: '01',
-        name: 'northern pintail',
-        sci: 'Anas acuta',
-        slug: 'northern-pintail',
-        season: 'winter',
-        seasonLabel: 'Oct–Mar',
-        freq: 78,
+        num: '01', name: 'northern pintail', sci: 'Anas acuta', slug: 'northern-pintail',
+        season: 'winter', seasonLabel: 'Oct–Mar', freq: 78,
         peak: 'Nov–Jan: flocks of 10,000–50,000',
         connection: 'Pintails show up right after rice harvest when farmers flood the fields. They eat leftover grain and small bugs in the shallow water. In a wet year you can see tens of thousands of them at once.',
-        color: 'var(--lightblue)'
+        color: 'var(--lightblue)', callNo: 'XC621202', recordist: 'Paul Marvin'
     },
     {
-        num: '02',
-        name: 'sandhill crane',
-        sci: 'Antigone canadensis',
-        slug: 'sandhill-crane',
-        season: 'winter',
-        seasonLabel: 'Oct–Mar',
-        freq: 62,
+        num: '02', name: 'sandhill crane', sci: 'Antigone canadensis', slug: 'sandhill-crane',
+        season: 'winter', seasonLabel: 'Oct–Mar', freq: 62,
         peak: 'Nov–Feb: roosts of 2,000–8,000',
         connection: 'Cranes eat in the rice stubble during the day and fly to the wetlands at dusk to sleep. They come back year after year. When the fields are dry, the numbers drop.',
-        color: 'var(--lightblue)'
+        color: 'var(--lightblue)', callNo: 'XC539728', recordist: 'Thomas Magarian'
     },
     {
-        num: '03',
-        name: 'american coot',
-        sci: 'Fulica americana',
-        slug: 'american-coot',
-        season: 'yearround',
-        seasonLabel: 'Year-round',
-        freq: 85,
+        num: '03', name: 'american coot', sci: 'Fulica americana', slug: 'american-coot',
+        season: 'yearround', seasonLabel: 'Year-round', freq: 85,
         peak: 'Year-round; winter counts up to 5,000',
         connection: 'The most commonly seen waterbird on the site. They stay year-round in the permanent wetlands and pack in by the thousands when the seasonal fields flood. If you see one bird at the Yolo Basin, it is probably this one.',
-        color: 'rgba(255,255,255,.4)'
+        color: 'rgba(255,255,255,.4)', callNo: 'XC452164', recordist: 'Paul Marvin'
     },
     {
-        num: '04',
-        name: 'white-faced ibis',
-        sci: 'Plegadis chihi',
-        slug: 'white-faced-ibis',
-        season: 'summer',
-        seasonLabel: 'Mar–Oct',
-        freq: 70,
+        num: '04', name: 'white-faced ibis', sci: 'Plegadis chihi', slug: 'white-faced-ibis',
+        season: 'summer', seasonLabel: 'Mar–Oct', freq: 70,
         peak: 'Apr–Sep: breeding colonies of 500–3,000',
         connection: 'Ibis nest in the tule reeds and feed in wet farm fields through spring and summer. Spring flooding of rice paddies is part of why they breed here. You can spot them by the way they walk — probing the mud with that curved bill.',
-        color: 'var(--yellow)'
+        color: 'var(--yellow)', callNo: 'XC452112', recordist: 'Paul Marvin'
     },
     {
-        num: '05',
-        name: 'great blue heron',
-        sci: 'Ardea herodias',
-        slug: 'great-blue-heron',
-        season: 'yearround',
-        seasonLabel: 'Year-round',
-        freq: 88,
+        num: '05', name: 'great blue heron', sci: 'Ardea herodias', slug: 'great-blue-heron',
+        season: 'yearround', seasonLabel: 'Year-round', freq: 88,
         peak: 'Year-round; nests in willows along levees',
         connection: 'Lives here permanently. Nests in the willows along the levee roads. Hunts in flooded fields and permanent ponds. One of the most reported birds on eBird at this site, all year.',
-        color: 'rgba(255,255,255,.4)'
+        color: 'rgba(255,255,255,.4)', callNo: 'XC143575', recordist: 'Paul Marvin'
     },
     {
-        num: '06',
-        name: 'northern harrier',
-        sci: 'Circus hudsonius',
-        slug: 'northern-harrier',
-        season: 'winter',
-        seasonLabel: 'Oct–Apr',
-        freq: 74,
+        num: '06', name: 'northern harrier', sci: 'Circus hudsonius', slug: 'northern-harrier',
+        season: 'winter', seasonLabel: 'Oct–Apr', freq: 74,
         peak: 'Nov–Mar: several birds hunting at once',
         connection: 'Harriers fly low and slow over flooded fields looking for voles and frogs. You get more of them when there is more water — more water concentrates more prey in a smaller area. Easy to spot flying over rice stubble in winter.',
-        color: 'var(--lightblue)'
+        color: 'var(--lightblue)', callNo: 'XC776694', recordist: 'Phoebe Barnes'
     },
     {
-        num: '07',
-        name: 'dunlin',
-        sci: 'Calidris alpina',
-        slug: 'dunlin',
-        season: 'winter',
-        seasonLabel: 'Nov–Apr',
-        freq: 58,
+        num: '07', name: 'dunlin', sci: 'Calidris alpina', slug: 'dunlin',
+        season: 'winter', seasonLabel: 'Nov–Apr', freq: 58,
         peak: 'Dec–Feb: flocks of 1,000–20,000',
         connection: 'Dunlin come down from the Arctic to spend winter here. They need very shallow water — just a few centimeters — to pick bugs off the mud. The Yolo Basin is one of the better wintering spots for them on the West Coast.',
-        color: 'var(--lightblue)'
+        color: 'var(--lightblue)', callNo: 'XC169170', recordist: 'Paul Marvin'
     },
     {
-        num: '08',
-        name: 'great egret',
-        sci: 'Ardea alba',
-        slug: 'great-egret',
-        season: 'yearround',
-        seasonLabel: 'Year-round',
-        freq: 81,
+        num: '08', name: 'great egret', sci: 'Ardea alba', slug: 'great-egret',
+        season: 'yearround', seasonLabel: 'Year-round', freq: 81,
         peak: 'Year-round; large communal roosts in winter',
         connection: 'Second-most common wading bird at the site after the heron. Stands still in flooded fields waiting for fish or frogs. Often the first white bird you see from the auto tour road.',
-        color: 'rgba(255,255,255,.4)'
+        color: 'rgba(255,255,255,.4)', callNo: 'XC452101', recordist: 'Paul Marvin'
     },
     {
-        num: '09',
-        name: 'snow goose',
-        sci: 'Anser caerulescens',
-        slug: 'snow-goose',
-        season: 'winter',
-        seasonLabel: 'Nov–Mar',
-        freq: 52,
+        num: '09', name: 'snow goose', sci: 'Anser caerulescens', slug: 'snow-goose',
+        season: 'winter', seasonLabel: 'Nov–Mar', freq: 52,
         peak: 'Dec–Feb: flocks occasionally over 50,000',
         connection: 'Snow geese come from the Arctic and graze on the legume fields at Tule Ranch and the rice stubble. Big flocks show up in wet years when there is more flooded area to spread out across.',
-        color: 'var(--lightblue)'
+        color: 'var(--lightblue)', callNo: 'XC452581', recordist: 'Paul Marvin'
     },
     {
-        num: '10',
-        name: 'tricolored blackbird',
-        sci: 'Agelaius tricolor',
-        slug: 'tricolored-blackbird',
-        season: 'spring',
-        seasonLabel: 'Mar–Jul',
-        freq: 44,
+        num: '10', name: 'tricolored blackbird', sci: 'Agelaius tricolor', slug: 'tricolored-blackbird',
+        season: 'spring', seasonLabel: 'Mar–Jul', freq: 44,
         peak: 'Apr–Jun: colonies of 500–5,000',
         connection: 'Almost the entire world population of this bird breeds in California. The Yolo Bypass is one of their main nesting sites. They build nests in the tule reeds and feed in the rice fields next door. Listed as threatened. Losing the basin would hurt this species badly.',
-        color: 'var(--olivegreen)'
+        color: 'var(--olivegreen)', callNo: 'XC344799', recordist: 'Paul Marvin'
     }
 ];
 
-/*
- MONTHLY SEASONAL DATA
- Source: Napa Solano Audubon Society field accounts, YBWA Land Management Plan (CDFW 2008)
-*/
 var MONTHLY = [
     { m: 'jan', flood: 'Peak flood time. Fremont Weir usually overtopping. Managed wetlands at full water.',
       birds: 'Most birds of the year here. Pintails, cranes, dunlin, snow geese. Biggest eBird submission month.',
@@ -257,14 +191,14 @@ var MONTH_FULL   = ['January','February','March','April','May','June','July','Au
 // STATE
 // ════════════════════════════════════════════════════════════════
 
-var activeFilters  = { flood: true, birds: true, rice: true };
-var selectedMonth  = null;
+var activeFilters = { flood: true, birds: true, rice: true };
+var selectedMonth = null;
 
 // ════════════════════════════════════════════════════════════════
 // PROGRESS BAR
 // ════════════════════════════════════════════════════════════════
 
-var progressEl = document.getElementById('sysProgress');
+var progressEl = document.querySelector('#sysProgress');
 
 window.addEventListener('scroll', function () {
     var h = document.documentElement.scrollHeight - window.innerHeight;
@@ -291,7 +225,7 @@ document.querySelectorAll('.sys-toggle').forEach(function (btn) {
 // ════════════════════════════════════════════════════════════════
 
 function renderChart() {
-    var chart = document.getElementById('annualChart');
+    var chart = document.querySelector('#annualChart');
     chart.innerHTML = '';
 
     var maxFlood = Math.max.apply(null, YEARS.map(function(y){ return FLOOD[y]; }));
@@ -330,19 +264,13 @@ function renderChart() {
 // TOOLTIP
 // ════════════════════════════════════════════════════════════════
 
-var tooltip = document.getElementById('sysTooltip');
+var tooltip = document.querySelector('#sysTooltip');
 
 function showTooltip(e, year) {
     var rows = '';
-    if (activeFilters.flood) {
-        rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--lightblue)">flood days</span><span class="sys-tooltip-val">' + FLOOD[year] + ' days</span></div>';
-    }
-    if (activeFilters.birds) {
-        rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--pink)">checklists</span><span class="sys-tooltip-val">' + BIRDS[year].toLocaleString() + '</span></div>';
-    }
-    if (activeFilters.rice) {
-        rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--olivegreen)">rice acres</span><span class="sys-tooltip-val">' + parseInt(RICE[year].acres).toLocaleString() + '</span></div>';
-    }
+    if (activeFilters.flood) rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--lightblue)">flood days</span><span class="sys-tooltip-val">' + FLOOD[year] + ' days</span></div>';
+    if (activeFilters.birds) rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--pink)">checklists</span><span class="sys-tooltip-val">' + BIRDS[year].toLocaleString() + '</span></div>';
+    if (activeFilters.rice)  rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--olivegreen)">rice acres</span><span class="sys-tooltip-val">' + parseInt(RICE[year].acres).toLocaleString() + '</span></div>';
     tooltip.innerHTML = '<span class="sys-tooltip-year">' + year + '</span>' + rows;
     tooltip.classList.add('visible');
     moveTooltip(e);
@@ -373,13 +301,12 @@ function renderLegend() {
 // ════════════════════════════════════════════════════════════════
 
 function renderWheel() {
-    var container = document.getElementById('sysWheel');
+    var container = document.querySelector('#sysWheel');
     var size = 400;
     var cx = size / 2, cy = size / 2;
     var outerR = 162, innerR = 56;
     var ns = 'http://www.w3.org/2000/svg';
 
-    // Activity levels per month — 0 (none) to 4 (peak)
     var floodAct = [4,3,2,1,0,0,0,0,1,2,3,4];
     var birdsAct = [4,4,3,3,2,1,2,3,3,4,4,4];
     var riceAct  = [0,0,0,2,3,4,4,4,4,3,1,0];
@@ -395,17 +322,18 @@ function renderWheel() {
 
     function arc(startDeg, endDeg, r1, r2) {
         var s1 = polar(startDeg, r1), e1 = polar(endDeg, r1);
-        var s2 = polar(startDeg, r2), e2 = polar(endDeg, r2);
+        var s2 = polar(startDeg, r2);
         var lg = (endDeg - startDeg) > 180 ? 1 : 0;
-        return ['M',s1.x,s1.y,'A',r1,r1,0,lg,1,e1.x,e1.y,'L',e2.x,e2.y,'A',r2,r2,0,lg,0,s2.x,s2.y,'Z'].join(' ');
+        return ['M',s1.x,s1.y,'A',r1,r1,0,lg,1,e1.x,e1.y,'L',
+                polar(endDeg,r2).x,polar(endDeg,r2).y,
+                'A',r2,r2,0,lg,0,s2.x,s2.y,'Z'].join(' ');
     }
 
     MONTH_LABELS.forEach(function (mon, i) {
         var start = i * 30, end = start + 29.4;
 
-        // Three ring layers per month
         [
-            { level: floodAct[i], color: '#7292cb', ro: outerR,    ri: outerR - 26 },
+            { level: floodAct[i], color: '#7292cb', ro: outerR,      ri: outerR - 26 },
             { level: birdsAct[i], color: '#f06896', ro: outerR - 28, ri: outerR - 54 },
             { level: riceAct[i],  color: '#bda543', ro: outerR - 56, ri: innerR }
         ].forEach(function (ring) {
@@ -418,7 +346,6 @@ function renderWheel() {
             svg.appendChild(el);
         });
 
-        // Month label
         var lp = polar(start + 15, outerR + 18);
         var text = document.createElementNS(ns, 'text');
         text.setAttribute('x', lp.x);
@@ -432,7 +359,6 @@ function renderWheel() {
         text.textContent = mon.toUpperCase();
         svg.appendChild(text);
 
-        // Invisible click/hover hit area
         var hit = document.createElementNS(ns, 'path');
         hit.setAttribute('d', arc(start, end, outerR + 22, innerR));
         hit.setAttribute('fill', 'transparent');
@@ -446,18 +372,13 @@ function renderWheel() {
             updateWheelDetail(idx);
         });
         hit.addEventListener('mouseleave', function () {
-            document.querySelectorAll('.month-slice').forEach(function (s) {
-                s.style.opacity = '';
-            });
+            document.querySelectorAll('.month-slice').forEach(function (s) { s.style.opacity = ''; });
             if (selectedMonth === null) clearWheelDetail();
         });
-        hit.addEventListener('click', function () {
-            selectedMonth = parseInt(this.dataset.month);
-        });
+        hit.addEventListener('click', function () { selectedMonth = parseInt(this.dataset.month); });
         svg.appendChild(hit);
     });
 
-    // Center circle
     var cc = document.createElementNS(ns, 'circle');
     cc.setAttribute('cx', cx); cc.setAttribute('cy', cy); cc.setAttribute('r', innerR - 1);
     cc.setAttribute('fill', 'rgba(15,27,61,.8)');
@@ -483,7 +404,7 @@ function updateWheelDetail(idx) {
     var data = MONTHLY[idx];
     var prompt = document.querySelector('.wheel-prompt');
     if (prompt) prompt.style.display = 'none';
-    document.getElementById('wdMonth').textContent = MONTH_FULL[idx].toLowerCase();
+    document.querySelector('#wdMonth').textContent = MONTH_FULL[idx].toLowerCase();
 
     var rows = [
         { sys: 'flood', color: '#7292cb', desc: data.flood },
@@ -491,7 +412,7 @@ function updateWheelDetail(idx) {
         { sys: 'food',  color: '#bda543', desc: data.rice }
     ];
 
-    document.getElementById('wdRows').innerHTML = rows.map(function (r) {
+    document.querySelector('#wdRows').innerHTML = rows.map(function (r) {
         return '<div class="wheel-detail-row">' +
             '<div class="wdr-dot" style="background:' + r.color + '"></div>' +
             '<div><span class="wdr-system">' + r.sys + '</span><span class="wdr-desc">' + r.desc + '</span></div>' +
@@ -500,26 +421,24 @@ function updateWheelDetail(idx) {
 }
 
 function clearWheelDetail() {
-    document.getElementById('wdMonth').textContent = '';
-    document.getElementById('wdRows').innerHTML = '';
+    document.querySelector('#wdMonth').textContent = '';
+    document.querySelector('#wdRows').innerHTML = '';
     var prompt = document.querySelector('.wheel-prompt');
     if (prompt) prompt.style.display = '';
 }
 
 // ════════════════════════════════════════════════════════════════
-// BIRD CARDS — with radial arc frequency display
+// BIRD CARDS — radial arc + audio player
 // ════════════════════════════════════════════════════════════════
 
 function makeRadialArc(freq, color) {
-    // Returns an SVG arc showing frequency as a partial circle + dot cluster
     var ns = 'http://www.w3.org/2000/svg';
-    var size = 52;
-    var cx = size / 2, cy = size / 2, r = 20;
+    var size = 52, cx = 26, cy = 26, r = 20;
     var svg = document.createElementNS(ns, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
-    svg.setAttribute('width', size); svg.setAttribute('height', size);
+    svg.setAttribute('width', size);
+    svg.setAttribute('height', size);
 
-    // Background circle
     var bg = document.createElementNS(ns, 'circle');
     bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
     bg.setAttribute('fill', 'none');
@@ -527,22 +446,18 @@ function makeRadialArc(freq, color) {
     bg.setAttribute('stroke-width', '2');
     svg.appendChild(bg);
 
-    // Arc
     var pct = freq / 100;
     var startAngle = -90;
-    var endAngle = startAngle + pct * 360;
-    function polarPt(deg, rad) {
+    var endAngle   = startAngle + pct * 360;
+
+    function pt(deg) {
         var a = (deg * Math.PI) / 180;
-        return { x: cx + rad * Math.cos(a), y: cy + rad * Math.sin(a) };
+        return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
     }
-    var s = polarPt(startAngle, r);
-    var e = polarPt(endAngle, r);
-    var largeArc = pct > 0.5 ? 1 : 0;
+
+    var s = pt(startAngle), e = pt(endAngle);
     var arcPath = document.createElementNS(ns, 'path');
-    arcPath.setAttribute('d',
-        'M ' + s.x + ' ' + s.y +
-        ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 1 ' + e.x + ' ' + e.y
-    );
+    arcPath.setAttribute('d', 'M ' + s.x + ' ' + s.y + ' A ' + r + ' ' + r + ' 0 ' + (pct > 0.5 ? 1 : 0) + ' 1 ' + e.x + ' ' + e.y);
     arcPath.setAttribute('fill', 'none');
     arcPath.setAttribute('stroke', color);
     arcPath.setAttribute('stroke-width', '2.5');
@@ -550,7 +465,6 @@ function makeRadialArc(freq, color) {
     arcPath.setAttribute('stroke-opacity', '0.8');
     svg.appendChild(arcPath);
 
-    // Center text
     var txt = document.createElementNS(ns, 'text');
     txt.setAttribute('x', cx); txt.setAttribute('y', cy + 1);
     txt.setAttribute('text-anchor', 'middle');
@@ -564,32 +478,50 @@ function makeRadialArc(freq, color) {
     return svg;
 }
 
+// Audio player state — only one playing at a time
+var currentAudio = null;
+var currentBtn   = null;
+
+function stopAllAudio() {
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+    }
+    document.querySelectorAll('.bird-audio-btn').forEach(function (b) {
+        b.classList.remove('playing');
+        b.setAttribute('aria-label', 'play call');
+    });
+    currentAudio = null;
+    currentBtn   = null;
+}
+
+var COLOR_MAP = {
+    'var(--lightblue)':     '#7292cb',
+    'var(--yellow)':        '#f1b93f',
+    'var(--olivegreen)':    '#bda543',
+    'rgba(255,255,255,.4)': 'rgba(255,255,255,0.55)'
+};
+
 function renderBirdGrid() {
-    var grid = document.getElementById('birdGrid');
+    var grid = document.querySelector('#birdGrid');
     grid.innerHTML = '';
 
     BIRDS_DATA.forEach(function (b) {
-        var imgSrc = 'images/bird-' + b.slug + '.png';
-        var altText = 'Illustration of a ' + b.name + ' at the Yolo Bypass Wildlife Area';
-
-        // Resolve actual color value for SVG (can't use CSS vars in SVG attributes)
-        var colorMap = {
-            'var(--lightblue)': '#7292cb',
-            'var(--yellow)': '#f1b93f',
-            'var(--olivegreen)': '#bda543',
-            'rgba(255,255,255,.4)': 'rgba(255,255,255,0.55)'
-        };
-        var resolvedColor = colorMap[b.color] || '#7292cb';
+        var resolvedColor = COLOR_MAP[b.color] || '#7292cb';
+        var audioSrc      = 'media/audio/' + b.callNo + '.mp3';
+        var xcLink        = 'https://xeno-canto.org/' + b.callNo.replace('XC', '');
 
         var card = document.createElement('div');
         card.className = 'bird-card';
         card.dataset.season = b.season;
 
         card.innerHTML =
-            '<div class="bird-card-img-slot" id="imgslot-' + b.slug + '">' +
-            '<img src="' + imgSrc + '" alt="' + altText + '" class="bird-card-img" ' +
-            'onload="this.parentElement.classList.remove(\'bird-img-missing\')" ' +
-            'onerror="this.parentElement.classList.add(\'bird-img-missing\')">' +
+            '<div class="bird-card-img-slot">' +
+            '<img src="images/systems/birds/' + b.slug + '.png"' +
+            ' alt="Illustration of a ' + b.name + ' at the Yolo Bypass Wildlife Area"' +
+            ' class="bird-card-img"' +
+            ' onload="this.parentElement.classList.remove(\'bird-img-missing\')"' +
+            ' onerror="this.parentElement.classList.add(\'bird-img-missing\')">' +
             '<span class="bird-img-label">bird-' + b.slug + '.png</span>' +
             '</div>' +
             '<div class="bird-card-content">' +
@@ -599,7 +531,6 @@ function renderBirdGrid() {
             '</div>' +
             '<div class="bird-card-name">' + b.name + '</div>' +
             '<div class="bird-card-sci">' + b.sci + '</div>' +
-            // Radial arc + stat row
             '<div class="bird-card-radial-row">' +
             '<div class="bird-card-radial-svg" data-color="' + resolvedColor + '" data-freq="' + b.freq + '"></div>' +
             '<div class="bird-card-stat-block">' +
@@ -609,18 +540,58 @@ function renderBirdGrid() {
             '</div>' +
             '</div>' +
             '<div class="bird-card-connection">' + b.connection + '</div>' +
+            '<div class="bird-audio-wrap">' +
+            '<button class="bird-audio-btn"' +
+            ' aria-label="play call"' +
+            ' data-src="' + audioSrc + '"' +
+            ' data-color="' + resolvedColor + '">' +
+            '<span class="bird-audio-icon">' +
+            '<svg class="icon-play"  viewBox="0 0 16 16" width="11" height="11"><polygon points="3,2 13,8 3,14" fill="currentColor"/></svg>' +
+            '<svg class="icon-pause" viewBox="0 0 16 16" width="11" height="11"><rect x="2" y="2" width="4" height="12" fill="currentColor"/><rect x="10" y="2" width="4" height="12" fill="currentColor"/></svg>' +
+            '</span>' +
+            '<span class="bird-audio-bars">' +
+            '<span class="bar b1" style="background:' + resolvedColor + '"></span>' +
+            '<span class="bar b2" style="background:' + resolvedColor + '"></span>' +
+            '<span class="bar b3" style="background:' + resolvedColor + '"></span>' +
+            '<span class="bar b4" style="background:' + resolvedColor + '"></span>' +
+            '<span class="bar b5" style="background:' + resolvedColor + '"></span>' +
+            '</span>' +
+            '</button>' +
+            '<div class="bird-audio-meta">' +
+            '<a href="' + xcLink + '" target="_blank" rel="noopener" class="bird-audio-id">' + b.callNo + '</a>' +
+            '<span class="bird-audio-credit">rec. ' + b.recordist + ' · <a href="https://xeno-canto.org" target="_blank" rel="noopener" class="bird-xc-link">xeno-canto.org</a> · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" class="bird-cc-link">CC BY-NC-SA</a></span>' +
+            '</div>' +
+            '</div>' +
             '</div>';
 
         card.querySelector('.bird-card-img-slot').classList.add('bird-img-missing');
         grid.appendChild(card);
     });
 
-    // Inject SVG arcs (after DOM insertion)
-    grid.querySelectorAll('.bird-card-radial-svg').forEach(function(slot) {
-        var freq = parseInt(slot.dataset.freq);
-        var color = slot.dataset.color;
-        var arcSvg = makeRadialArc(freq, color);
-        slot.appendChild(arcSvg);
+    // Inject SVG arcs after DOM insertion
+    grid.querySelectorAll('.bird-card-radial-svg').forEach(function (slot) {
+        slot.appendChild(makeRadialArc(parseInt(slot.dataset.freq), slot.dataset.color));
+    });
+
+    // Wire up audio buttons
+    grid.querySelectorAll('.bird-audio-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            if (btn.classList.contains('playing')) {
+                stopAllAudio();
+                return;
+            }
+            stopAllAudio();
+
+            var audio = new Audio(btn.dataset.src);
+            currentAudio = audio;
+            currentBtn   = btn;
+
+            btn.classList.add('playing');
+            btn.setAttribute('aria-label', 'stop call');
+
+            audio.play().catch(function () { stopAllAudio(); });
+            audio.addEventListener('ended', function () { stopAllAudio(); });
+        });
     });
 }
 
@@ -636,52 +607,43 @@ document.querySelectorAll('.sys-bird-filter').forEach(function (btn) {
 });
 
 // ════════════════════════════════════════════════════════════════
-// RICE VISUAL TIMELINE (replaces boring table)
+// RICE VISUAL TIMELINE
 // ════════════════════════════════════════════════════════════════
 
 function renderRiceTable() {
-    // Replace the table with a visual timeline of rice data
-    var tableWrap = document.getElementById('riceTable');
+    var tableWrap = document.querySelector('#riceTable');
     if (!tableWrap) return;
 
-    // Create a new container, hide the old table
     tableWrap.style.display = 'none';
 
     var container = document.createElement('div');
     container.className = 'rice-timeline';
-    container.id = 'riceTimeline';
     tableWrap.parentNode.insertBefore(container, tableWrap);
 
     var maxAcres = 36000;
+    var rows = RICE_TABLE.slice().reverse();
 
-    // Sort chronologically
-    var rows = RICE_TABLE.slice().reverse(); // 2018→2023
-
-    rows.forEach(function(row) {
-        var acresNum = parseInt(row.acres.replace(/,/g,''));
-        var pct = acresNum / maxAcres;
-        var isFlood = row.flood;
+    rows.forEach(function (row) {
+        var acresNum = parseInt(row.acres.replace(/,/g, ''));
+        var pct      = acresNum / maxAcres;
+        var isFlood  = row.flood;
 
         var entry = document.createElement('div');
         entry.className = 'rice-entry';
 
-        // Year badge
         var yearBadge = document.createElement('div');
         yearBadge.className = 'rice-year';
         yearBadge.textContent = row.year;
         entry.appendChild(yearBadge);
 
-        // Water indicator
         var waterTag = document.createElement('div');
         waterTag.className = 'rice-water-tag ' + (isFlood ? 'rice-wet' : 'rice-dry');
         waterTag.textContent = isFlood ? '~ wet' : '⌀ dry';
         entry.appendChild(waterTag);
 
-        // Main content
         var content = document.createElement('div');
         content.className = 'rice-content';
 
-        // Organic fill bar
         var barWrap = document.createElement('div');
         barWrap.className = 'rice-bar-wrap';
 
@@ -692,14 +654,12 @@ function renderRiceTable() {
             ? 'linear-gradient(90deg, var(--olivegreen) 0%, rgba(189,165,67,0.4) 100%)'
             : 'linear-gradient(90deg, rgba(189,165,67,0.3) 0%, rgba(189,165,67,0.08) 100%)';
 
-        // Bubble on bar end
         var dot = document.createElement('div');
         dot.className = 'rice-bar-dot';
         dot.style.background = isFlood ? 'var(--olivegreen)' : 'rgba(189,165,67,0.4)';
         bar.appendChild(dot);
         barWrap.appendChild(bar);
 
-        // Numbers
         var nums = document.createElement('div');
         nums.className = 'rice-nums';
         nums.innerHTML =
@@ -709,15 +669,13 @@ function renderRiceTable() {
             '<span class="rice-divider">·</span>' +
             '<span class="rice-value">' + row.value + '</span>';
 
-        content.appendChild(barWrap);
-        content.appendChild(nums);
-
-        // Context note
         var ctx = document.createElement('div');
         ctx.className = 'rice-context';
         ctx.textContent = row.context;
-        content.appendChild(ctx);
 
+        content.appendChild(barWrap);
+        content.appendChild(nums);
+        content.appendChild(ctx);
         entry.appendChild(content);
         container.appendChild(entry);
     });
@@ -732,6 +690,5 @@ renderLegend();
 renderWheel();
 renderBirdGrid();
 renderRiceTable();
-
 
 })();
