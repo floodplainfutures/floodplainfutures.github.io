@@ -77,63 +77,63 @@ var BIRDS_DATA = [
         num: '01', name: 'northern pintail', sci: 'Anas acuta', slug: 'northern-pintail',
         season: 'winter', seasonLabel: 'Oct–Mar', freq: 78,
         peak: 'Nov–Jan: flocks of 10,000–50,000',
-        connection: 'Pintails show up right after rice harvest when farmers flood the fields. They eat leftover grain and small bugs in the shallow water. In a wet year you can see tens of thousands of them at once.',
+        connection: 'Pintails show up right after rice harvest when the fields begin to flood. They will eat leftover grain and small bugs in the shallow water. In a wet year you can see tens of thousands of them at once.',
         color: 'var(--lightblue)', callNo: 'XC621202', recordist: 'Paul Marvin'
     },
     {
         num: '02', name: 'sandhill crane', sci: 'Antigone canadensis', slug: 'sandhill-crane',
         season: 'winter', seasonLabel: 'Oct–Mar', freq: 62,
         peak: 'Nov–Feb: roosts of 2,000–8,000',
-        connection: 'Cranes eat in the rice stubble during the day and fly to the wetlands at dusk to sleep. They come back year after year. When the fields are dry, the numbers drop.',
+        connection: 'Cranes eat in the rice stubble during the day and fly to the wetlands at dusk to sleep. They come back year after year.',
         color: 'var(--lightblue)', callNo: 'XC539728', recordist: 'Thomas Magarian'
     },
     {
         num: '03', name: 'american coot', sci: 'Fulica americana', slug: 'american-coot',
         season: 'yearround', seasonLabel: 'Year-round', freq: 85,
         peak: 'Year-round; winter counts up to 5,000',
-        connection: 'The most commonly seen waterbird on the site. They stay year-round in the permanent wetlands and pack in by the thousands when the seasonal fields flood. If you see one bird at the Yolo Basin, it is probably this one.',
+        connection: 'ONe of the most commonly seen waterbirds at the basin. They stay year-round in the permanent wetlands and pack in by the thousands when the seasonal fields flood.',
         color: 'rgba(255,255,255,.4)', callNo: 'XC452164', recordist: 'Paul Marvin'
     },
     {
         num: '04', name: 'white-faced ibis', sci: 'Plegadis chihi', slug: 'white-faced-ibis',
         season: 'summer', seasonLabel: 'Mar–Oct', freq: 70,
         peak: 'Apr–Sep: breeding colonies of 500–3,000',
-        connection: 'Ibis nest in the tule reeds and feed in wet farm fields through spring and summer. Spring flooding of rice paddies is part of why they breed here. You can spot them by the way they walk — probing the mud with that curved bill.',
+        connection: 'Ibis nest in the tule reeds and feed in wet farm fields through spring and summer. Spring flooding of rice paddies is part of why they breed here. You can spot them by the way they walk, probing the mud with their curved bills.',
         color: 'var(--yellow)', callNo: 'XC452112', recordist: 'Paul Marvin'
     },
     {
         num: '05', name: 'great blue heron', sci: 'Ardea herodias', slug: 'great-blue-heron',
         season: 'yearround', seasonLabel: 'Year-round', freq: 88,
         peak: 'Year-round; nests in willows along levees',
-        connection: 'Lives here permanently. Nests in the willows along the levee roads. Hunts in flooded fields and permanent ponds. One of the most reported birds on eBird at this site, all year.',
+        connection: 'Great blue herons live here permanently. Nests in the willows along the levee roads. They tend to hunt in the flooded fields and permanent ponds. They are also one of the most popular birds spotted at the basin.',
         color: 'rgba(255,255,255,.4)', callNo: 'XC143575', recordist: 'Paul Marvin'
     },
     {
         num: '06', name: 'northern harrier', sci: 'Circus hudsonius', slug: 'northern-harrier',
         season: 'winter', seasonLabel: 'Oct–Apr', freq: 74,
         peak: 'Nov–Mar: several birds hunting at once',
-        connection: 'Harriers fly low and slow over flooded fields looking for voles and frogs. You get more of them when there is more water — more water concentrates more prey in a smaller area. Easy to spot flying over rice stubble in winter.',
+        connection: 'Harriers fly low and slow over flooded fields looking for voles and frogs. You can see more of them when there is more water, as more water means denser culsters of prey.',
         color: 'var(--lightblue)', callNo: 'XC776694', recordist: 'Phoebe Barnes'
     },
     {
         num: '07', name: 'dunlin', sci: 'Calidris alpina', slug: 'dunlin',
         season: 'winter', seasonLabel: 'Nov–Apr', freq: 58,
         peak: 'Dec–Feb: flocks of 1,000–20,000',
-        connection: 'Dunlin come down from the Arctic to spend winter here. They need very shallow water — just a few centimeters — to pick bugs off the mud. The Yolo Basin is one of the better wintering spots for them on the West Coast.',
+        connection: 'Dunlin come down from the Arctic to spend winter here. They need very shallow water to pick bugs off the mud. The Yolo Basin is one of the better wintering spots for them on the West Coast.',
         color: 'var(--lightblue)', callNo: 'XC169170', recordist: 'Paul Marvin'
     },
     {
         num: '08', name: 'great egret', sci: 'Ardea alba', slug: 'great-egret',
         season: 'yearround', seasonLabel: 'Year-round', freq: 81,
         peak: 'Year-round; large communal roosts in winter',
-        connection: 'Second-most common wading bird at the site after the heron. Stands still in flooded fields waiting for fish or frogs. Often the first white bird you see from the auto tour road.',
+        connection: 'You will find great egrets standing still in flooded fields waiting for fish or frogs. They are easy to spot and you can see them from the auto tour route at the Yolo Bypass Wildlife Area.',
         color: 'rgba(255,255,255,.4)', callNo: 'XC452101', recordist: 'Paul Marvin'
     },
     {
         num: '09', name: 'snow goose', sci: 'Anser caerulescens', slug: 'snow-goose',
         season: 'winter', seasonLabel: 'Nov–Mar', freq: 52,
         peak: 'Dec–Feb: flocks occasionally over 50,000',
-        connection: 'Snow geese come from the Arctic and graze on the legume fields at Tule Ranch and the rice stubble. Big flocks show up in wet years when there is more flooded area to spread out across.',
+        connection: 'Snow geese come from the Arctic and graze on the legume fields at Tule Ranch and the rice stubble. Big flocks show up in wet years when there is more flooded area to spread out across. They are very loud!',
         color: 'var(--lightblue)', callNo: 'XC452581', recordist: 'Paul Marvin'
     },
     {
