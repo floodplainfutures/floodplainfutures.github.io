@@ -2471,3 +2471,90 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 }
 .bird-xc-link:hover,
 .bird-cc-link:hover { color: rgba(255,255,255,.65); }
+
+/* ─────────────────────────────────────────────────────────────
+   IDLE TIMEOUT MODAL — all pages
+───────────────────────────────────────────────────────────── */
+#idle-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(15, 27, 61, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+}
+#idle-overlay.idle-visible {
+    display: flex;
+    animation: idle-fade-in 0.35s ease forwards;
+}
+@keyframes idle-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+#idle-modal {
+    background: var(--blackblue, #0f1b3d);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 4px;
+    padding: 2.4rem 2.8rem 2rem;
+    text-align: center;
+    max-width: 320px;
+    width: 88%;
+    animation: idle-slide-up 0.35s ease forwards;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+@keyframes idle-slide-up {
+    from { transform: translateY(18px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+.idle-icon {
+    font-size: 1.4rem;
+    font-variation-settings: 'wght' 300;
+    color: var(--pink, #f06896);
+    margin-bottom: .8rem;
+    opacity: .8;
+}
+.idle-heading {
+    font-family: "DM Mono", monospace;
+    font-size: 1.15rem;
+    color: var(--whitebeige, #fffdf2);
+    margin: 0 0 .5rem;
+    letter-spacing: .04em;
+}
+.idle-sub {
+    font-family: "DM Mono", monospace;
+    font-size: .78rem;
+    color: rgba(255,253,242,.5);
+    margin: 0 0 1.6rem;
+    letter-spacing: .03em;
+}
+#idle-count {
+    color: var(--pink, #f06896);
+    font-weight: 600;
+}
+#idle-stay {
+    display: inline-block;
+    font-family: "DM Mono", monospace;
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: lowercase;
+    color: var(--blackblue, #0f1b3d);
+    background: var(--whitebeige, #fffdf2);
+    border: none;
+    border-radius: 2px;
+    padding: .55rem 1.4rem;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+}
+#idle-stay:hover {
+    background: var(--olivegreen, #bda543);
+    color: var(--blackblue, #0f1b3d);
+}
+
+/* idle-icon override: size the Material Symbol raven correctly */
+.idle-icon .material-symbols-outlined {
+    font-size: 2.4rem;
+    display: block;
+}
