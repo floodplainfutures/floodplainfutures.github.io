@@ -23,6 +23,7 @@
        with sessionStorage cleared so the begin screen shows.
     ─────────────────────────────────────────────────────────── */
     (function initIdleTimeout() {
+        if (body.classList.contains('home-page')) { return; }
         var IDLE_MS        = 60 * 1000;  // 60 s until modal appears
         var COUNTDOWN_S    = 10;         // 10 s countdown before redirect
         var idleTimer      = null;
