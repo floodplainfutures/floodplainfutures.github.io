@@ -22,36 +22,49 @@
     <!-- HERO -->
     <section class="ctx-hero">
         <div class="ctx-hero-photo">
-            <img src="images/context/hero.jpg" alt="Aerial view of the Yolo Basin floodplain in winter, fields flooded with birds in flight">
+            <img src="images/context/hero.jpg" alt="Aerial view of the Yolo Basin floodplain">
         </div>
-        <div class="ctx-hero-text">
-            <div class="ctx-hero-meta">
-                <span class="ctx-label">MFA Design Thesis</span>
-                <span class="ctx-label-sep">·</span>
-                <span class="ctx-label">UC Davis · 2026</span>
-                <span class="ctx-label-sep">·</span>
-                <span class="ctx-label">Zahra Baxi</span>
-            </div>
-            <h1 class="ctx-hero-title">
-                <span class="ctx-hero-word"><span class="ctx-hero-word-inner">floodplain</span></span>
-                <span class="ctx-hero-word ctx-hero-word--accent"><span class="ctx-hero-word-inner">futures</span></span>
-            </h1>
-            <p class="ctx-hero-sub">
-                An interactive design project looking at the Yolo Basin as a working landscape where flooding, agriculture, and migration overlap rather than compete.
-            </p>
+
+        <!-- floating meta — top left -->
+        <div class="ctx-hero-float ctx-hero-float--topleft">
+            <span class="ctx-label">MFA Design Thesis</span>
+            <span class="ctx-label-sep">·</span>
+            <span class="ctx-label">UC Davis · 2026</span>
         </div>
+
+        <!-- author — top right -->
+        <div class="ctx-hero-float ctx-hero-float--topright">
+            <span class="ctx-label">Zahra Baxi</span>
+        </div>
+
+        <!-- FLOODPLAIN — giant, mid-left, breaks into image -->
+        <span class="ctx-hero-word-big ctx-hero-word-big--1">floodplain</span>
+
+        <!-- FUTURES — lower, shifted right, pink -->
+        <span class="ctx-hero-word-big ctx-hero-word-big--2">futures</span>
+
+        <!-- subtitle as small annotation, bottom right -->
+        <p class="ctx-hero-sub-float">
+            A working landscape where flooding,<br>agriculture, and migration overlap<br>rather than compete.
+        </p>
+
+        <!-- location annotation, mid-right with line -->
         <div class="ctx-hero-ann">
             <span class="ctx-ann-line"></span>
             <span class="ctx-ann-text">Yolo County, CA<br>3.2 mi from Davis</span>
         </div>
+
+        <!-- scroll nudge -->
+        <div class="ctx-hero-scroll">
+            <span class="ctx-scroll-line"></span>
+            <span class="ctx-scroll-label">scroll</span>
+        </div>
     </section>
 
-    <!-- FLOWING MAIN -->
     <main class="ctx-flow">
 
-        <!-- 01 PREMISE -->
+        <!-- ══ 01 · PREMISE  (image-heavy) ══ -->
         <section class="cfs cfs-premise" id="premise">
-
             <div class="cfs-num-bg" aria-hidden="true">01</div>
 
             <div class="cfs-header-float" data-reveal>
@@ -59,34 +72,36 @@
                 <h2 class="cfs-title">premise</h2>
             </div>
 
-            <p class="cfs-lede" data-reveal>
-                Hi! I'm Zahra Baxi, an MFA Design student at UC Davis and a Davis Native. This project started from living just less than 15 minutes away from an amazing landscape that shifts between flood control, farmland, and wildlife habitat.
-            </p>
+            <!-- text left, tall photo bleeds right -->
+            <div class="cfs-col2" data-reveal>
+                <div class="cfs-col2-text">
+                    <p class="cfs-lede">Hi! I'm Zahra Baxi, an MFA Design student at UC Davis. I grew up in Davis and the Yolo Basin is basically in my backyard. I never really paid attention to it until this thesis.</p>
+                    <p class="cfs-body-p">I started visiting it seriously in fall 2024. This site documents what I found.</p>
+                </div>
+                <div class="cfs-img-slot cfs-img-slot--tall" data-label="field photo · first visit">
+                    <img src="images/context/premise-1.jpg" alt="" class="cfs-img">
+                </div>
+            </div>
 
-            <aside class="cfs-aside-right" data-reveal>
-                <span class="cfs-aside-label">field note</span>
-                <p>I lived here for 20+ years without really understanding what was going on in that space — and never truly visited until I started this thesis.</p>
-            </aside>
-
-            <p class="cfs-body-p" data-reveal>
-                The Yolo Basin is one of those places that doesn't behave like a single system. In winter it becomes a managed floodplain. In spring and summer it returns to agriculture. Throughout the year it also functions as a critical stop along the Pacific Flyway for migrating birds.
-            </p>
+            <!-- wide bleed photo -->
+            <div class="cfs-img-slot cfs-img-slot--wide" data-reveal data-label="basin overview · aerial or levee road">
+                <img src="images/context/premise-wide.jpg" alt="" class="cfs-img">
+            </div>
 
             <blockquote class="cfs-pullquote" data-reveal>
-                <p>"The same ground can hold floodwater, food production, and migration, depending on how we choose to see it."</p>
-                <cite>field notes, Yolo Basin research</cite>
+                <p>"The same field holds floodwater in January, rice in July, and birds all year."</p>
+                <cite>field notes, Yolo Basin</cite>
             </blockquote>
 
-            <p class="cfs-body-p" data-reveal>
-                I started this thesis by trying to understand how a place can be designed to hold all of these roles at once, and what gets lost when we only see it as infrastructure or only as nature. This project sits in between ecology, design, and systems thinking.
+            <p class="cfs-trail" data-reveal>
+                The basin floods in winter, supports farming in summer, and is a major stop for migratory birds year round. I wanted to understand how one place does all three.
             </p>
         </section>
 
         <div class="cfs-rule" data-reveal><span>✦</span></div>
 
-        <!-- 02 THE PLACE -->
+        <!-- ══ 02 · THE PLACE  (image-heavy) ══ -->
         <section class="cfs cfs-place" id="place">
-
             <div class="cfs-num-bg" aria-hidden="true">02</div>
 
             <div class="cfs-header-float" data-reveal>
@@ -95,57 +110,63 @@
             </div>
 
             <div class="cfs-stats-scatter" data-reveal>
-                <div class="cfs-stat-pill" style="--rot: -2deg; --clr: var(--pink)">
-                    <span class="csp-n">41 mi</span>
-                    <span class="csp-l">bypass length</span>
+                <div class="cfs-stat-pill" style="--rot:-2deg;--clr:var(--pink)">
+                    <span class="csp-n">41 mi</span><span class="csp-l">bypass length</span>
                 </div>
-                <div class="cfs-stat-pill" style="--rot: 1.5deg; --clr: var(--lightblue)">
-                    <span class="csp-n">59,000</span>
-                    <span class="csp-l">acres</span>
+                <div class="cfs-stat-pill" style="--rot:1.5deg;--clr:var(--lightblue)">
+                    <span class="csp-n">59,000</span><span class="csp-l">acres</span>
                 </div>
-                <div class="cfs-stat-pill" style="--rot: -1deg; --clr: var(--olivegreen)">
-                    <span class="csp-n">200+</span>
-                    <span class="csp-l">bird species</span>
+                <div class="cfs-stat-pill" style="--rot:-1deg;--clr:var(--olivegreen)">
+                    <span class="csp-n">200+</span><span class="csp-l">bird species</span>
                 </div>
             </div>
 
-            <p class="cfs-lede" data-reveal>
-                The Yolo Basin Wildlife Area sits just outside Davis and Sacramento, shaped by engineered flood control systems that redirect seasonal water from the Sacramento River.
-            </p>
+            <!-- map slot left, caption text right -->
+            <div class="cfs-map-row" data-reveal>
+                <div class="cfs-img-slot cfs-img-slot--map" data-label="map · basin extent + land use layers">
+                    <img src="images/context/place-map.jpg" alt="" class="cfs-img">
+                </div>
+                <div class="cfs-map-caption">
+                    <p class="cfs-lede">The Yolo Basin is about 3 miles from downtown Davis and runs 41 miles along the Sacramento River. Most people only see it from the freeway.</p>
+                    <p class="cfs-body-p">It gets intentionally flooded in winter to take pressure off Sacramento. When the water drains, farmers come back in for rice season. The wildlife area covers about 16,000 acres of it.</p>
+                </div>
+            </div>
 
-            <p class="cfs-body-p cfs-body-p--indent" data-reveal>
-                During wet months, the basin is intentionally flooded to relieve pressure on nearby cities. In dry months, the same land supports rice fields and other agricultural production. These shifts are not accidental — they are designed into the landscape.
-            </p>
-
+            <!-- four roles -->
             <div class="cfs-tiles" data-reveal>
-                <div class="cfs-tile" style="--rot: -.8deg">
-                    <span class="cft-label" style="color: var(--lightblue)">infrastructure</span>
-                    <p>The basin is part of a controlled flood system that protects surrounding cities from seasonal overflow.</p>
+                <div class="cfs-tile" style="--rot:-.8deg">
+                    <span class="cft-label" style="color:var(--lightblue)">infrastructure</span>
+                    <p>It protects Sacramento from flooding. That's the original reason it exists.</p>
                 </div>
-                <div class="cfs-tile" style="--rot: .5deg">
-                    <span class="cft-label" style="color: var(--olivegreen)">ecology</span>
-                    <p>Flooded fields temporarily become wetlands that support fish, insects, and aquatic plants.</p>
+                <div class="cfs-tile" style="--rot:.5deg">
+                    <span class="cft-label" style="color:var(--olivegreen)">ecology</span>
+                    <p>Flooded fields become temporary wetlands. Fish, insects, plants show up fast.</p>
                 </div>
-                <div class="cfs-tile" style="--rot: -1.2deg">
-                    <span class="cft-label" style="color: var(--yellow)">agriculture</span>
-                    <p>Rice farming uses the same flood infrastructure during dry months, linking food production with water management.</p>
+                <div class="cfs-tile" style="--rot:-1.2deg">
+                    <span class="cft-label" style="color:var(--yellow)">agriculture</span>
+                    <p>Rice farmers use the same water infrastructure. Food and flood control share the same land.</p>
                 </div>
-                <div class="cfs-tile" style="--rot: .7deg">
-                    <span class="cft-label" style="color: var(--pink)">migration</span>
-                    <p>Hundreds of thousands of birds rely on the basin as seasonal habitat and resting ground.</p>
+                <div class="cfs-tile" style="--rot:.7deg">
+                    <span class="cft-label" style="color:var(--pink)">migration</span>
+                    <p>Hundreds of thousands of birds stop here every year. It's a major point on the Pacific Flyway.</p>
                 </div>
             </div>
 
-            <p class="cfs-trail" data-reveal>
-                Because of this cycle, the basin also becomes one of the most important wetland habitats in the region, supporting migratory birds traveling along the Pacific Flyway.
-            </p>
+            <!-- two field photos side by side -->
+            <div class="cfs-photo-pair" data-reveal>
+                <div class="cfs-img-slot" data-label="field photo · flooded rice field">
+                    <img src="images/context/place-flood.jpg" alt="" class="cfs-img">
+                </div>
+                <div class="cfs-img-slot" data-label="field photo · birds / tule marsh">
+                    <img src="images/context/place-birds.jpg" alt="" class="cfs-img">
+                </div>
+            </div>
         </section>
 
         <div class="cfs-rule" data-reveal><span>✦</span></div>
 
-        <!-- 03 QUESTION -->
+        <!-- ══ 03 · THE QUESTION  (type-only) ══ -->
         <section class="cfs cfs-question" id="question">
-
             <div class="cfs-num-bg" aria-hidden="true">03</div>
 
             <div class="cfs-header-float" data-reveal>
@@ -154,28 +175,27 @@
             </div>
 
             <p class="cfs-lede" data-reveal>
-                How do you design systems that help people understand a landscape that is not fixed, but constantly shifting between infrastructure, ecology, and agriculture?
+                How do you represent a place that is genuinely different things at different times of year?
             </p>
 
             <p class="cfs-body-p" data-reveal>
-                Most representations of floodplains separate these functions into categories. Flood control is engineering. Wetlands are ecology. Farms are agriculture. But in places like the Yolo Basin, these boundaries blur in practice.
+                Most maps show the basin as one thing: a flood zone, a wildlife area, or farmland. But those are all true at the same time. The categories overlap in practice even if they're kept separate on paper.
             </p>
 
             <div class="cfs-big-q" data-reveal>
                 <span class="cbq-mark">?</span>
-                <p class="cbq-text">What happens when we design tools that show overlap instead of separation, and how does that change the way we value a landscape?</p>
+                <p class="cbq-text">What if a design tool showed all the overlapping uses at once instead of picking one? Would that change how people think about the place?</p>
             </div>
 
             <p class="cfs-trail cfs-trail--right" data-reveal>
-                This thesis explores whether interactive design can make these overlapping systems easier to see, and whether that visibility can shift how people relate to land that is usually treated as background infrastructure.
+                That's the core question. Whether showing the full picture actually shifts how people relate to a landscape they usually just drive past.
             </p>
         </section>
 
         <div class="cfs-rule" data-reveal><span>✦</span></div>
 
-        <!-- 04 METHOD -->
+        <!-- ══ 04 · METHOD  (diagram + steps) ══ -->
         <section class="cfs cfs-method" id="method">
-
             <div class="cfs-num-bg" aria-hidden="true">04</div>
 
             <div class="cfs-header-float" data-reveal>
@@ -183,51 +203,52 @@
                 <h2 class="cfs-title">method</h2>
             </div>
 
-            <p class="cfs-lede" data-reveal>
-                This project combines field research, mapping, and interaction design to translate ecological systems into visual and digital form.
-            </p>
-
-            <ol class="cfs-steps" data-reveal>
-                <li class="cfs-step" style="--nudge: 0rem">
-                    <span class="cfs-step-n">01</span>
-                    <div class="cfs-step-body">
-                        <strong>field observation</strong>
-                        <p>Site visits across seasons to document flooding patterns, wildlife presence, and agricultural cycles.</p>
-                    </div>
-                </li>
-                <li class="cfs-step" style="--nudge: 2rem">
-                    <span class="cfs-step-n">02</span>
-                    <div class="cfs-step-body">
-                        <strong>mapping systems</strong>
-                        <p>Translating environmental data into layered spatial maps that show overlapping land uses.</p>
-                    </div>
-                </li>
-                <li class="cfs-step" style="--nudge: 4rem">
-                    <span class="cfs-step-n">03</span>
-                    <div class="cfs-step-body">
-                        <strong>interaction design</strong>
-                        <p>Building an interactive experience that allows users to explore the basin as a changing system.</p>
-                    </div>
-                </li>
-                <li class="cfs-step" style="--nudge: 6rem">
-                    <span class="cfs-step-n">04</span>
-                    <div class="cfs-step-body">
-                        <strong>visual translation</strong>
-                        <p>Designing visuals that connect scientific data with accessible storytelling.</p>
-                    </div>
-                </li>
-            </ol>
+            <!-- steps left, diagram slot right -->
+            <div class="cfs-method-layout" data-reveal>
+                <ol class="cfs-steps">
+                    <li class="cfs-step" style="--nudge:0rem">
+                        <span class="cfs-step-n">01</span>
+                        <div class="cfs-step-body">
+                            <strong>field observation</strong>
+                            <p>Multiple visits across fall and winter to document the basin across seasons and conditions.</p>
+                        </div>
+                    </li>
+                    <li class="cfs-step" style="--nudge:2rem">
+                        <span class="cfs-step-n">02</span>
+                        <div class="cfs-step-body">
+                            <strong>mapping systems</strong>
+                            <p>Building layered spatial maps that show the basin's overlapping land uses in the same view.</p>
+                        </div>
+                    </li>
+                    <li class="cfs-step" style="--nudge:4rem">
+                        <span class="cfs-step-n">03</span>
+                        <div class="cfs-step-body">
+                            <strong>interaction design</strong>
+                            <p>Designing an interactive site where you can move through the systems rather than just read about them.</p>
+                        </div>
+                    </li>
+                    <li class="cfs-step" style="--nudge:6rem">
+                        <span class="cfs-step-n">04</span>
+                        <div class="cfs-step-body">
+                            <strong>visual translation</strong>
+                            <p>Making ecological data readable for people who aren't already familiar with the basin.</p>
+                        </div>
+                    </li>
+                </ol>
+                <div class="cfs-img-slot cfs-img-slot--diagram" data-label="diagram · seasonal cycle or systems map">
+                    <img src="images/context/method-diagram.jpg" alt="" class="cfs-img">
+                </div>
+            </div>
 
             <p class="cfs-trail" data-reveal>
-                The goal is not to simplify the basin, but to make its complexity easier to approach without flattening what is actually happening there.
+                The goal isn't to simplify the basin. It's to make the complexity feel approachable rather than overwhelming.
             </p>
         </section>
 
         <div class="cfs-rule" data-reveal><span>✦</span></div>
 
-        <!-- 05 THESIS -->
+        <!-- ══ 05 · THESIS  (type-only) ══ -->
         <section class="cfs cfs-thesis" id="thesis">
-
             <div class="cfs-num-bg" aria-hidden="true">05</div>
 
             <div class="cfs-header-float" data-reveal>
@@ -236,24 +257,19 @@
             </div>
 
             <p class="cfs-lede" data-reveal>
-                This thesis looks at how design can make ecological systems more legible without removing their complexity.
+                Can design make a complicated place understandable without flattening it?
             </p>
 
             <div class="cfs-thesis-card" data-reveal>
                 <span class="ctc-label">thesis statement</span>
-                <p class="ctc-text">
-                    This project explores how interactive and information design can bridge ecological research and public understanding by translating the Yolo Basin into an accessible, layered system that reflects its overlapping roles as flood control infrastructure, agricultural land, and wildlife habitat.
-                </p>
+                <p class="ctc-text">This project uses interactive and information design to help people understand the Yolo Basin as multiple things at once: flood infrastructure, agricultural land, and wildlife habitat that share the same space.</p>
                 <div class="ctc-corner" aria-hidden="true">✦</div>
             </div>
 
-            <p class="cfs-body-p" data-reveal>
-                Using a systems-based design approach, the work focuses on making environmental data experiential rather than abstract, so people can understand how the basin operates over time rather than as a static map.
-            </p>
-
-            <p class="cfs-body-p" data-reveal>
-                The intention is not to resolve the contradictions in the landscape, but to show that they are the structure of it.
-            </p>
+            <div class="cfs-thesis-footnotes" data-reveal>
+                <p class="cfs-body-p">The goal is to make the data feel like something you move through over time, not just a static snapshot of a place.</p>
+                <p class="cfs-trail" style="margin:0">The overlapping uses aren't contradictions to resolve. They're what the basin actually is.</p>
+            </div>
         </section>
 
         <footer class="ctx-footer" data-reveal>
