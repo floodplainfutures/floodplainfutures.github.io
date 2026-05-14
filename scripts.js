@@ -136,8 +136,70 @@
 
 
     /* ───────────────────────────────────────────────────────────
-       1. HOME PAGE
+       SCROLL NAV — ↑ ↓ buttons injected on all non-home pages
     ─────────────────────────────────────────────────────────── */
+    (function initScrollNav() {
+        if (body.classList.contains('home-page')) { return; }
+
+        var isObs = body.classList.contains('observations-page');
+
+        var wrap = document.createElement('div');
+        wrap.className = 'scroll-nav';
+
+        var upBtn = document.createElement('button');
+        upBtn.className = 'scroll-nav-btn';
+        upBtn.type = 'button';
+        upBtn.setAttribute('aria-label', 'Scroll up');
+        upBtn.textContent = '↑';
+
+        var downBtn = document.createElement('button');
+        downBtn.className = 'scroll-nav-btn';
+        downBtn.type = 'button';
+        downBtn.setAttribute('aria-label', 'Scroll down');
+        downBtn.textContent = '↓';
+
+        wrap.appendChild(upBtn);
+        wrap.appendChild(downBtn);
+        document.body.appendChild(wrap);
+
+        var STEP = window.innerHeight * 0.82;
+
+        function getContainer() {
+            if (isObs) { return document.getElementById('obsScroll'); }
+            return null;
+        }
+
+        function doScroll(dir) {
+            var c = getContainer();
+            var amt = dir * STEP;
+            if (c) { c.scrollBy({ top: amt, behavior: 'smooth' }); }
+            else   { window.scrollBy({ top: amt, behavior: 'smooth' }); }
+        }
+
+        function updateBtns() {
+            var c = getContainer();
+            var top, total, visible;
+            if (c) {
+                top = c.scrollTop; total = c.scrollHeight; visible = c.clientHeight;
+            } else {
+                top = window.scrollY;
+                total = document.documentElement.scrollHeight;
+                visible = window.innerHeight;
+            }
+            upBtn.disabled   = top <= 4;
+            downBtn.disabled = top + visible >= total - 4;
+        }
+
+        upBtn.addEventListener('click',   function () { doScroll(-1); });
+        downBtn.addEventListener('click', function () { doScroll(1); });
+
+        var c = getContainer();
+        if (c) { c.addEventListener('scroll', updateBtns, { passive: true }); }
+        window.addEventListener('scroll', updateBtns, { passive: true });
+        window.addEventListener('resize', function () { STEP = window.innerHeight * 0.82; updateBtns(); });
+
+        updateBtns();
+    })();
     if (body.classList.contains('home-page')) {
         console.log('checking migratory patterns...');
 
