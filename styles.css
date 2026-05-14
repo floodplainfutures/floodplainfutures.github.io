@@ -2874,6 +2874,20 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
    ACCESSIBLE TEXT — minimum readable sizes for kiosk
 ───────────────────────────────────────────────────────────── */
 
+/* Disable text selection and callouts for better kiosk experience */
+
+/* .kiosk-mode * {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+} */
+
+* {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
 /* Context page body text — bump opacity and min size */
 .cfs-lede    { font-size: clamp(1.1rem, 1.6vw, 1.3rem); opacity: 1; color: var(--whitebeige); }
 .cfs-body-p  { font-size: clamp(1rem, 1.2vw, 1.1rem);   opacity: 1; color: rgba(255,253,242,.85); }
@@ -2891,21 +2905,43 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 .ctc-label   { font-size: .82rem; opacity: 1; }
 
 /* Observation entry text */
-.entry-body p { font-size: 1rem !important; opacity: 1 !important; color: rgba(255,253,242,.88) !important; }
-.entry-date   { font-size: .88rem; opacity: 1; }
-.entry-weather { font-size: .88rem; opacity: 1; }
-.il-title     { font-size: .9rem; opacity: 1; }
-.il-num       { font-size: .82rem; }
+.entry-body p { 
+    font-size: 1rem !important; opacity: 1 !important; color: rgba(255,253,242,.88) !important; 
+}
+.entry-date { 
+    font-size: .88rem; opacity: 1; 
+}
+.entry-weather { 
+    font-size: .88rem; opacity: 1; 
+}
+.il-title { 
+    font-size: .9rem; opacity: 1; 
+}
+.il-num { 
+    font-size: .82rem; 
+}
 
 /* Map panel text */
-.stat-lbl     { font-size: .82rem; }
-.layer-name   { font-size: .9rem; }
-.ck, .cv      { font-size: .9rem; }
-.annotation-card p { font-size: .9rem; }
+.stat-lbl     { 
+    font-size: .82rem; 
+}
+.layer-name   { 
+    font-size: .9rem; 
+}
+.ck, .cv      { 
+    font-size: .9rem; 
+}
+.annotation-card p { 
+    font-size: .9rem; 
+}
 
 /* Footer */
-.ctx-footer-nav a  { font-size: 1rem; opacity: 1; color: rgba(255,253,242,.8); }
-.ctx-footer-credit { font-size: .85rem; opacity: 1; color: rgba(255,253,242,.6); }
+.ctx-footer-nav a  { 
+    font-size: 1rem; opacity: 1; color: rgba(255,253,242,.8); 
+}
+.ctx-footer-credit { 
+    font-size: .85rem; opacity: 1; color: rgba(255,253,242,.6); 
+}
 
 
 /* ─────────────────────────────────────────────────────────────

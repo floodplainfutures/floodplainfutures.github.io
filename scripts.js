@@ -558,4 +558,20 @@
         }
     }
 
+
+    
+    document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+    });
+
+    const isKiosk = new URLSearchParams(window.location.search)
+    .get('kiosk') === '1';
+
+    if (isKiosk) {
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.body.classList.add('kiosk-mode');
+    }
+    console.log('Kiosk mode initialized');
+    
+
 })();
