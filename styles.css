@@ -1905,6 +1905,25 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .wdr-desc { font-family: "DM Mono", monospace; font-size: .68rem; line-height: 1.72; color: rgba(255,255,255,.55); }
 
+/* ==========================================================================
+   5. WHEEL / SVG DIAGRAM TEXT FIXES
+========================================================================== */
+
+/* Target text inside SVGs, charts, or elements with "wheel" in the class name */
+svg text,
+[class*="wheel"] text,
+[class*="wheel"],
+.chart-text {
+    font-size: 14px !important; 
+    /* You can bump this to 16px if 14px is still too small */
+}
+
+/* If the wheel uses standard HTML labels positioned in a circle instead of SVG: */
+.wheel-label,
+[class*="label"] {
+    font-size: 0.85rem !important;
+}
+
 /* BIRD GRID */
 .sys-bird-filters { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2rem; }
 .sys-bird-filter {
@@ -2017,6 +2036,33 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-rice-note { margin-bottom: 2rem; }
 .sys-rice-note-inner { padding: 1.4rem 1.8rem; border: 1px solid rgba(189,165,67,.18); background: rgba(189,165,67,.03); }
 .sys-rice-note-inner p { font-family: "DM Mono", monospace; font-size: .72rem; line-height: 1.8; color: rgba(255,255,255,.45); }
+
+
+/* ==========================================================================
+   6. OBSERVATIONS MENU / INDEX FIXES
+========================================================================== */
+
+/* The "entries" header */
+.index-label {
+    font-size: 1rem !important; 
+    letter-spacing: 0.05em; /* A tiny bit of spacing helps legibility */
+    margin-bottom: 1rem;
+}
+
+/* The individual entry links and numbers */
+.index-link .il-num,
+.index-link .il-title {
+    font-size: 0.95rem !important; /* Almost full body size for easy reading */
+    line-height: 1.5;
+}
+
+/* Ensure the links have enough clickable space (touch target size) */
+.index-link {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: flex; /* Ensures the number and title align nicely */
+    gap: 0.75rem; 
+}
 
 /* ─────────────────────────────────────────────────────────────
    BUBBLE NETWORK CHART (Section 01 replacement)
@@ -3006,4 +3052,132 @@ body.map-page .scroll-nav-btn:hover,
 body.map-page .scroll-nav-btn:focus-visible {
     border-color: var(--pink);
     color: var(--pink);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   DISMISSIBLE CONSTRUCTION TOAST BANNER
+───────────────────────────────────────────────────────────── */
+.wip-banner {
+    position: fixed !important;
+    bottom: 2rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background-color: var(--yellow) !important;
+    color: var(--blackblue) !important;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(15, 27, 61, 0.4);
+    z-index: 2147483647 !important; /* Maximum z-index ensures it layers on top of video & load state */
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: calc(100% - 3rem);
+    max-width: 520px;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Hidden state when exit button is triggered */
+.wip-banner.hidden {
+    display: none !important;
+}
+
+.wip-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.wip-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.wip-close {
+    background: none;
+    border: none;
+    color: var(--blackblue);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
+}
+
+.wip-close:hover {
+    opacity: 1;
+}
+
+
+
+
+
+/* ==========================================================================
+   ACCESSIBILITY & CONSISTENCY OVERRIDES
+   Ensures text meets minimum readable sizes across Systems and Observations
+========================================================================== */
+
+/* 1. Unify and enlarge primary reading text */
+.sys-hero-body,
+.sys-section-desc,
+.sys-callout p,
+.sys-rice-note-inner p,
+.entry-body p {
+    font-size: 1rem; /* Bumps text up to standard 16px */
+    line-height: 1.6;
+}
+
+/* 2. Fix the extremely tiny text on Systems page */
+.sys-eyebrow,
+.sys-legend-name,
+.sys-legend-src,
+.sys-legend-unit,
+.rice-tons,
+.rice-value,
+.bird-card-num,
+.sys-section-num,
+.toggle-name,
+.toggle-desc {
+    font-size: 0.85rem; /* Sets a legible minimum for secondary info */
+    line-height: 1.4;
+}
+
+/* 3. Fix the tiny meta text on Observations page */
+.entry-date,
+.entry-weather,
+.entry-tag,
+.etag,
+.il-num,
+.il-title,
+.im-k,
+.im-v,
+.ck,
+.cv,
+.ctx-label {
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Fix specific aside text that had heavy specificity/important tags */
+.entry-aside p {
+    font-size: 0.85rem !important;
+}
+
+/* 4. Harmonize header sizes between the two pages */
+.sys-hero-title,
+.entry-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.sys-section-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
 }

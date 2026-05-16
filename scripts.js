@@ -15,6 +15,24 @@
 
     var body = document.body;
 
+    /* ───────────────────────────────────────────────────────────
+       CONSTRUCTION BANNER TOGGLE (Shows on Every Fresh Load)
+    ─────────────────────────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', function() {
+        var wipBanner = document.getElementById('wip-banner');
+        var closeWipBtn = document.getElementById('close-wip');
+
+        if (wipBanner && closeWipBtn) {
+            // Remove any old hidden configurations from past code attempts
+            wipBanner.classList.remove('hidden');
+
+            // Add event listener to let them dismiss it for this view session
+            closeWipBtn.addEventListener('click', function() {
+                wipBanner.classList.add('hidden');
+            });
+        }
+    });
+
 
     /* ───────────────────────────────────────────────────────────
        0. IDLE TIMEOUT — all pages
