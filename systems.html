@@ -5,14 +5,29 @@
     <title>Systems — Floodplain Futures</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
+    <style>
+        /* Screen-reader-only utility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
 </head>
 <body class="systems-page">
 
 <!-- SHARED HEADER -->
 <header class="ff-header">
     <a href="index.html" class="ff-header-back">← home</a>
-    <span class="ff-header-title">✦&ensp;systems</span>
+    <span class="ff-header-title">systems</span>
     <nav class="ff-header-nav">
         <a href="map.html" class="ff-header-nav-link">← the basin</a>
         <a href="observations.html" class="ff-header-nav-link">observations →</a>
@@ -38,10 +53,11 @@
                      alt="Illustration of the Yolo Basin showing flooded fields, birds in flight, and rice growing in summer"
                      class="sys-hero-img"
                      onerror="this.parentElement.classList.add('img-missing')">
-                <span class="img-placeholder-label">systems-hero.png</span>
+                <!-- image: systems-hero.png -->
             </div>
         </div>
     </section>
+    
 
     <!-- ══ CHART + TOGGLES ══ -->
     <section class="sys-section" id="annual">
@@ -74,8 +90,8 @@
                 </button>
             </div>
         </div>
-        <div class="sys-chart-wrap" id="annualChartWrap">
-            <div class="sys-chart" id="annualChart"></div>
+        <div class="sys-chart-wrap" id="annualChartWrap" role="region" aria-label="Annual bar chart: flood days, bird checklists, and rice acres 2018–2023">
+            <div class="sys-chart" id="annualChart" role="img" aria-label="Bar chart showing flood, bird, and rice data from 2018 to 2023. Use the data table below for full details."></div>
             <div class="sys-chart-labels-x">
                 <span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span>
             </div>
@@ -131,8 +147,8 @@
             </p>
         </div>
         <div class="sys-wheel-wrap">
-            <div class="sys-wheel" id="sysWheel"></div>
-            <div class="sys-wheel-detail" id="wheelDetail">
+            <div class="sys-wheel" id="sysWheel" role="region" aria-label="Seasonal activity wheel"></div>
+            <div class="sys-wheel-detail" id="wheelDetail" role="region" aria-label="Monthly detail" aria-live="polite" aria-atomic="true">
                 <p class="wheel-prompt">hover a month to start</p>
                 <p class="wheel-detail-month" id="wdMonth"></p>
                 <div class="wheel-detail-rows" id="wdRows"></div>
@@ -151,14 +167,14 @@
                 Each card explains why that bird is there and how it connects to the water or the rice.
             </p>
         </div>
-        <div class="sys-bird-filters">
+        <div class="sys-bird-filters" role="group" aria-label="Filter birds by season">
             <button class="sys-bird-filter active" data-season="all">all seasons</button>
             <button class="sys-bird-filter" data-season="winter">winter</button>
             <button class="sys-bird-filter" data-season="spring">spring</button>
             <button class="sys-bird-filter" data-season="summer">summer</button>
             <button class="sys-bird-filter" data-season="yearround">year-round</button>
         </div>
-        <div class="sys-bird-grid" id="birdGrid"></div>
+        <div class="sys-bird-grid" id="birdGrid" aria-live="polite" aria-label="Bird species at the Yolo Bypass Wildlife Area"></div>
         <p class="sys-data-note">
             Bird data: eBird / Cornell Lab of Ornithology, Hotspot L443535 (Vic Fazio Yolo Wildlife Area).
             Peak counts from Napa Solano Audubon Society and Yolo Bird Alliance field records.
@@ -183,7 +199,7 @@
                  alt="Illustration of a flooded rice field in Yolo County in winter, with birds feeding in shallow water"
                  class="sys-section-img"
                  onerror="this.parentElement.classList.add('img-missing')">
-            <span class="img-placeholder-label">rice-field.png</span>
+                <!-- image: rice-field.png -->
         </div>
         <div class="sys-table-wrap">
             <table class="sys-table" id="riceTable">
@@ -226,7 +242,7 @@
                  alt="Diagram showing the relationship between Sacramento River flooding, bird migration, and rice agriculture in the Yolo Basin"
                  class="sys-section-img"
                  onerror="this.parentElement.classList.add('img-missing')">
-            <span class="img-placeholder-label">connection-diagram.png</span>
+                <!-- image: connection-diagram.png -->
         </div>
         <div class="sys-connection-grid">
             <div class="sys-conn-card sys-conn-flood">
@@ -297,4 +313,3 @@
 <script src="scripts.js"></script>
 </body>
 </html>
-

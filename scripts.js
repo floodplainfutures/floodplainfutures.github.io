@@ -23,12 +23,18 @@
         var closeWipBtn = document.getElementById('close-wip');
 
         if (wipBanner && closeWipBtn) {
-            // Remove any old hidden configurations from past code attempts
             wipBanner.classList.remove('hidden');
 
-            // Add event listener to let them dismiss it for this view session
+            // Close button hides the banner
             closeWipBtn.addEventListener('click', function() {
                 wipBanner.classList.add('hidden');
+            });
+
+            // Shift+W toggles it back on/off — useful for kiosk mode
+            document.addEventListener('keydown', function(e) {
+                if (e.shiftKey && e.key === 'W') {
+                    wipBanner.classList.toggle('hidden');
+                }
             });
         }
     });
@@ -159,6 +165,8 @@
     (function initScrollNav() {
         if (body.classList.contains('home-page')) { return; }
 
+        var isSys = body.classList.contains('systems-page');
+        var isCtx = body.classList.contains('context-page');
         var isObs = body.classList.contains('observations-page');
 
         var wrap = document.createElement('div');
@@ -183,11 +191,69 @@
         var STEP = window.innerHeight * 0.82;
 
         function getContainer() {
+            if (isSys) { return document.querySelector('.sys-main'); }
+            if (isCtx) { return document.getElementById('ctxPageScroll'); }
             if (isObs) { return document.getElementById('obsScroll'); }
             return null;
         }
 
+        // Helper: offsetTop of el relative to a scroll container
+        function topRelToContainer(el, container) {
+            var top = 0;
+            while (el && el !== container) {
+                top += el.offsetTop;
+                el = el.offsetParent;
+            }
+            return top;
+        }
+
+        // Systems: snap to .sys-hero / .sys-section inside .sys-main
+        function snapSysScroll(dir) {
+            var c = getContainer();
+            if (!c) { return; }
+            var sections = Array.prototype.slice.call(c.querySelectorAll('.sys-hero, .sys-section'));
+            if (!sections.length) { return; }
+            var scrollTop = c.scrollTop;
+            var target = null;
+            if (dir === 1) {
+                for (var i = 0; i < sections.length; i++) {
+                    var t = topRelToContainer(sections[i], c);
+                    if (t > scrollTop + 10) { target = t; break; }
+                }
+            } else {
+                for (var j = sections.length - 1; j >= 0; j--) {
+                    var t2 = topRelToContainer(sections[j], c);
+                    if (t2 < scrollTop - 10) { target = t2; break; }
+                }
+            }
+            if (target !== null) { c.scrollTo({ top: target, behavior: 'smooth' }); }
+        }
+
+        // Context: snap to .ctx-hero / .cfs inside #ctxPageScroll
+        function snapCtxScroll(dir) {
+            var c = getContainer();
+            if (!c) { return; }
+            var sections = Array.prototype.slice.call(c.querySelectorAll('.ctx-hero, .cfs'));
+            if (!sections.length) { return; }
+            var scrollTop = c.scrollTop;
+            var target = null;
+            if (dir === 1) {
+                for (var i = 0; i < sections.length; i++) {
+                    var t = topRelToContainer(sections[i], c);
+                    if (t > scrollTop + 10) { target = t; break; }
+                }
+            } else {
+                for (var j = sections.length - 1; j >= 0; j--) {
+                    var t2 = topRelToContainer(sections[j], c);
+                    if (t2 < scrollTop - 10) { target = t2; break; }
+                }
+            }
+            if (target !== null) { c.scrollTo({ top: target, behavior: 'smooth' }); }
+        }
+
         function doScroll(dir) {
+            if (isSys) { snapSysScroll(dir); return; }
+            if (isCtx) { snapCtxScroll(dir); return; }
             var c = getContainer();
             var amt = dir * STEP;
             if (c) { c.scrollBy({ top: amt, behavior: 'smooth' }); }
@@ -200,7 +266,7 @@
             if (c) {
                 top = c.scrollTop; total = c.scrollHeight; visible = c.clientHeight;
             } else {
-                top = window.scrollY;
+                top = window.scrollY || window.pageYOffset;
                 total = document.documentElement.scrollHeight;
                 visible = window.innerHeight;
             }
@@ -213,13 +279,16 @@
 
         var c = getContainer();
         if (c) { c.addEventListener('scroll', updateBtns, { passive: true }); }
-        window.addEventListener('scroll', updateBtns, { passive: true });
+        if (!isSys && !isCtx && !isObs) { window.addEventListener('scroll', updateBtns, { passive: true }); }
         window.addEventListener('resize', function () { STEP = window.innerHeight * 0.82; updateBtns(); });
 
         updateBtns();
     })();
+
+    /* ───────────────────────────────────────────────────────────
+       1. HOME PAGE
+    ─────────────────────────────────────────────────────────── */
     if (body.classList.contains('home-page')) {
-        console.log('checking migratory patterns...');
 
         var myVideo        = document.querySelector('#myVideo');
         var loading        = document.querySelector('#loadingScreen');
@@ -582,14 +651,11 @@
         e.preventDefault();
     });
 
-    const isKiosk = new URLSearchParams(window.location.search)
-    .get('kiosk') === '1';
+    var isKiosk = new URLSearchParams(window.location.search).get('kiosk') === '1';
 
     if (isKiosk) {
-        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.body.classList.add('kiosk-mode');
     }
-    console.log('Kiosk mode initialized');
-    
 
 })();

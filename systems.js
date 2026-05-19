@@ -228,6 +228,30 @@ function renderChart() {
     var chart = document.querySelector('#annualChart');
     chart.innerHTML = '';
 
+    // Add/update visually-hidden data table for screen readers
+    var existingTable = document.querySelector('#annualChartTable');
+    if (existingTable) existingTable.remove();
+    var srTable = document.createElement('table');
+    srTable.id = 'annualChartTable';
+    srTable.className = 'sr-only';
+    srTable.setAttribute('aria-label', 'Annual data table: flood days, bird checklists, and rice acres 2018–2023');
+    srTable.innerHTML = '<thead><tr><th>Year</th>' +
+        (activeFilters.flood ? '<th>Flood days</th>' : '') +
+        (activeFilters.birds ? '<th>Bird checklists</th>' : '') +
+        (activeFilters.rice  ? '<th>Rice acres</th>' : '') +
+        '</tr></thead>';
+    var tbody = document.createElement('tbody');
+    YEARS.forEach(function (y) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + y + '</td>' +
+            (activeFilters.flood ? '<td>' + FLOOD[y] + ' days</td>' : '') +
+            (activeFilters.birds ? '<td>' + BIRDS[y].toLocaleString() + '</td>' : '') +
+            (activeFilters.rice  ? '<td>' + RICE[y].acres.toLocaleString() + ' acres</td>' : '');
+        tbody.appendChild(tr);
+    });
+    srTable.appendChild(tbody);
+    chart.parentNode.insertBefore(srTable, chart.nextSibling);
+
     var maxFlood = Math.max.apply(null, YEARS.map(function(y){ return FLOOD[y]; }));
     var maxBirds = Math.max.apply(null, YEARS.map(function(y){ return BIRDS[y]; }));
     var maxRice  = Math.max.apply(null, YEARS.map(function(y){ return RICE[y].acres; }));
@@ -236,20 +260,33 @@ function renderChart() {
         var wrap = document.createElement('div');
         wrap.className = 'sys-chart-year';
         wrap.setAttribute('data-year', year);
+        // Build aria-label from active datasets
+        var parts = [];
+        if (activeFilters.flood) parts.push(FLOOD[year] + ' flood days');
+        if (activeFilters.birds) parts.push(BIRDS[year].toLocaleString() + ' bird checklists');
+        if (activeFilters.rice)  parts.push(RICE[year].acres.toLocaleString() + ' rice acres');
+        wrap.setAttribute('aria-label', year + ': ' + parts.join(', '));
+        wrap.setAttribute('role', 'img');
 
         var group = document.createElement('div');
         group.className = 'sys-bar-group';
 
-        function makeBar(cls, val, max, active) {
+        function makeBar(cls, val, max, active, label) {
             var el = document.createElement('div');
             el.className = 'sys-bar ' + cls + (active ? '' : ' dim');
             el.style.height = (active && max > 0 ? Math.max(2, (val / max) * 280) : 2) + 'px';
+            if (active) {
+                el.setAttribute('aria-label', label);
+                el.setAttribute('role', 'img');
+            } else {
+                el.setAttribute('aria-hidden', 'true');
+            }
             return el;
         }
 
-        group.appendChild(makeBar('flood-bar', FLOOD[year], maxFlood, activeFilters.flood));
-        group.appendChild(makeBar('birds-bar', BIRDS[year], maxBirds, activeFilters.birds));
-        group.appendChild(makeBar('rice-bar',  RICE[year].acres, maxRice, activeFilters.rice));
+        group.appendChild(makeBar('flood-bar', FLOOD[year], maxFlood, activeFilters.flood, 'Flood: ' + FLOOD[year] + ' days'));
+        group.appendChild(makeBar('birds-bar', BIRDS[year], maxBirds, activeFilters.birds, 'Birds: ' + BIRDS[year].toLocaleString() + ' checklists'));
+        group.appendChild(makeBar('rice-bar',  RICE[year].acres, maxRice, activeFilters.rice, 'Rice: ' + RICE[year].acres.toLocaleString() + ' acres'));
 
         wrap.appendChild(group);
         chart.appendChild(wrap);
@@ -301,6 +338,13 @@ function renderLegend() {
 // ════════════════════════════════════════════════════════════════
 
 function renderWheel() {
+    // Make the detail panel a live region so screen readers announce updates
+    var detailPanel = document.querySelector('#wheelDetail');
+    if (detailPanel) {
+        detailPanel.setAttribute('aria-live', 'polite');
+        detailPanel.setAttribute('aria-atomic', 'true');
+    }
+
     var container = document.querySelector('#sysWheel');
     var size = 400;
     var cx = size / 2, cy = size / 2;
@@ -311,9 +355,31 @@ function renderWheel() {
     var birdsAct = [4,4,3,3,2,1,2,3,3,4,4,4];
     var riceAct  = [0,0,0,2,3,4,4,4,4,3,1,0];
 
+    // Visually-hidden accessible table for the wheel data
+    var srTable = document.createElement('table');
+    srTable.className = 'sr-only';
+    srTable.setAttribute('aria-label', 'Monthly activity by system');
+    var thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>Month</th><th>Flood</th><th>Birds</th><th>Rice</th></tr>';
+    srTable.appendChild(thead);
+    var tbody = document.createElement('tbody');
+    MONTHLY.forEach(function (d, i) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + MONTH_FULL[i] + '</td>' +
+            '<td>' + d.flood + '</td>' +
+            '<td>' + d.birds + '</td>' +
+            '<td>' + d.rice  + '</td>';
+        tbody.appendChild(tr);
+    });
+    srTable.appendChild(tbody);
+    container.appendChild(srTable);
+
     var svg = document.createElementNS(ns, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
     svg.setAttribute('xmlns', ns);
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', 'Seasonal activity wheel — hover or press Enter on a month to explore. The table below contains the same information.');
+    svg.setAttribute('focusable', 'false');
 
     function polar(deg, r) {
         var rad = (deg - 90) * Math.PI / 180;
@@ -363,6 +429,9 @@ function renderWheel() {
         hit.setAttribute('d', arc(start, end, outerR + 22, innerR));
         hit.setAttribute('fill', 'transparent');
         hit.setAttribute('cursor', 'pointer');
+        hit.setAttribute('role', 'button');
+        hit.setAttribute('tabindex', '0');
+        hit.setAttribute('aria-label', MONTH_FULL[i] + ' — click to read activity details');
         hit.dataset.month = i;
         hit.addEventListener('mouseenter', function () {
             var idx = parseInt(this.dataset.month);
@@ -376,6 +445,24 @@ function renderWheel() {
             if (selectedMonth === null) clearWheelDetail();
         });
         hit.addEventListener('click', function () { selectedMonth = parseInt(this.dataset.month); });
+        hit.addEventListener('focus', function () {
+            var idx = parseInt(this.dataset.month);
+            document.querySelectorAll('.month-slice').forEach(function (s) {
+                s.style.opacity = (parseInt(s.dataset.month) === idx) ? '1' : '0.45';
+            });
+            updateWheelDetail(idx);
+        });
+        hit.addEventListener('blur', function () {
+            document.querySelectorAll('.month-slice').forEach(function (s) { s.style.opacity = ''; });
+            if (selectedMonth === null) clearWheelDetail();
+        });
+        hit.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                selectedMonth = parseInt(this.dataset.month);
+                updateWheelDetail(selectedMonth);
+            }
+        });
         svg.appendChild(hit);
     });
 
@@ -438,6 +525,8 @@ function makeRadialArc(freq, color) {
     svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
     svg.setAttribute('width', size);
     svg.setAttribute('height', size);
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', 'Appears on ' + freq + '% of e-bird checklists');
 
     var bg = document.createElementNS(ns, 'circle');
     bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
@@ -514,6 +603,8 @@ function renderBirdGrid() {
         var card = document.createElement('div');
         card.className = 'bird-card';
         card.dataset.season = b.season;
+        card.setAttribute('role', 'article');
+        card.setAttribute('aria-label', b.name + ' (' + b.sci + ') — ' + b.seasonLabel);
 
         card.innerHTML =
             '<div class="bird-card-img-slot">' +
@@ -522,7 +613,7 @@ function renderBirdGrid() {
             ' class="bird-card-img"' +
             ' onload="this.parentElement.classList.remove(\'bird-img-missing\')"' +
             ' onerror="this.parentElement.classList.add(\'bird-img-missing\')">' +
-            '<span class="bird-img-label">bird-' + b.slug + '.png</span>' +
+            // '<span class="bird-img-label">bird-' + b.slug + '.png</span>' +
             '</div>' +
             '<div class="bird-card-content">' +
             '<div class="bird-card-header">' +
@@ -535,7 +626,7 @@ function renderBirdGrid() {
             '<div class="bird-card-radial-svg" data-color="' + resolvedColor + '" data-freq="' + b.freq + '"></div>' +
             '<div class="bird-card-stat-block">' +
             '<div class="bird-card-stat-freq" style="color:' + resolvedColor + '">' + b.freq + '%</div>' +
-            '<div class="bird-card-stat-label">of checklists</div>' +
+            '<div class="bird-card-stat-label">of e-bird checklists</div>' +
             '<div class="bird-card-stat-peak">' + b.peak + '</div>' +
             '</div>' +
             '</div>' +
@@ -630,6 +721,8 @@ function renderRiceTable() {
 
         var entry = document.createElement('div');
         entry.className = 'rice-entry';
+        entry.setAttribute('role', 'region');
+        entry.setAttribute('aria-label', row.year + ': ' + row.acres + ' acres harvested, ' + row.prod + ', value ' + row.value + '. ' + (isFlood ? 'Wet year.' : 'Dry year.'));
 
         var yearBadge = document.createElement('div');
         yearBadge.className = 'rice-year';

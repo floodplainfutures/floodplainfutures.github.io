@@ -43,16 +43,8 @@
     --ink-faint:   rgba(255,255,255,.28);
 }
 
-@font-face {
-    font-family: "Montreal";
-    src: url("fonts/neuemontreal/PPNeueMontreal-Book.otf") format("opentype");
-    font-display: swap;
-}
-@font-face {
-    font-family: "Montreal Italic";
-    src: url("fonts/neuemontreal/PPNeueMontreal-Italic.otf") format("opentype");
-    font-display: swap;
-}
+/* Inter via Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap");
 @font-face {
     font-family: "DM Mono";
     src: url("fonts/DM_Mono/DMMono-Regular.ttf") format("truetype");
@@ -72,7 +64,9 @@
 html, body {
     height: 100%;
     width: 100%;
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
+    font-synthesis: none;
     -webkit-text-size-adjust: 100%;
 }
 
@@ -81,6 +75,18 @@ html, body {
     overflow: hidden; 
 }
 
+/* Prevent Inter from ever appearing bold — reset browser defaults */
+strong, b, h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+}
+
+a:visited, a:link, a:active {
+    /* color: inherit; */
+    color: var(--pink);
+}
+a:hover {
+    color: var(--lightblue);
+}
 
 /* ─────────────────────────────────────────────────────────────
    3. HOME PAGE  (index.html)
@@ -119,7 +125,7 @@ html, body {
 }
 #loadingText,
 #loadingPercent {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.5rem;
     color: var(--pink);
 }
@@ -154,8 +160,9 @@ html, body {
 #landing.state-open .title-block { transform: translateX(-50px); }
 
 .title-block h1 {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.7rem;
+    font-weight: 300;
     text-transform: lowercase;
     color: var(--whitebeige);
     margin-bottom: 0.5rem;
@@ -181,8 +188,9 @@ html, body {
 .begin-link {
     background: none;
     border: none;
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.8rem;
+    font-weight: 300;
     color: var(--whitebeige);
     cursor: pointer;
     padding: 0;
@@ -217,7 +225,7 @@ html, body {
     pointer-events: auto;
 }
 .menu a {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.6rem;
     color: var(--whitebeige);
     text-decoration: none;
@@ -268,7 +276,7 @@ html, body {
 }
 
 .ff-header-back {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: .9rem;
     color: var(--whitebeige);
     text-decoration: none;
@@ -323,7 +331,7 @@ html, body {
     justify-self: end;
 }
 .ff-header-nav-link {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: .9rem;
     color: var(--whitebeige);
     text-decoration: none;
@@ -378,7 +386,7 @@ html, body {
     gap: 2rem;
 }
 .ff-footer-nav a {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: .85rem;
     color: var(--whitebeige);
     opacity: .28;
@@ -476,7 +484,7 @@ body.context-page {
 
 .ctx-label {
     font-family: "DM Mono", monospace;
-    font-size: .55rem;
+    font-size: .8rem;
     letter-spacing: .18em;
     text-transform: uppercase;
     color: var(--whitebeige);
@@ -493,8 +501,8 @@ body.context-page {
 .ctx-hero-word-big {
     position: absolute;
     z-index: 10;
-    font-family: "Montreal", sans-serif;
-    font-weight: 400;
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
     text-transform: lowercase;
     letter-spacing: -.04em;
     line-height: .9;
@@ -528,7 +536,7 @@ body.context-page {
     bottom: 10vh;
     right: 6vw;
     font-family: "DM Mono", monospace;
-    font-size: clamp(.58rem, .8vw, .72rem);
+    font-size: 1em;
     line-height: 2;
     color: var(--whitebeige);
     opacity: 0;
@@ -558,7 +566,7 @@ body.context-page {
 }
 .ctx-ann-text {
     font-family: "DM Mono", monospace;
-    font-size: .46rem;
+    font-size: .8rem;
     letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--whitebeige);
@@ -588,7 +596,7 @@ body.context-page {
 }
 .ctx-scroll-label {
     font-family: "DM Mono", monospace;
-    font-size: .42rem;
+    font-size: .8rem;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--whitebeige);
@@ -613,7 +621,7 @@ body.context-page {
     position: absolute;
     top: 2rem;
     right: 5vw;
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(8rem, 18vw, 16rem);
     font-weight: 400;
     letter-spacing: -.06em;
@@ -640,7 +648,7 @@ body.context-page {
     flex-shrink: 0;
 }
 .cfs-title {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(2.2rem, 5vw, 4rem);
     font-weight: 400;
     text-transform: lowercase;
@@ -651,7 +659,7 @@ body.context-page {
 
 /* ── BODY TEXT ── */
 .cfs-lede {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(1.05rem, 1.6vw, 1.25rem);
     line-height: 1.75;
     color: var(--whitebeige);
@@ -660,7 +668,7 @@ body.context-page {
     margin-bottom: 2rem;
 }
 .cfs-body-p {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(.9rem, 1.1vw, 1rem);
     line-height: 1.85;
     color: var(--whitebeige);
@@ -718,7 +726,7 @@ body.context-page {
     clear: both;
 }
 .cfs-pullquote p {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(1.05rem, 1.7vw, 1.3rem);
     line-height: 1.6;
     color: var(--olivegreen);
@@ -755,7 +763,7 @@ body.context-page {
 }
 .cfs-stat-pill:hover { transform: rotate(0deg) scale(1.02); }
 .csp-n {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(1.6rem, 3vw, 2.2rem);
     color: var(--clr, var(--pink));
     letter-spacing: -.04em;
@@ -838,19 +846,7 @@ body.context-page {
     justify-content: center;
     min-height: 220px;
 }
-.cfs-img-slot::after {
-    content: attr(data-label);
-    position: absolute;
-    bottom: .7rem; left: 50%;
-    transform: translateX(-50%);
-    font-family: "DM Mono", monospace;
-    font-size: .44rem;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.15);
-    white-space: nowrap;
-    pointer-events: none;
-}
+/* data-label is kept as an attribute for reference only — not rendered */
 .cfs-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* tall — first-visit photo, sits right of intro text */
@@ -879,10 +875,10 @@ body.context-page {
     gap: 3vw;
     margin-bottom: 0;
 }
-/* photo takes 55% */
+/* photo takes 40% — narrower so text stays visible */
 .cfs-col2 .cfs-img-slot--tall {
-    flex: 0 0 55%;
-    margin-left: -8vw;   /* bleeds left past section padding */
+    flex: 0 0 40%;
+    margin-left: 0;   /* no bleed — keeps layout contained */
 }
 .cfs-col2-text {
     flex: 1;
@@ -1000,7 +996,7 @@ body.context-page {
 }
 .cfs-big-q:hover { transform: rotate(0deg); }
 .cbq-mark {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(3rem, 6vw, 5rem);
     color: var(--pink);
     opacity: .25;
@@ -1009,7 +1005,7 @@ body.context-page {
     margin-top: -.3rem;
 }
 .cbq-text {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(1.05rem, 1.8vw, 1.35rem);
     line-height: 1.6;
     color: var(--whitebeige);
@@ -1046,7 +1042,7 @@ body.context-page {
 }
 .cfs-step-body { display: flex; flex-direction: column; gap: .35rem; }
 .cfs-step-body strong {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: .98rem;
     font-weight: 400;
     color: var(--whitebeige);
@@ -1084,7 +1080,7 @@ body.context-page {
     margin-bottom: 1.2rem;
 }
 .ctc-text {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(1rem, 1.5vw, 1.18rem);
     line-height: 1.72;
     color: var(--whitebeige);
@@ -1133,7 +1129,7 @@ body.context-page {
 }
 .ctx-footer-nav { display: flex; gap: 2rem; }
 .ctx-footer-nav a {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: .82rem;
     color: var(--whitebeige);
     opacity: .28;
@@ -1297,7 +1293,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 }
 
 .panel-title {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(2rem, 3.5vw, 3rem);
     font-weight: 400;
     text-transform: lowercase;
@@ -1332,7 +1328,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
     opacity: .35;
 }
 .stat-val {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.1rem;
     letter-spacing: -.02em;
     color: var(--blackblue);
@@ -1475,7 +1471,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
     gap: .15rem;
 }
 .map-tag-big {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(2.5rem, 7vw, 6rem);
     font-weight: 400;
     letter-spacing: .18em;
@@ -1562,7 +1558,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 
 /* MAIN */
-.sys-main { padding-top: 56px; }
+.sys-main { padding-top: 56px; overflow-x: hidden; }
 
 /* HERO */
 .sys-hero {
@@ -1575,7 +1571,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-eyebrow {
     font-family: "DM Mono", monospace;
-    font-size: .56rem;
+    font-size: .78rem;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--pink);
@@ -1583,7 +1579,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
     margin-bottom: 1.4rem;
 }
 .sys-hero-title {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(3.5rem, 8vw, 7rem);
     font-weight: 400;
     line-height: .92;
@@ -1594,9 +1590,9 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-hero-body {
     font-family: "DM Mono", monospace;
-    font-size: clamp(.75rem, 1vw, .88rem);
+    font-size: clamp(.88rem, 1vw, 1rem);
     line-height: 1.85;
-    color: rgba(255,255,255,.45);
+    color: #c3c6ce;
     max-width: 420px;
 }
 
@@ -1623,14 +1619,17 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
     font-size: .5rem;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.15);
+    color: #808799;
     position: absolute;
     bottom: .8rem;
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
     pointer-events: none;
+    opacity: 0; /* hidden by default */
 }
+/* only show when image slot has the missing class */
+.img-missing .img-placeholder-label { opacity: 1; }
 .sys-hero-img-slot:not(.img-missing) .img-placeholder-label,
 .sys-section-img-slot:not(.img-missing) .img-placeholder-label { opacity: 0; }
 
@@ -1647,11 +1646,11 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-controls-label {
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: .78rem;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: white;
-    opacity: .25;
+    opacity: .5;
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -1677,17 +1676,17 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-toggle.inactive .toggle-dot { opacity: .25; }
 .toggle-name {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: .88rem;
     color: white;
     text-transform: lowercase;
 }
 .toggle-desc {
     font-family: "DM Mono", monospace;
-    font-size: .52rem;
+    font-size: .8rem;
     letter-spacing: .05em;
     color: white;
-    opacity: .28;
+    opacity: .6;
 }
 
 /* SECTIONS */
@@ -1695,16 +1694,16 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-section-header { margin-bottom: 2.5rem; }
 .sys-section-num {
     font-family: "DM Mono", monospace;
-    font-size: .52rem;
+    font-size: .8rem;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--pink);
-    opacity: .5;
+    opacity: .7;
     display: block;
     margin-bottom: .6rem;
 }
 .sys-section-title {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: clamp(1.8rem, 3.5vw, 3rem);
     font-weight: 400;
     text-transform: lowercase;
@@ -1715,9 +1714,9 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-section-desc {
     font-family: "DM Mono", monospace;
-    font-size: .75rem;
+    font-size: .95rem;
     line-height: 1.75;
-    color: rgba(255,255,255,.35);
+    color: #b7bbc5;
     max-width: 600px;
 }
 
@@ -1769,7 +1768,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
     font-family: "DM Mono", monospace;
     font-size: .6rem;
     letter-spacing: .1em;
-    color: rgba(255,255,255,.3);
+    color: #808799;
     text-align: center;
 }
 
@@ -1787,25 +1786,25 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-legend-item[data-system="rice"]  { border-left: 2px solid var(--olivegreen); }
 .sys-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .sys-legend-name {
-    font-family: "Montreal", sans-serif;
-    font-size: .85rem;
+    font-family: "Inter", sans-serif;
+    font-size: .9rem;
     color: white;
-    opacity: .72;
+    opacity: .88;
     display: block;
     margin-bottom: .15rem;
 }
 .sys-legend-src {
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: .78rem;
     letter-spacing: .05em;
-    color: rgba(255,255,255,.25);
+    color: #9398a8;
     display: block;
 }
 .sys-legend-unit {
     font-family: "DM Mono", monospace;
-    font-size: .55rem;
+    font-size: .78rem;
     letter-spacing: .07em;
-    color: rgba(255,255,255,.2);
+    color: #808799;
     margin-left: auto;
     white-space: nowrap;
 }
@@ -1840,10 +1839,10 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
     font-family: "DM Mono", monospace;
     font-size: .52rem;
     letter-spacing: .08em;
-    color: rgba(255,255,255,.38);
+    color: #6a7287;
     text-transform: uppercase;
 }
-.sys-tooltip-val { font-family: "Montreal", sans-serif; font-size: .85rem; color: white; }
+.sys-tooltip-val { font-family: "Inter", sans-serif; font-size: .85rem; color: white; }
 
 /* CALLOUT */
 .sys-callout {
@@ -1863,7 +1862,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
     flex-shrink: 0;
     margin-top: .05rem;
 }
-.sys-callout p { font-family: "DM Mono", monospace; font-size: .72rem; line-height: 1.82; color: rgba(255,255,255,.48); }
+.sys-callout p { font-family: "DM Mono", monospace; font-size: .9rem; line-height: 1.82; color: #c3c6ce; }
 .sys-callout strong { color: white; font-weight: 400; }
 
 /* SEASONAL WHEEL */
@@ -1874,14 +1873,14 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-wheel-detail { padding-top: .5rem; }
 .wheel-prompt {
     font-family: "DM Mono", monospace;
-    font-size: .6rem;
+    font-size: .82rem;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.18);
+    color: #808799;
     margin-bottom: 1rem;
 }
 .wheel-detail-month {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 2.5rem;
     font-weight: 400;
     text-transform: lowercase;
@@ -1896,31 +1895,22 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .wdr-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: .4rem; }
 .wdr-system {
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: .78rem;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.25);
+    color: #9398a8;
     display: block;
     margin-bottom: .3rem;
 }
-.wdr-desc { font-family: "DM Mono", monospace; font-size: .68rem; line-height: 1.72; color: rgba(255,255,255,.55); }
+.wdr-desc { font-family: "DM Mono", monospace; font-size: .9rem; line-height: 1.72; color: #cfd1d8; }
 
 /* ==========================================================================
    5. WHEEL / SVG DIAGRAM TEXT FIXES
 ========================================================================== */
 
-/* Target text inside SVGs, charts, or elements with "wheel" in the class name */
-svg text,
-[class*="wheel"] text,
-[class*="wheel"],
-.chart-text {
-    font-size: 14px !important; 
-    /* You can bump this to 16px if 14px is still too small */
-}
 
 /* If the wheel uses standard HTML labels positioned in a circle instead of SVG: */
-.wheel-label,
-[class*="label"] {
+.wheel-label {
     font-size: 0.85rem !important;
 }
 
@@ -1928,17 +1918,17 @@ svg text,
 .sys-bird-filters { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2rem; }
 .sys-bird-filter {
     font-family: "DM Mono", monospace;
-    font-size: .56rem;
+    font-size: .82rem;
     letter-spacing: .12em;
     text-transform: uppercase;
-    padding: .38rem .9rem;
+    padding: .5rem 1rem;
     background: none;
     border: 1px solid rgba(255,255,255,.1);
-    color: rgba(255,255,255,.38);
+    color: #9fa4b1;
     cursor: pointer;
     transition: background .2s, color .2s, border-color .2s;
 }
-.sys-bird-filter:hover { color: white; border-color: rgba(255,255,255,.28); }
+.sys-bird-filter:hover { color: white; border-color: #808799; }
 .sys-bird-filter.active { background: rgba(255,255,255,.05); border-color: var(--pink); color: var(--pink); }
 .sys-bird-grid {
     display: grid;
@@ -1979,41 +1969,44 @@ svg text,
     font-size: .46rem;
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.12);
+    color: #808799;
     position: absolute;
     bottom: .5rem;
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
     pointer-events: none;
+    opacity: 0; /* hidden by default — only shown when image fails */
 }
+/* show label only when image is missing */
+.bird-img-missing .bird-img-label { opacity: 1; }
 .bird-card-img-slot:not(.bird-img-missing) .bird-img-label { opacity: 0; }
 .bird-card-content { padding: 1.4rem; display: flex; flex-direction: column; gap: .65rem; flex: 1; min-width: 0; overflow: hidden; }
 .bird-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; flex-shrink: 0; }
-.bird-card-num { font-family: "DM Mono", monospace; font-size: .5rem; letter-spacing: .14em; color: rgba(255,255,255,.18); }
-.bird-card-season { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .12em; text-transform: uppercase; padding: .16rem .48rem; border: 1px solid currentColor; flex-shrink: 0; }
+.bird-card-num { font-family: "DM Mono", monospace; font-size: .8rem; letter-spacing: .14em; color: #808799; }
+.bird-card-season { font-family: "DM Mono", monospace; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; padding: .16rem .48rem; border: 1px solid currentColor; flex-shrink: 0; }
 .season-winter   { color: var(--lightblue); }
 .season-spring   { color: var(--olivegreen); }
 .season-summer   { color: var(--yellow); }
 .season-fall     { color: var(--pink); }
-.season-yearround{ color: rgba(255,255,255,.35); }
-.bird-card-name { font-family: "Montreal", sans-serif; font-size: 1rem; color: white; font-weight: 400; text-transform: lowercase; letter-spacing: -.01em; line-height: 1.2; }
-.bird-card-sci { font-family: "DM Mono", monospace; font-size: .52rem; font-style: italic; color: rgba(255,255,255,.2); letter-spacing: .03em; }
+.season-yearround{ color: #9398a8; }
+.bird-card-name { font-family: "Inter", sans-serif; font-size: 1.1rem; color: white; font-weight: 400; text-transform: lowercase; letter-spacing: -.01em; line-height: 1.2; }
+.bird-card-sci { font-family: "DM Mono", monospace; font-size: .78rem; font-style: italic; color: #878d9e; letter-spacing: .03em; }
 .bird-card-bar { height: 2px; background: rgba(255,255,255,.06); border-radius: 1px; position: relative; overflow: hidden; }
 .bird-card-bar-fill { position: absolute; top: 0; left: 0; bottom: 0; border-radius: 1px; transition: width .8s cubic-bezier(.22,1,.36,1); }
-.bird-card-stat { font-family: "DM Mono", monospace; font-size: .56rem; letter-spacing: .05em; color: rgba(255,255,255,.28); }
-.bird-card-stat strong { font-weight: 400; color: rgba(255,255,255,.6); }
-.bird-card-connection { font-family: "DM Mono", monospace; font-size: .62rem; line-height: 1.72; color: rgba(255,255,255,.36); border-top: 1px solid rgba(255,255,255,.05); padding-top: .7rem; margin-top: .2rem; overflow: hidden; word-break: break-word; }
+.bird-card-stat { font-family: "DM Mono", monospace; font-size: .8rem; letter-spacing: .05em; color: #9398a8; }
+.bird-card-stat strong { font-weight: 400; color: #cfd1d8; }
+.bird-card-connection { font-family: "DM Mono", monospace; font-size: .85rem; line-height: 1.72; color: #b7bbc5; border-top: 1px solid rgba(255,255,255,.05); padding-top: .7rem; margin-top: .2rem; overflow: hidden; word-break: break-word; }
 
 /* RICE TABLE */
 .sys-table-wrap { overflow-x: auto; margin-bottom: 2rem; }
 .sys-table { width: 100%; border-collapse: collapse; }
 .sys-table th {
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: .82rem;
     letter-spacing: .16em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.22);
+    color: #878d9e;
     padding: .8rem 1.2rem;
     text-align: left;
     border-bottom: 1px solid rgba(255,255,255,.1);
@@ -2021,21 +2014,21 @@ svg text,
 }
 .sys-table td {
     font-family: "DM Mono", monospace;
-    font-size: .7rem;
-    color: rgba(255,255,255,.6);
+    font-size: 1rem;
+    color: #cfd1d8;
     padding: .9rem 1.2rem;
     border-bottom: 1px solid rgba(255,255,255,.05);
     vertical-align: top;
     line-height: 1.5;
 }
 .sys-table tr:hover td { background: rgba(255,255,255,.02); }
-.sys-table td.year-col { font-family: "Montreal", sans-serif; font-size: 1.1rem; color: white; letter-spacing: -.02em; }
-.sys-table td.acres-col strong { font-family: "Montreal", sans-serif; font-size: 1rem; color: var(--olivegreen); font-weight: 400; letter-spacing: -.02em; }
+.sys-table td.year-col { font-family: "Inter", sans-serif; font-size: 1.1rem; color: white; letter-spacing: -.02em; }
+.sys-table td.acres-col strong { font-family: "Inter", sans-serif; font-size: 1rem; color: var(--olivegreen); font-weight: 400; letter-spacing: -.02em; }
 .flood-badge { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .48rem; border: 1px solid var(--lightblue); color: var(--lightblue); white-space: nowrap; }
-.drought-badge { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .48rem; border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.3); white-space: nowrap; }
+.drought-badge { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .48rem; border: 1px solid rgba(255,255,255,.15); color: #808799; white-space: nowrap; }
 .sys-rice-note { margin-bottom: 2rem; }
 .sys-rice-note-inner { padding: 1.4rem 1.8rem; border: 1px solid rgba(189,165,67,.18); background: rgba(189,165,67,.03); }
-.sys-rice-note-inner p { font-family: "DM Mono", monospace; font-size: .72rem; line-height: 1.8; color: rgba(255,255,255,.45); }
+.sys-rice-note-inner p { font-family: "DM Mono", monospace; font-size: .9rem; line-height: 1.8; color: #c3c6ce; }
 
 
 /* ==========================================================================
@@ -2095,7 +2088,7 @@ svg text,
     font-size: .48rem;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.18);
+    color: #808799;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -2116,7 +2109,7 @@ svg text,
     gap: .2rem;
 }
 .bird-card-stat-freq {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.3rem;
     font-weight: 400;
     letter-spacing: -.03em;
@@ -2124,16 +2117,16 @@ svg text,
 }
 .bird-card-stat-label {
     font-family: "DM Mono", monospace;
-    font-size: .46rem;
+    font-size: .7rem;
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.2);
+    color: #808799;
 }
 .bird-card-stat-peak {
     font-family: "DM Mono", monospace;
-    font-size: .55rem;
+    font-size: .7rem;
     line-height: 1.5;
-    color: rgba(255,255,255,.28);
+    color: #808799;
     margin-top: .2rem;
 }
 
@@ -2162,7 +2155,7 @@ svg text,
     padding-right: .8rem;
 }
 .rice-year {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.4rem;
     font-weight: 400;
     letter-spacing: -.04em;
@@ -2181,7 +2174,7 @@ svg text,
     white-space: nowrap;
 }
 .rice-wet { color: var(--lightblue); border-color: var(--lightblue); }
-.rice-dry { color: rgba(255,255,255,.25); border-color: rgba(255,255,255,.12); }
+.rice-dry { color: #808799; border-color: #808799; }
 .rice-content {
     display: flex;
     flex-direction: column;
@@ -2219,61 +2212,61 @@ svg text,
     flex-wrap: wrap;
 }
 .rice-acres {
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1rem;
     color: var(--olivegreen);
     letter-spacing: -.02em;
 }
 .rice-divider {
-    color: rgba(255,255,255,.15);
+    color: #808799;
     font-family: "DM Mono", monospace;
 }
 .rice-tons, .rice-value {
     font-family: "DM Mono", monospace;
     font-size: .62rem;
     letter-spacing: .04em;
-    color: rgba(255,255,255,.35);
+    color: #808799;
 }
 .rice-context {
     font-family: "DM Mono", monospace;
     font-size: .6rem;
     line-height: 1.72;
-    color: rgba(255,255,255,.28);
+    color: #808799;
     max-width: 520px;
 }
 
 /* CONNECTION */
 .sys-connection { border-bottom: none; }
 .sys-connection-grid { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: center; margin-bottom: 2.5rem; }
-.sys-conn-arrow { font-family: "Montreal", sans-serif; font-size: 1.4rem; color: rgba(255,255,255,.18); padding: 0 1.2rem; text-align: center; flex-shrink: 0; }
+.sys-conn-arrow { font-family: "Inter", sans-serif; font-size: 1.4rem; color: #808799; padding: 0 1.2rem; text-align: center; flex-shrink: 0; }
 .sys-conn-card { padding: 2rem 1.6rem; border: 1px solid rgba(255,255,255,.06); display: flex; flex-direction: column; gap: .8rem; align-self: stretch; }
 .sys-conn-flood { border-top: 2px solid var(--lightblue); }
 .sys-conn-birds { border-top: 2px solid var(--pink); }
 .sys-conn-rice  { border-top: 2px solid var(--olivegreen); }
-.sys-conn-num { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .2em; color: rgba(255,255,255,.18); }
-.sys-conn-card h3 { font-family: "Montreal", sans-serif; font-size: .95rem; font-weight: 400; text-transform: lowercase; letter-spacing: -.01em; color: white; line-height: 1.25; }
-.sys-conn-card p { font-family: "DM Mono", monospace; font-size: .64rem; line-height: 1.78; color: rgba(255,255,255,.36); flex: 1; }
+.sys-conn-num { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .2em; color: #808799; }
+.sys-conn-card h3 { font-family: "Inter", sans-serif; font-size: .95rem; font-weight: 400; text-transform: lowercase; letter-spacing: -.01em; color: white; line-height: 1.25; }
+.sys-conn-card p { font-family: "DM Mono", monospace; font-size: .64rem; line-height: 1.78; color: #656d83; flex: 1; }
 .sys-conn-tag { font-family: "DM Mono", monospace; font-size: .46rem; letter-spacing: .2em; text-transform: uppercase; align-self: flex-start; margin-top: auto; padding-top: .8rem; }
 .sys-conn-flood .sys-conn-tag { color: var(--lightblue); }
 .sys-conn-birds .sys-conn-tag { color: var(--pink); }
 .sys-conn-rice  .sys-conn-tag { color: var(--olivegreen); }
 .sys-connection-note { padding: 1.8rem 2.2rem; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
-.sys-connection-note p { font-family: "DM Mono", monospace; font-size: .72rem; line-height: 1.82; color: rgba(255,255,255,.48); }
+.sys-connection-note p { font-family: "DM Mono", monospace; font-size: .72rem; line-height: 1.82; color: #82889a; }
 
 /* DATA NOTE */
-.sys-data-note { font-family: "DM Mono", monospace; font-size: .55rem; letter-spacing: .05em; color: rgba(255,255,255,.2); line-height: 1.75; margin-top: .5rem; }
+.sys-data-note { font-family: "DM Mono", monospace; font-size: .55rem; letter-spacing: .05em; color: #808799; line-height: 1.75; margin-top: .5rem; }
 .sys-data-note a { color: var(--lightblue); text-decoration: underline; text-underline-offset: 3px; }
 
 /* SYSTEMS FOOTER */
 .sys-footer { padding: 4rem 6vw; background: rgba(0,0,0,.25); }
 .sys-footer-rule { height: 1px; background: rgba(255,255,255,.07); margin-bottom: 2.5rem; }
 .sys-footer-inner { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: start; }
-.sys-footer-label { font-family: "DM Mono", monospace; font-size: .5rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.22); margin-bottom: 1rem; }
+.sys-footer-label { font-family: "DM Mono", monospace; font-size: .5rem; letter-spacing: .2em; text-transform: uppercase; color: #808799; margin-bottom: 1rem; }
 .sys-footer-sources ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
-.sys-footer-sources a { font-family: "DM Mono", monospace; font-size: .58rem; letter-spacing: .03em; color: rgba(255,255,255,.28); text-decoration: none; line-height: 1.6; transition: color .2s; }
+.sys-footer-sources a { font-family: "DM Mono", monospace; font-size: .58rem; letter-spacing: .03em; color: #808799; text-decoration: none; line-height: 1.6; transition: color .2s; }
 .sys-footer-sources a:hover { color: var(--lightblue); }
 .sys-footer-nav { display: flex; flex-direction: column; gap: .8rem; align-items: flex-end; }
-.sys-footer-nav a { font-family: "Montreal", sans-serif; font-size: .82rem; color: rgba(255,255,255,.25); text-decoration: none; transition: color .2s; white-space: nowrap; }
+.sys-footer-nav a { font-family: "Inter", sans-serif; font-size: .82rem; color: #808799; text-decoration: none; transition: color .2s; white-space: nowrap; }
 .sys-footer-nav a:hover { color: var(--pink); }
 
 
@@ -2437,7 +2430,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     margin-top: .35rem;
     transform: rotate(.6deg);
 }
-.entry-title { font-family: "Montreal", sans-serif; font-size: 2rem; color: var(--ink); letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.2rem; }
+.entry-title { font-family: "Inter", sans-serif; font-size: 2rem; color: var(--ink); letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.2rem; }
 .entry-body p { font-family: "DM Mono", monospace; font-size: .8rem; line-height: 1.85; color: var(--ink); opacity: .8; margin-bottom: 1rem; letter-spacing: .02em; }
 .entry-body p:last-child { margin-bottom: 0; }
 .entry-aside {
@@ -2463,7 +2456,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     margin: 1.4rem 0;
     padding: 1rem 0 1rem 1.4rem;
     border-left: 3px solid var(--olivegreen);
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.05rem;
     color: var(--olivegreen);
     line-height: 1.5;
@@ -2478,7 +2471,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     color: var(--olivegreen);
     opacity: .2;
     line-height: 1;
-    font-family: "Montreal", sans-serif;
+    font-family: "Inter", sans-serif;
 }
 .entry-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.4rem; }
 .etag {
@@ -2733,7 +2726,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     gap: .5rem;
     background: rgba(255,255,255,.05);
     border: 1px solid rgba(255,255,255,.1);
-    color: rgba(255,255,255,.6);
+    color: #9fa4b1;
     padding: .38rem .65rem .38rem .55rem;
     cursor: pointer;
     transition: background .2s, border-color .2s, color .2s;
@@ -2742,20 +2735,32 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 }
 .bird-audio-btn:hover {
     background: rgba(255,255,255,.1);
-    border-color: rgba(255,255,255,.22);
+    border-color: #808799;
     color: white;
 }
 .bird-audio-btn.playing {
     background: rgba(255,255,255,.08);
-    border-color: rgba(255,255,255,.2);
+    border-color: #808799;
     color: white;
 }
 
-.bird-audio-icon { display: flex; align-items: center; flex-shrink: 0; }
-.icon-play  { display: block; }
-.icon-pause { display: none; }
-.bird-audio-btn.playing .icon-play  { display: none; }
-.bird-audio-btn.playing .icon-pause { display: block; }
+.bird-audio-icon { 
+    display: flex; 
+    align-items: center; 
+    flex-shrink: 0; 
+}
+.icon-play  { 
+    display: block; 
+}
+.icon-pause { 
+    display: none; 
+}
+.bird-audio-btn.playing .icon-play  { 
+    display: none; 
+}
+.bird-audio-btn.playing .icon-pause { 
+    display: block; 
+}
 
 .bird-audio-bars {
     display: flex;
@@ -2802,32 +2807,32 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 }
 .bird-audio-id {
     font-family: "DM Mono", monospace;
-    font-size: .52rem;
+    font-size: .8rem;
     letter-spacing: .1em;
-    color: rgba(255,255,255,.45);
+    color: #808799;
     text-decoration: none;
     transition: color .2s;
 }
-.bird-audio-id:hover { color: rgba(255,255,255,.8); }
+.bird-audio-id:hover { color: #cfd1d8; }
 .bird-audio-credit {
     font-family: "DM Mono", monospace;
-    font-size: .46rem;
+    font-size: .7rem;
     letter-spacing: .03em;
-    color: rgba(255,255,255,.2);
-    white-space: nowrap;
+    color: #808799;
+    /* white-space: nowrap; */
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .bird-xc-link,
 .bird-cc-link {
-    color: rgba(255,255,255,.3);
+    color: #808799;
     text-decoration: underline;
     text-underline-offset: 2px;
-    text-decoration-color: rgba(255,255,255,.12);
+    text-decoration-color: #808799;
     transition: color .2s;
 }
 .bird-xc-link:hover,
-.bird-cc-link:hover { color: rgba(255,255,255,.65); }
+.bird-cc-link:hover { color: #abafbb; }
 
 /* ─────────────────────────────────────────────────────────────
    IDLE TIMEOUT MODAL — all pages
@@ -2883,13 +2888,13 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 .idle-sub {
     font-family: "DM Mono", monospace;
     font-size: .78rem;
-    color: rgba(255,253,242,.5);
+    color: #878c98;
     margin: 0 0 1.6rem;
     letter-spacing: .03em;
 }
 #idle-count {
     color: var(--pink, #f06896);
-    font-weight: 600;
+    font-weight: 400;
 }
 #idle-stay {
     display: inline-block;
@@ -2916,82 +2921,157 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     display: block;
 }
 
+
+
 /* ─────────────────────────────────────────────────────────────
-   ACCESSIBLE TEXT — minimum readable sizes for kiosk
+   10. CONTRAST & ACCESSIBILITY OVERRIDES
+   Ensures all text meets WCAG 2.1 standards. Removes opacity
+   dimming on text and sets solid accessible color values.
 ───────────────────────────────────────────────────────────── */
 
-/* Disable text selection and callouts for better kiosk experience */
-
-/* .kiosk-mode * {
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-} */
-
-* {
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
+/* Strip opacity from all text-bearing elements globally.
+   Hierarchy is preserved via color values, not opacity. */
+p, span, h1, h2, h3, h4, h5, h6, a, li, label, strong, cite, blockquote {
+    opacity: 1 !important;
 }
 
-/* Context page body text — bump opacity and min size */
-.cfs-lede    { font-size: clamp(1.1rem, 1.6vw, 1.3rem); opacity: 1; color: var(--whitebeige); }
-.cfs-body-p  { font-size: clamp(1rem, 1.2vw, 1.1rem);   opacity: 1; color: rgba(255,253,242,.85); }
-.cfs-trail   { font-size: 1rem; opacity: 1; color: rgba(255,253,242,.75); }
-.cbq-text    { font-size: clamp(1.05rem, 1.8vw, 1.35rem); opacity: 1; color: var(--whitebeige); }
-.ctc-text    { font-size: clamp(1rem, 1.5vw, 1.18rem); opacity: 1; }
-.cfs-step-body p      { font-size: 1rem; opacity: 1; color: rgba(255,253,242,.8); }
-.cfs-step-body strong { font-size: 1rem; opacity: 1; }
-.cfs-pullquote p      { font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
-.cfs-pullquote cite   { font-size: .88rem; opacity: 1; color: rgba(255,253,242,.65); }
-.cfs-tile p  { font-size: .95rem; opacity: 1; color: rgba(255,253,242,.8); }
-.cft-label   { font-size: .82rem; opacity: 1; }
-.cfs-num-sm  { font-size: .82rem; opacity: 1; }
-.csp-l       { font-size: .82rem; opacity: 1; color: rgba(255,253,242,.7); }
-.ctc-label   { font-size: .82rem; opacity: 1; }
-
-/* Observation entry text */
-.entry-body p { 
-    font-size: 1rem !important; opacity: 1 !important; color: rgba(255,253,242,.88) !important; 
-}
-.entry-date { 
-    font-size: .88rem; opacity: 1; 
-}
-.entry-weather { 
-    font-size: .88rem; opacity: 1; 
-}
-.il-title { 
-    font-size: .9rem; opacity: 1; 
-}
-.il-num { 
-    font-size: .82rem; 
+/* ── DARK BACKGROUND TEXT (whitebeige) ── */
+/* Context, Systems, Observations pages — dark surfaces */
+.ff-header,
+.ff-header a,
+.ff-header span,
+.ctx-hero-float span,
+.sys-hero,
+.sys-hero-title,
+.sys-hero-body {
+    color: var(--whitebeige);
 }
 
-/* Map panel text */
-.stat-lbl     { 
-    font-size: .82rem; 
+/* ── WIP BANNER ── */
+.wip-banner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9999;
+    background: var(--blackblue);
+    border-bottom: 1px solid rgba(255,253,242,.12);
+    padding: .65rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: transform .3s ease, opacity .3s ease;
 }
-.layer-name   { 
-    font-size: .9rem; 
+.wip-banner.hidden {
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
 }
-.ck, .cv      { 
-    font-size: .9rem; 
+.wip-content {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex: 1;
 }
-.annotation-card p { 
-    font-size: .9rem; 
+.wip-icon { font-size: 1rem; flex-shrink: 0; }
+.wip-text {
+    font-family: "Inter", sans-serif;
+    font-size: .88rem;
+    font-weight: 400;
+    color: var(--whitebeige);
+    line-height: 1.4;
+}
+.wip-text strong { font-weight: 400; color: var(--whitebeige); }
+.wip-close {
+    background: none;
+    border: 1px solid rgba(255,253,242,.25);
+    color: var(--whitebeige);
+    font-size: .85rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background .2s, border-color .2s;
+}
+.wip-close:hover { background: rgba(255,253,242,.08); border-color: rgba(255,253,242,.4); }
+.wip-banner * {
+    color: var(--whitebeige);
 }
 
-/* Footer */
-.ctx-footer-nav a  { 
-    font-size: 1rem; opacity: 1; color: rgba(255,253,242,.8); 
+/* Context page body copy — readable sizes + solid colors */
+.cfs-lede        { font-size: clamp(1.1rem, 1.6vw, 1.3rem);  color: var(--whitebeige); }
+.cfs-body-p      { font-size: clamp(1rem, 1.2vw, 1.1rem);    color: #e2e2dc; }
+.cfs-trail       { font-size: 1rem;                            color: #c3c4c5; }
+.cbq-text        { font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: var(--whitebeige); }
+.ctc-text        { font-size: clamp(1rem, 1.5vw, 1.18rem);    color: var(--whitebeige); }
+.cfs-pullquote p { font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
+.cfs-pullquote cite { font-size: .88rem; color: #abaeb3; }
+.cfs-tile p      { font-size: .95rem; color: #cfd0ce; }
+.cft-label       { font-size: .82rem; }
+.cfs-num-sm      { font-size: .82rem; }
+.csp-l           { font-size: .82rem; color: #b7b9bc; }
+.ctc-label       { font-size: .82rem; }
+.cfs-step-body p      { font-size: 1rem; color: #cfd0ce; }
+.cfs-step-body strong { font-size: 1rem; }
+.ctx-footer-nav a     { font-size: 1rem;  color: #cfd0ce; }
+.ctx-footer-credit    { font-size: .85rem; color: #9fa3aa; }
+
+/* Systems page body copy */
+.sys-hero-body    { font-size: 1rem;   color: #dbdbd7; }
+.sys-section-desc { font-size: .95rem; color: #cfd0ce; }
+.sys-callout p    { font-size: .95rem; color: #cfd0ce; }
+.sys-rice-note-inner p { font-size: .95rem; color: #cfd0ce; }
+.sys-eyebrow      { font-size: .78rem; }
+.sys-legend-name  { font-size: .9rem;  color: #e7e6e0; }
+.sys-legend-src   { font-size: .8rem;  color: #abaeb3; }
+.sys-section-num  { font-size: .8rem;  }
+.toggle-name      { font-size: .95rem; }
+.toggle-desc      { font-size: .8rem;  color: #b7b9bc; }
+.rice-tons, .rice-value { font-size: .85rem; color: #b7b9bc; }
+.bird-card-num    { font-size: .8rem;  }
+.sys-table td     { font-size: .9rem;  color: #dbdbd7; }
+.sys-table th     { font-size: .85rem; }
+
+/* Observations page body copy */
+.entry-body p   { font-size: 1rem !important; color: #e2e2dc !important; }
+.entry-date     { font-size: .88rem; color: #cfd0ce; }
+.entry-weather  { font-size: .88rem; color: #abaeb3; }
+.il-title       { font-size: .9rem;  color: #dbdbd7; }
+.il-num         { font-size: .82rem; }
+.im-k           { font-size: .82rem; color: #9fa3aa; }
+.im-v           { font-size: .82rem; color: #c3c4c5; }
+.entry-aside p  { font-size: .88rem !important; color: #c3c4c5 !important; }
+.entry-tag      { font-size: .82rem; }
+.etag           { font-size: .82rem; }
+
+/* ── LIGHT BACKGROUND TEXT (blackblue) ── */
+/* Map page panel — light surface */
+.map-panel .stat-lbl       { font-size: .82rem; color: #636a7c; }
+.map-panel .layer-name     { font-size: .9rem;  color: #3f4861; }
+.map-panel .ck             { font-size: .88rem; color: #636a7c; }
+.map-panel .cv             { font-size: .88rem; color: #3f4861; }
+.map-panel .annotation-card p { font-size: .9rem; color: #636a7c; }
+.map-panel .cond-title     { font-size: .82rem; color: #6f7585; }
+.map-panel .layers-title   { font-size: .82rem; color: #5d6475; }
+
+/* ── SVG / CHART TEXT ── */
+/* Systems charts are on dark backgrounds → use whitebeige */
+svg text,
+.chart-text,
+[class*="wheel"] text {
+    fill: var(--whitebeige) !important;
+    opacity: 1 !important;
 }
-.ctx-footer-credit { 
-    font-size: .85rem; opacity: 1; color: rgba(255,253,242,.6); 
-}
+
+/* Minimum font size for SVG labels */
+svg text { font-size: 14px !important; }
 
 
 /* ─────────────────────────────────────────────────────────────
-   SCROLL NAV BUTTONS — fixed ↑ ↓ for touch / kiosk
+   11. SCROLL NAV BUTTONS — fixed ↑ ↓ for touch / kiosk
 ───────────────────────────────────────────────────────────── */
 
 .scroll-nav {
@@ -3032,16 +3112,10 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     color: var(--pink);
     outline: none;
 }
-.scroll-nav-btn:active {
-    transform: scale(.92);
-    background: rgba(240,104,150,.15);
-}
-.scroll-nav-btn:disabled {
-    opacity: .22;
-    pointer-events: none;
-}
+.scroll-nav-btn:active  { transform: scale(.92); background: rgba(240,104,150,.15); }
+.scroll-nav-btn:disabled { opacity: .22; pointer-events: none; }
 
-/* Map page — light panel, use dark buttons */
+/* Map page — light background, flip to dark buttons */
 body.map-page .scroll-nav-btn {
     background: rgba(255,253,242,.95);
     border-color: rgba(15,27,61,.2);
@@ -3054,130 +3128,50 @@ body.map-page .scroll-nav-btn:focus-visible {
     color: var(--pink);
 }
 
-
-/* ─────────────────────────────────────────────────────────────
-   DISMISSIBLE CONSTRUCTION TOAST BANNER
-───────────────────────────────────────────────────────────── */
-.wip-banner {
-    position: fixed !important;
-    bottom: 2rem !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background-color: var(--yellow) !important;
-    color: var(--blackblue) !important;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 12px 32px rgba(15, 27, 61, 0.4);
-    z-index: 2147483647 !important; /* Maximum z-index ensures it layers on top of video & load state */
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    width: calc(100% - 3rem);
-    max-width: 520px;
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* Hidden state when exit button is triggered */
-.wip-banner.hidden {
-    display: none !important;
-}
-
-.wip-content {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-}
-
-.wip-icon {
-    font-size: 1.2rem;
-    line-height: 1;
-}
-
-.wip-close {
-    background: none;
-    border: none;
-    color: var(--blackblue);
-    font-size: 1.1rem;
-    cursor: pointer;
-    padding: 0.25rem;
-    line-height: 1;
-    opacity: 0.6;
-    transition: opacity 0.15s ease;
-}
-
-.wip-close:hover {
-    opacity: 1;
-}
-
-
-
-
-
 /* ==========================================================================
-   ACCESSIBILITY & CONSISTENCY OVERRIDES
-   Ensures text meets minimum readable sizes across Systems and Observations
+   VIEWPORT SCROLL SNAPPING (SYSTEMS PAGE)
 ========================================================================== */
 
-/* 1. Unify and enlarge primary reading text */
-.sys-hero-body,
-.sys-section-desc,
-.sys-callout p,
-.sys-rice-note-inner p,
-.entry-body p {
-    font-size: 1rem; /* Bumps text up to standard 16px */
-    line-height: 1.6;
+/* 1. Lock the outer body so only the main container scrolls */
+body.systems-page {
+    height: 100vh;
+    overflow: hidden; 
 }
 
-/* 2. Fix the extremely tiny text on Systems page */
-.sys-eyebrow,
-.sys-legend-name,
-.sys-legend-src,
-.sys-legend-unit,
-.rice-tons,
-.rice-value,
-.bird-card-num,
-.sys-section-num,
-.toggle-name,
-.toggle-desc {
-    font-size: 0.85rem; /* Sets a legible minimum for secondary info */
-    line-height: 1.4;
+/* 2. Turn the main container into a snap-track */
+.sys-main {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    padding-top: 0 !important; /* Let the segments handle their own padding */
 }
 
-/* 3. Fix the tiny meta text on Observations page */
-.entry-date,
-.entry-weather,
-.entry-tag,
-.etag,
-.il-num,
-.il-title,
-.im-k,
-.im-v,
-.ck,
-.cv,
-.ctx-label {
-    font-size: 0.85rem;
-    line-height: 1.4;
+/* 3. The universal segment container */
+.sys-segment {
+    height: 100vh;
+    width: 100%;
+    scroll-snap-align: start; /* Forces the scroll to snap to the top of this div */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers content vertically */
+    padding: 80px 2rem 2rem 2rem; /* 80px top padding clears your fixed header */
+    box-sizing: border-box;
+    position: relative;
 }
 
-/* Fix specific aside text that had heavy specificity/important tags */
-.entry-aside p {
-    font-size: 0.85rem !important;
+/* Alternating background colors for visual separation */
+.sys-segment:nth-child(even) {
+    background-color: var(--whitebeige);
+    color: var(--blackblue);
+}
+.sys-segment:nth-child(odd) {
+    background-color: var(--blackblue);
+    color: var(--whitebeige);
 }
 
-/* 4. Harmonize header sizes between the two pages */
-.sys-hero-title,
-.entry-title {
+.segment-title {
     font-size: 2.5rem;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-}
-
-.sys-section-title {
-    font-size: 1.8rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 2rem;
+    text-align: center;
 }

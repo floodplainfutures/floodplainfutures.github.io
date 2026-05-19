@@ -5,13 +5,14 @@
     <title>Context — Floodplain Futures</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
 <body class="context-page">
 
     <header class="ff-header">
         <a href="index.html" class="ff-header-back">← home</a>
-        <span class="ff-header-title">✦&ensp;context</span>
+        <span class="ff-header-title">context</span>
         <nav class="ff-header-nav">
             <a href="map.html" class="ff-header-nav-link">the basin →</a>
         </nav>
@@ -19,10 +20,12 @@
 
     <div class="ctx-progress" id="ctxProgress"></div>
 
+    <div class="ctx-page-scroll" id="ctxPageScroll">
+
     <!-- HERO -->
     <section class="ctx-hero">
         <div class="ctx-hero-photo">
-            <img src="images/context/hero.jpg" alt="Aerial view of the Yolo Basin floodplain">
+            <img src="images/context/hero.png" alt="Aerial view of the Yolo Basin floodplain">
         </div>
 
         <!-- floating meta — top left -->
@@ -44,9 +47,9 @@
         <span class="ctx-hero-word-big ctx-hero-word-big--2">futures</span>
 
         <!-- subtitle as small annotation, bottom right -->
-        <p class="ctx-hero-sub-float">
-            A working landscape where flooding,<br>agriculture, and migration overlap<br>rather than compete.
-        </p>
+        <!-- <p class="ctx-hero-sub-float">
+            A working landscape where flood,<br>flight, and food overlap<br>rather than compete.
+        </p> -->
 
         <!-- location annotation, mid-right with line -->
         <div class="ctx-hero-ann">
@@ -75,11 +78,16 @@
             <!-- text left, tall photo bleeds right -->
             <div class="cfs-col2" data-reveal>
                 <div class="cfs-col2-text">
-                    <p class="cfs-lede">Hi! I'm Zahra Baxi, an MFA Design student at UC Davis. I grew up in Davis and the Yolo Basin is basically in my backyard. I never really paid attention to it until this thesis.</p>
-                    <p class="cfs-body-p">I started visiting it seriously in fall 2024. This site documents what I found.</p>
+                    <p class="cfs-lede">Hi! I'm Zahra Baxi, an MFA Design student at UC Davis. I'm a product designer that works across the disciplines of interactive design, social responsibility, & human-centered design.<br>
+                    <br>I grew up in Davis almost my whole life. The Yolo Basin is a 15 minute drive from my childhood home and I never visited until I started this thesis. I really misunderstood the space. I frequently passed by on commutes to Sacramento and as someone who didn't consider themselves a birder (as I only really knew of it as a popular birding spot) I would drive by not really paying attention. After moving back to Davis for my masters I learned a lot more about the space from a different perspective, now being a designer within enviornmental spaces.<br>
+                    <br>This thesis explores the complicated and intricate relationship between the floodplain, the birds, and the farmers that all share the same space. I wanted to understand how one place can be all three of those things at once, and how to design for that complexity without flattening it. I also wanted to weave in my story of exploring and experiencing the basin for the first time, and how that personal journey of discovery shaped my relationship to the place and ultimately this project. <br>
+                    <!-- <br>You can learn more about my work @ www.zahrabaxi.com -->
+                    <!-- <br>You can learn more about my work @ <a href="https://www.zahrabaxi.com/" target="_blank" rel="noopener">www.zahrabaxi.com</a> -->
+                </p>
+                    <!-- <p class="cfs-body-p">I started visiting it seriously in fall 2024. This site documents what I found.</p> -->
                 </div>
                 <div class="cfs-img-slot cfs-img-slot--tall" data-label="field photo · first visit">
-                    <img src="images/context/premise-1.jpg" alt="" class="cfs-img">
+                    <img src="images/context/zahrabaxi.JPG" alt="photo of zahra baxi" class="cfs-img">
                 </div>
             </div>
 
@@ -89,7 +97,7 @@
             </div>
 
             <blockquote class="cfs-pullquote" data-reveal>
-                <p>"The same field holds floodwater in January, rice in July, and birds all year."</p>
+                <p>"This field is complex. The same field holds floodwater in January, rice in July, and birds all year."</p>
                 <cite>field notes, Yolo Basin</cite>
             </blockquote>
 
@@ -124,7 +132,7 @@
             <!-- map slot left, caption text right -->
             <div class="cfs-map-row" data-reveal>
                 <div class="cfs-img-slot cfs-img-slot--map" data-label="map · basin extent + land use layers">
-                    <img src="images/context/place-map.jpg" alt="" class="cfs-img">
+                    <img src="images/context/place-map.png" alt="" class="cfs-img">
                 </div>
                 <div class="cfs-map-caption">
                     <p class="cfs-lede">The Yolo Basin is about 3 miles from downtown Davis and runs 41 miles along the Sacramento River. Most people only see it from the freeway.</p>
@@ -236,7 +244,7 @@
                     </li>
                 </ol>
                 <div class="cfs-img-slot cfs-img-slot--diagram" data-label="diagram · seasonal cycle or systems map">
-                    <img src="images/context/method-diagram.jpg" alt="" class="cfs-img">
+                    <img src="images/context/method-diagram.jpeg" alt="" class="cfs-img">
                 </div>
             </div>
 
@@ -284,6 +292,8 @@
         </footer>
 
     </main>
+
+    </div><!-- end .ctx-page-scroll -->
 
     <script src="scripts.js"></script>
 </body>

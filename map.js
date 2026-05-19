@@ -27,6 +27,22 @@
 
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
+    // ── Fixed-order panes ──────────────────────────────────────
+    // Each layer gets its own pane so toggling never changes z-order.
+    // Higher zIndex = drawn on top. Order (bottom → top):
+    //   basin → wildlife → hunting → nigiri → roads → sites
+    map.createPane('paneBasin');    map.getPane('paneBasin').style.zIndex    = 300;
+    map.createPane('paneWildlife'); map.getPane('paneWildlife').style.zIndex  = 310;
+    map.createPane('paneHunting');  map.getPane('paneHunting').style.zIndex   = 320;
+    map.createPane('paneNigiriOne');map.getPane('paneNigiriOne').style.zIndex = 330;
+    map.createPane('paneNigiriTwo');map.getPane('paneNigiriTwo').style.zIndex = 331;
+    map.createPane('paneRoads');    map.getPane('paneRoads').style.zIndex     = 340;
+    map.createPane('paneSites');    map.getPane('paneSites').style.zIndex     = 350;
+    // Pointer events: only sites pane needs clicks; polygon panes are display-only
+    ['paneBasin','paneWildlife','paneHunting','paneNigiriOne','paneNigiriTwo','paneRoads'].forEach(function(p){
+        map.getPane(p).style.pointerEvents = 'none';
+    });
+
     // YOLO BYPASS WILDLIFE AREA BOUNDARY (Official GeoJSON)
     const wildlifeAreaGeoJSON = {
         "type": "FeatureCollection",
@@ -163,7 +179,8 @@
             opacity: 0,
             fillColor: '#0f1b3d',
             fillOpacity: 0.5
-        }
+        },
+        pane: 'paneWildlife'
     }).bindPopup('<b>Yolo Bypass Wildlife Area</b><span><br>16,000 acres managed by CDFW</span>');
 
 
@@ -338,7 +355,8 @@
             opacity: 0,
             fillColor: '#ef6244',
             fillOpacity: 0.5
-        }
+        },
+        pane: 'paneHunting'
     }).bindPopup('<b>Yolo Bypass Hunting Area</b><span><br>zones open to public hunting (permit required)</span>');
 
     
@@ -676,7 +694,8 @@
             opacity: 0,
             fillColor: '#7292cbff',
             fillOpacity: 0.5
-        }
+        },
+        pane: 'paneBasin'
     }).bindPopup('<b>Yolo Bypass</b><span><br>59,000 acres total floodway</span>');
 
     
@@ -708,7 +727,8 @@
             color: '#f06896',
             weight: 6,
             opacity: 1
-        }
+        },
+        pane: 'paneRoads'
     }).bindPopup('<b>I-80 Yolo Causeway</b><span><br>3.2 mile bridge from Davis to West Sacramento</span>');
 
 
@@ -784,7 +804,8 @@
             opacity: 0,
             fillColor: '#bda543ff',
             fillOpacity: 0.7
-        }
+        },
+        pane: 'paneNigiriOne'
     }).bindPopup('<b>Conway Ranch</b><span><br>Part of the Nigiri Project</span>');
 
 
@@ -841,7 +862,8 @@
                 opacity: 0,
                 fillColor: '#f1b93f',
                 fillOpacity: 0.7
-            }
+            },
+            pane: 'paneNigiriTwo'
         }).bindPopup('<b>Knaggs Ranch</b><span><br>Part of the Nigiri Project</span>');
 
 
@@ -892,51 +914,47 @@
 
     // WILDLIFE AREA KEY SITES (accurate coordinates)
     const sitesLayer = L.layerGroup([
-        L.marker([38.56175808082506, -121.63817642192132], { icon: pin('rgba(240,104,150,1)',20) })
+        L.marker([38.56175808082506, -121.63817642192132], { icon: pin('rgba(240,104,150,1)',20), pane: 'paneSites' })
             .bindPopup('<b>Main Entrance</b><span><br>Yolo Bypass Wildlife Area</span>'),
-        L.marker([38.56373578901804, -121.63647676080996], { icon: pin('rgba(189,165,67,1)',18) })
+        L.marker([38.56373578901804, -121.63647676080996], { icon: pin('rgba(189,165,67,1)',18), pane: 'paneSites' })
             .bindPopup('<b>Bat Tour Viewing Spot</b><span><br>Mexican free-tailed bat colony observation</span>'),
-        L.marker([38.56363743968578, -121.63530902018849], { icon: pin('rgba(46,85,124,1)',18) })
+        L.marker([38.56363743968578, -121.63530902018849], { icon: pin('rgba(46,85,124,1)',18), pane: 'paneSites' })
             .bindPopup('<b>Main Parking Lot</b><span><br>Visitor parking area</span>'),
-
-
-         L.marker([38.76493298658616, -121.64181211363625], { icon: pin('rgba(46,85,124,1)',18) })
+        L.marker([38.76493298658616, -121.64181211363625], { icon: pin('rgba(46,85,124,1)',18), pane: 'paneSites' })
             .bindPopup('<b>Fremont Weir</b><span><br>Fremont Weir</span>'),
-        L.marker([38.556101042353816, -121.67203501881403], { icon: pin('rgba(46,85,124,1)',18) })
+        L.marker([38.556101042353816, -121.67203501881403], { icon: pin('rgba(46,85,124,1)',18), pane: 'paneSites' })
             .bindPopup('<b>Wildlife Area HQ</b><span><br>Wildlife Area HQ</span>'),
-         L.marker([38.76421454381989, -121.64693248894628], { icon: pin('rgba(46,85,124,1)',18) })
+        L.marker([38.76421454381989, -121.64693248894628], { icon: pin('rgba(46,85,124,1)',18), pane: 'paneSites' })
             .bindPopup('<b>Adult Fish Passage Lot</b><span><br>Adult Fish Passage</span>'),
-
-
-        L.marker([38.5309, -121.6200], { icon: pin('rgb(195, 21, 21)',18) })
+        L.marker([38.5309, -121.6200], { icon: pin('rgb(195, 21, 21)',18), pane: 'paneSites' })
             .bindPopup('<b>Hunters Checkpoint</b><span><br>Adult Fish Passage</span>')
-
-
-
     ]);
 
+    // Map each layer key → { layer, paneName }
+    const layerMap = {
+        basin:     { layer: basinLayer,      pane: 'paneBasin'     },
+        wildlife:  { layer: wildlifeLayer,   pane: 'paneWildlife'  },
+        hunting:   { layer: wildlifeHunting, pane: 'paneHunting'   },
+        nigirione: { layer: nigiriLayerOne,  pane: 'paneNigiriOne' },
+        nigiritwo: { layer: nigiriLayerTwo,  pane: 'paneNigiriTwo' },
+        roads:     { layer: roadsLayer,      pane: 'paneRoads'     },
+        sites:     { layer: sitesLayer,      pane: 'paneSites'     }
+    };
 
-    // {
-    //   "type": "Feature",
-    //   "properties": {},
-    //   "geometry": {
-    //     "coordinates": [
-    //       -121.64181211363625,
-    //       38.76493298658616
-    //     ],
-    //     "type": "Point"
-    //   }
+    // Add all layers once — they never get removed/re-added, only shown/hidden
+    Object.values(layerMap).forEach(({ layer }) => layer.addTo(map));
 
-    const layerMap = { basin: basinLayer, wildlife: wildlifeLayer, hunting: wildlifeHunting, sites: sitesLayer, roads: roadsLayer , nigirione: nigiriLayerOne, nigiritwo: nigiriLayerTwo};
-    Object.values(layerMap).forEach(l => l.addTo(map));
-
+    // Toggle by hiding/showing the pane DOM element — z-order never changes
     document.querySelectorAll('.layer-row').forEach(row => {
         row.addEventListener('click', () => {
             const key = row.dataset.layer;
-            const lyr = layerMap[key];
-            if (!lyr) return;
-            row.classList.toggle('active');
-            map.hasLayer(lyr) ? map.removeLayer(lyr) : lyr.addTo(map);
+            const entry = layerMap[key];
+            if (!entry) return;
+            const paneEl = map.getPane(entry.pane);
+            if (!paneEl) return;
+            const isVisible = paneEl.style.display !== 'none';
+            paneEl.style.display = isVisible ? 'none' : '';
+            row.classList.toggle('active', !isVisible);
         });
     });
 
