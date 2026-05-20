@@ -2430,7 +2430,13 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     margin-top: .35rem;
     transform: rotate(.6deg);
 }
-.entry-title { font-family: "Inter", sans-serif; font-size: 2rem; color: var(--ink); letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.2rem; }
+.entry-title { 
+    font-family: "Inter", sans-serif; 
+    font-size: 2rem; color: var(--ink); 
+    /* letter-spacing: -.03em;  */
+    line-height: 1.05;
+     margin-bottom: 1.2rem; 
+    }
 .entry-body p { font-family: "DM Mono", monospace; font-size: .8rem; line-height: 1.85; color: var(--ink); opacity: .8; margin-bottom: 1rem; letter-spacing: .02em; }
 .entry-body p:last-child { margin-bottom: 0; }
 .entry-aside {

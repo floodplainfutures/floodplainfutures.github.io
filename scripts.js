@@ -162,7 +162,7 @@
     /* ───────────────────────────────────────────────────────────
        SCROLL NAV — ↑ ↓ buttons injected on all non-home pages
     ─────────────────────────────────────────────────────────── */
-    (function initScrollNav() {
+    function initScrollNav() {
         if (body.classList.contains('home-page')) { return; }
 
         var isSys = body.classList.contains('systems-page');
@@ -197,7 +197,6 @@
             return null;
         }
 
-        // Helper: offsetTop of el relative to a scroll container
         function topRelToContainer(el, container) {
             var top = 0;
             while (el && el !== container) {
@@ -207,57 +206,39 @@
             return top;
         }
 
-        // Systems: snap to .sys-hero / .sys-section inside .sys-main
-        function snapSysScroll(dir) {
+        function snapToSection(selector) {
             var c = getContainer();
             if (!c) { return; }
-            var sections = Array.prototype.slice.call(c.querySelectorAll('.sys-hero, .sys-section'));
+            var sections = Array.prototype.slice.call(c.querySelectorAll(selector));
             if (!sections.length) { return; }
-            var scrollTop = c.scrollTop;
-            var target = null;
-            if (dir === 1) {
-                for (var i = 0; i < sections.length; i++) {
-                    var t = topRelToContainer(sections[i], c);
-                    if (t > scrollTop + 10) { target = t; break; }
-                }
-            } else {
-                for (var j = sections.length - 1; j >= 0; j--) {
-                    var t2 = topRelToContainer(sections[j], c);
-                    if (t2 < scrollTop - 10) { target = t2; break; }
-                }
-            }
-            if (target !== null) { c.scrollTo({ top: target, behavior: 'smooth' }); }
+            return { c: c, sections: sections };
         }
 
-        // Context: snap to .ctx-hero / .cfs inside #ctxPageScroll
-        function snapCtxScroll(dir) {
-            var c = getContainer();
-            if (!c) { return; }
-            var sections = Array.prototype.slice.call(c.querySelectorAll('.ctx-hero, .cfs'));
-            if (!sections.length) { return; }
-            var scrollTop = c.scrollTop;
+        function snapScroll(dir, selector) {
+            var s = snapToSection(selector);
+            if (!s) { return; }
+            var scrollTop = s.c.scrollTop;
             var target = null;
             if (dir === 1) {
-                for (var i = 0; i < sections.length; i++) {
-                    var t = topRelToContainer(sections[i], c);
+                for (var i = 0; i < s.sections.length; i++) {
+                    var t = topRelToContainer(s.sections[i], s.c);
                     if (t > scrollTop + 10) { target = t; break; }
                 }
             } else {
-                for (var j = sections.length - 1; j >= 0; j--) {
-                    var t2 = topRelToContainer(sections[j], c);
+                for (var j = s.sections.length - 1; j >= 0; j--) {
+                    var t2 = topRelToContainer(s.sections[j], s.c);
                     if (t2 < scrollTop - 10) { target = t2; break; }
                 }
             }
-            if (target !== null) { c.scrollTo({ top: target, behavior: 'smooth' }); }
+            if (target !== null) { s.c.scrollTo({ top: target, behavior: 'smooth' }); }
         }
 
         function doScroll(dir) {
-            if (isSys) { snapSysScroll(dir); return; }
-            if (isCtx) { snapCtxScroll(dir); return; }
+            if (isSys) { snapScroll(dir, '.sys-hero, .sys-section'); return; }
+            if (isCtx) { snapScroll(dir, '.ctx-hero, .cfs');         return; }
             var c = getContainer();
-            var amt = dir * STEP;
-            if (c) { c.scrollBy({ top: amt, behavior: 'smooth' }); }
-            else   { window.scrollBy({ top: amt, behavior: 'smooth' }); }
+            if (c) { c.scrollBy({ top: dir * STEP, behavior: 'smooth' }); }
+            else   { window.scrollBy({ top: dir * STEP, behavior: 'smooth' }); }
         }
 
         function updateBtns() {
@@ -277,13 +258,28 @@
         upBtn.addEventListener('click',   function () { doScroll(-1); });
         downBtn.addEventListener('click', function () { doScroll(1); });
 
+        // Attach scroll listener once DOM + container are ready
         var c = getContainer();
-        if (c) { c.addEventListener('scroll', updateBtns, { passive: true }); }
-        if (!isSys && !isCtx && !isObs) { window.addEventListener('scroll', updateBtns, { passive: true }); }
-        window.addEventListener('resize', function () { STEP = window.innerHeight * 0.82; updateBtns(); });
+        if (c) {
+            c.addEventListener('scroll', updateBtns, { passive: true });
+        } else {
+            // Fallback: window scroll (map page, or if container not yet in DOM)
+            window.addEventListener('scroll', updateBtns, { passive: true });
+        }
+        window.addEventListener('resize', function () {
+            STEP = window.innerHeight * 0.82;
+            updateBtns();
+        });
 
         updateBtns();
-    })();
+    }
+
+    // Run after DOM is ready so containers like #ctxPageScroll exist
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initScrollNav);
+    } else {
+        initScrollNav();
+    }
 
     /* ───────────────────────────────────────────────────────────
        1. HOME PAGE
