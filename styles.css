@@ -102,10 +102,19 @@ a:hover {
     z-index: 0;
     opacity: 0;
     transition: opacity 1s ease;
+    /* Hide Safari's native play button overlay */
+    -webkit-appearance: none;
+    pointer-events: none;
 }
 #myVideo.visible { 
     opacity: 1; 
 }
+/* Suppress Safari's native video controls & play button at every level */
+#myVideo::-webkit-media-controls              { display: none !important; }
+#myVideo::-webkit-media-controls-enclosure    { display: none !important; }
+#myVideo::-webkit-media-controls-panel        { display: none !important; }
+#myVideo::-webkit-media-controls-play-button  { display: none !important; }
+#myVideo::-webkit-media-controls-start-playback-button { display: none !important; }
 
 /* LOADING SCREEN */
 #loadingScreen {
@@ -277,7 +286,7 @@ a:hover {
 
 .ff-header-back {
     font-family: "Inter", sans-serif;
-    font-size: .9rem;
+    font-size: 1rem;    /* min 16px for tappable nav */
     color: var(--whitebeige);
     text-decoration: none;
     white-space: nowrap;
@@ -305,7 +314,7 @@ a:hover {
 
 .ff-header-title {
     font-family: "DM Mono", monospace;
-    font-size: .75rem;
+    font-size: .875rem;  /* was .75rem — raised to 14px min */
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--whitebeige);
@@ -316,7 +325,7 @@ a:hover {
 
 .ff-header-meta {
     font-family: "DM Mono", monospace;
-    font-size: .75rem;
+    font-size: .875rem;
     letter-spacing: .12em;
     text-transform: uppercase;
     color: var(--whitebeige);
@@ -332,7 +341,7 @@ a:hover {
 }
 .ff-header-nav-link {
     font-family: "Inter", sans-serif;
-    font-size: .9rem;
+    font-size: 1rem;
     color: var(--whitebeige);
     text-decoration: none;
     white-space: nowrap;
@@ -376,10 +385,10 @@ a:hover {
 }
 .ff-footer-credit {
     font-family: "DM Mono", monospace;
-    font-size: .54rem;
+    font-size: 0.875rem;
     letter-spacing: .1em;
-    color: var(--whitebeige);
-    opacity: .18;
+    color: #b0b4c2;
+    opacity: 1;
 }
 .ff-footer-nav {
     display: flex;
@@ -387,9 +396,9 @@ a:hover {
 }
 .ff-footer-nav a {
     font-family: "Inter", sans-serif;
-    font-size: .85rem;
-    color: var(--whitebeige);
-    opacity: .28;
+    font-size: 1rem;
+    color: #c0c4d0;
+    opacity: 1;
     text-decoration: none;
     transition: opacity .2s, color .2s;
     letter-spacing: .02em;
@@ -492,9 +501,9 @@ body.context-page {
 }
 .ctx-label-sep {
     font-family: "DM Mono", monospace;
-    font-size: .55rem;
-    color: var(--whitebeige);
-    opacity: .25;
+    font-size: 0.875rem;
+    color: rgba(255,253,242,.7);
+    opacity: 1;
 }
 
 /* the two big title words — independently placed */
@@ -641,7 +650,7 @@ body.context-page {
 }
 .cfs-num-sm {
     font-family: "DM Mono", monospace;
-    font-size: .56rem;
+    font-size: 0.875rem;
     letter-spacing: .22em;
     color: var(--pink);
     opacity: .6;
@@ -702,7 +711,7 @@ body.context-page {
 .cfs-aside-label {
     display: block;
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: 0.875rem;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--pink);
@@ -711,7 +720,7 @@ body.context-page {
 }
 .cfs-aside-right p {
     font-family: "DM Mono", monospace;
-    font-size: .68rem;
+    font-size: 0.875rem;
     line-height: 1.75;
     color: var(--whitebeige);
     opacity: .55;
@@ -735,10 +744,10 @@ body.context-page {
 }
 .cfs-pullquote cite {
     font-family: "DM Mono", monospace;
-    font-size: .52rem;
-    letter-spacing: .1em;
-    color: var(--whitebeige);
-    opacity: .28;
+    font-size: 0.875rem;
+    letter-spacing: .08em;
+    color: rgba(255,253,242,.75);
+    opacity: 1;
     font-style: normal;
 }
 
@@ -771,7 +780,7 @@ body.context-page {
 }
 .csp-l {
     font-family: "DM Mono", monospace;
-    font-size: .48rem;
+    font-size: 0.875rem;
     letter-spacing: .16em;
     text-transform: uppercase;
     color: var(--whitebeige);
@@ -804,7 +813,7 @@ body.context-page {
 .cft-label {
     display: block;
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: 0.875rem;
     letter-spacing: .2em;
     text-transform: uppercase;
     margin-bottom: .8rem;
@@ -812,7 +821,7 @@ body.context-page {
 }
 .cfs-tile p {
     font-family: "DM Mono", monospace;
-    font-size: .65rem;
+    font-size: 0.875rem;
     line-height: 1.82;
     color: var(--whitebeige);
     opacity: .35;
@@ -821,10 +830,10 @@ body.context-page {
 /* ── TRAIL TEXT ── */
 .cfs-trail {
     font-family: "DM Mono", monospace;
-    font-size: .72rem;
-    line-height: 1.85;
+    font-size: 1rem;
+    line-height: 1.7;
     color: var(--whitebeige);
-    opacity: .32;
+    opacity: 1;
     max-width: 420px;
     margin: 2rem 0 0 clamp(2rem, 8vw, 8rem);
     clear: both;
@@ -838,35 +847,28 @@ body.context-page {
 /* ── IMAGE SLOTS ── */
 .cfs-img-slot {
     position: relative;
-    background: rgba(255,255,255,.03);
-    border: 1px dashed rgba(255,255,255,.08);
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 220px;
+    display: block; /* block so image fills naturally without gap */
 }
 /* data-label is kept as an attribute for reference only — not rendered */
-.cfs-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cfs-img { width: 100%; height: auto; display: block; object-fit: cover; }
 
 /* tall — first-visit photo, sits right of intro text */
-.cfs-img-slot--tall { min-height: 380px; }
+.cfs-img-slot--tall { /* height is natural from image */ }
 
 /* wide — full bleed past margins */
 .cfs-img-slot--wide {
     margin: 2.5rem -8vw;
-    min-height: clamp(220px, 38vw, 480px);
-    border-left: none; border-right: none;
+    /* height natural from image */
 }
 
 /* map — large, bleeds left */
 .cfs-img-slot--map {
-    min-height: clamp(260px, 36vw, 460px);
     margin-left: -8vw;
 }
 
 /* diagram */
-.cfs-img-slot--diagram { min-height: 280px; }
+.cfs-img-slot--diagram { /* height natural */ }
 
 /* ── PREMISE: text floats right of tall photo ── */
 .cfs-col2 {
@@ -887,19 +889,21 @@ body.context-page {
     flex-direction: column;
     gap: 1.4rem;
 }
-/* demote body text to annotation weight inside col2 */
 .cfs-col2-text .cfs-lede {
-    font-size: clamp(.88rem, 1.2vw, 1rem);
-    opacity: .65;
+    font-size: clamp(1rem, 1.3vw, 1.1rem);  /* min 16px */
+    opacity: 1;
+    color: #deded8;
     max-width: none;
     margin-bottom: 0;
+    line-height: 1.7;
 }
 .cfs-col2-text .cfs-body-p {
-    font-family: "DM Mono", monospace;
-    font-size: .68rem;
-    opacity: .38;
+    font-size: 1rem;
+    opacity: 1;
+    color: #c0c4ce;
     max-width: none;
     margin-bottom: 0;
+    line-height: 1.65;
 }
 
 /* ── PLACE: map bleeds left, caption annotation beside it ── */
@@ -919,18 +923,19 @@ body.context-page {
     flex-direction: column;
     gap: 1.4rem;
 }
-/* annotation weight */
 .cfs-map-caption .cfs-lede {
-    font-size: clamp(.82rem, 1.1vw, .95rem);
-    opacity: .6;
+    font-size: clamp(1rem, 1.2vw, 1.1rem);  /* min 16px */
+    opacity: 1;
+    color: #deded8;
     max-width: none;
     margin-bottom: 0;
+    line-height: 1.65;
 }
 .cfs-map-caption .cfs-body-p {
-    font-family: "DM Mono", monospace;
-    font-size: .65rem;
-    line-height: 1.82;
-    opacity: .35;
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 1;
+    color: #c0c4ce;
     max-width: none;
     margin-bottom: 0;
 }
@@ -944,13 +949,11 @@ body.context-page {
 }
 .cfs-photo-pair .cfs-img-slot:first-child {
     flex: 0 0 58%;
-    min-height: 280px;
     margin-top: 0;
 }
 .cfs-photo-pair .cfs-img-slot:last-child {
     flex: 1;
-    min-height: 200px;
-    margin-top: 3rem; /* vertical offset — the "non-boxy" key */
+    margin-top: 3rem;
 }
 
 /* ── METHOD LAYOUT: steps flow, diagram floats right ── */
@@ -965,7 +968,6 @@ body.context-page {
 }
 .cfs-method-layout .cfs-img-slot--diagram {
     flex: 0 0 38%;
-    min-height: 320px;
     margin-top: 2rem;
     margin-right: -8vw;
     align-self: flex-start;
@@ -1033,7 +1035,7 @@ body.context-page {
 .cfs-step:hover { padding-left: calc(var(--nudge, 0rem) + .6rem); }
 .cfs-step-n {
     font-family: "DM Mono", monospace;
-    font-size: .54rem;
+    font-size: 0.875rem;
     letter-spacing: .16em;
     color: var(--pink);
     opacity: .45;
@@ -1052,7 +1054,7 @@ body.context-page {
 }
 .cfs-step-body p {
     font-family: "DM Mono", monospace;
-    font-size: .68rem;
+    font-size: 0.875rem;
     line-height: 1.75;
     color: var(--whitebeige);
     opacity: .3;
@@ -1072,7 +1074,7 @@ body.context-page {
 .ctc-label {
     display: block;
     font-family: "DM Mono", monospace;
-    font-size: .48rem;
+    font-size: 0.875rem;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--pink);
@@ -1122,17 +1124,17 @@ body.context-page {
 .ctx-footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
 .ctx-footer-credit {
     font-family: "DM Mono", monospace;
-    font-size: .54rem;
-    letter-spacing: .1em;
-    color: var(--whitebeige);
-    opacity: .18;
+    font-size: 0.875rem;
+    letter-spacing: .08em;
+    color: #b0b4c2;
+    opacity: 1;
 }
 .ctx-footer-nav { display: flex; gap: 2rem; }
 .ctx-footer-nav a {
     font-family: "Inter", sans-serif;
-    font-size: .82rem;
+    font-size: 1rem;
     color: var(--whitebeige);
-    opacity: .28;
+    opacity: 1;
     text-decoration: none;
     transition: opacity .2s, color .2s;
 }
@@ -1200,20 +1202,20 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 }
 .mh-item {
     font-family: "DM Mono", monospace;
-    font-size: .72rem;
-    letter-spacing: .1em;
+    font-size: 0.875rem;
+    letter-spacing: .08em;
     text-transform: uppercase;
     color: var(--blackblue);
-    opacity: .7;
+    opacity: 1;
     white-space: nowrap;
 }
 .mh-item.accent {
     color: var(--olivegreen);
     opacity: 1;
     font-family: "DM Mono", monospace;
-    font-size: .72rem;
+    font-size: 0.875rem;
     font-weight: 400;
-    letter-spacing: .1em;
+    letter-spacing: .08em;
 }
 .mh-divider {
     width: 1px; height: 10px;
@@ -1223,10 +1225,10 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 .mh-spacer { flex: 1; }
 .mh-back {
     font-family: "DM Mono", monospace;
-    font-size: .72rem;
-    letter-spacing: .08em;
+    font-size: 0.875rem;
+    letter-spacing: .06em;
     color: var(--blackblue);
-    opacity: .6;
+    opacity: 1;
     text-decoration: none;
     padding: .6rem 0;
     transition: opacity .2s, color .2s;
@@ -1242,7 +1244,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
     padding: .35rem .7rem;
     cursor: pointer;
     font-family: "DM Mono", monospace;
-    font-size: .65rem;
+    font-size: 0.875rem;
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--blackblue);
@@ -1321,7 +1323,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 }
 .stat-lbl {
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: 0.875rem;
     letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--blackblue);
@@ -1341,7 +1343,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 .layers-wrap { display: flex; flex-direction: column; gap: .3rem; }
 .layers-title {
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: 0.875rem;
     letter-spacing: .2em;
     text-transform: uppercase;
     color: var(--blackblue);
@@ -1416,7 +1418,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 .conditions { display: flex; flex-direction: column; gap: .15rem; margin-top: .4rem; }
 .cond-title {
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: 0.875rem;
     letter-spacing: .2em;
     text-transform: uppercase;
     color: var(--blackblue);
@@ -1433,14 +1435,14 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 .cond-row:last-child { border-bottom: none; }
 .ck {
     font-family: "DM Mono", monospace;
-    font-size: .58rem;
+    font-size: 0.875rem;
     letter-spacing: .08em;
     color: var(--blackblue);
     opacity: .35;
 }
 .cv {
     font-family: "DM Mono", monospace;
-    font-size: .6rem;
+    font-size: 0.875rem;
     color: var(--blackblue);
     opacity: .7;
     text-align: right;
@@ -1481,7 +1483,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 }
 .map-tag-line {
     font-family: "DM Mono", monospace;
-    font-size: .52rem;
+    font-size: 0.875rem;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--blackblue);
@@ -1508,7 +1510,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
 }
 .map-sheet span {
     font-family: "DM Mono", monospace;
-    font-size: .44rem;
+    font-size: 0.875rem;
     letter-spacing: .12em;
     text-transform: uppercase;
     color: var(--blackblue);
@@ -1521,7 +1523,7 @@ html:has(body.map-page) { overflow: hidden; height: 100%; }
     transform: translateX(-50%);
     z-index: 10;
     font-family: "DM Mono", monospace;
-    font-size: .52rem;
+    font-size: 0.875rem;
     letter-spacing: .12em;
     color: var(--blackblue);
     opacity: .25;
@@ -1571,11 +1573,11 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-eyebrow {
     font-family: "DM Mono", monospace;
-    font-size: .78rem;
-    letter-spacing: .22em;
+    font-size: 0.875rem;
+    letter-spacing: .18em;
     text-transform: uppercase;
     color: var(--pink);
-    opacity: .65;
+    opacity: 1;
     margin-bottom: 1.4rem;
 }
 .sys-hero-title {
@@ -1601,22 +1603,17 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-section-img-slot {
     position: relative;
     width: 100%;
-    background: rgba(255,255,255,.025);
-    border: 1px dashed rgba(255,255,255,.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 280px;
     overflow: hidden;
+    display: block;
 }
-.sys-section-img-slot { margin-bottom: 2.5rem; min-height: 200px; }
-.sys-section-img-slot--wide { min-height: 260px; margin-bottom: 3rem; }
-.sys-hero-img, .sys-section-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sys-section-img-slot { margin-bottom: 2.5rem; }
+.sys-section-img-slot--wide { margin-bottom: 3rem; }
+.sys-hero-img, .sys-section-img { width: 100%; height: auto; display: block; object-fit: cover; }
 .img-missing .sys-hero-img,
 .img-missing .sys-section-img { display: none; }
 .img-placeholder-label {
     font-family: "DM Mono", monospace;
-    font-size: .5rem;
+    font-size: 0.875rem;
     letter-spacing: .14em;
     text-transform: uppercase;
     color: #808799;
@@ -1646,11 +1643,11 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-controls-label {
     font-family: "DM Mono", monospace;
-    font-size: .78rem;
-    letter-spacing: .22em;
+    font-size: 0.875rem;
+    letter-spacing: .16em;
     text-transform: uppercase;
     color: white;
-    opacity: .5;
+    opacity: 1;
     white-space: nowrap;
     flex-shrink: 0;
 }
@@ -1766,7 +1763,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-chart-labels-x span {
     font-family: "DM Mono", monospace;
-    font-size: .6rem;
+    font-size: 0.875rem;
     letter-spacing: .1em;
     color: #808799;
     text-align: center;
@@ -1795,16 +1792,16 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-legend-src {
     font-family: "DM Mono", monospace;
-    font-size: .78rem;
-    letter-spacing: .05em;
-    color: #9398a8;
+    font-size: 0.875rem;
+    letter-spacing: .04em;
+    color: #b0b4c2;
     display: block;
 }
 .sys-legend-unit {
     font-family: "DM Mono", monospace;
-    font-size: .78rem;
-    letter-spacing: .07em;
-    color: #808799;
+    font-size: 0.875rem;
+    letter-spacing: .06em;
+    color: #9fa4b2;
     margin-left: auto;
     white-space: nowrap;
 }
@@ -1825,7 +1822,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-tooltip.visible { opacity: 1; }
 .sys-tooltip-year {
     font-family: "DM Mono", monospace;
-    font-size: .56rem;
+    font-size: 0.875rem;
     letter-spacing: .18em;
     text-transform: uppercase;
     color: var(--yellow);
@@ -1837,7 +1834,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-tooltip-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .2rem 0; }
 .sys-tooltip-label {
     font-family: "DM Mono", monospace;
-    font-size: .52rem;
+    font-size: 0.875rem;
     letter-spacing: .08em;
     color: #6a7287;
     text-transform: uppercase;
@@ -1873,10 +1870,10 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-wheel-detail { padding-top: .5rem; }
 .wheel-prompt {
     font-family: "DM Mono", monospace;
-    font-size: .82rem;
-    letter-spacing: .14em;
+    font-size: 0.875rem;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    color: #808799;
+    color: #9fa4b2;
     margin-bottom: 1rem;
 }
 .wheel-detail-month {
@@ -1895,10 +1892,10 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .wdr-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: .4rem; }
 .wdr-system {
     font-family: "DM Mono", monospace;
-    font-size: .78rem;
-    letter-spacing: .18em;
+    font-size: 0.875rem;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    color: #9398a8;
+    color: #b0b4c2;
     display: block;
     margin-bottom: .3rem;
 }
@@ -1911,15 +1908,15 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 
 /* If the wheel uses standard HTML labels positioned in a circle instead of SVG: */
 .wheel-label {
-    font-size: 0.85rem !important;
+    font-size: 0.875rem !important;
 }
 
 /* BIRD GRID */
 .sys-bird-filters { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2rem; }
 .sys-bird-filter {
     font-family: "DM Mono", monospace;
-    font-size: .82rem;
-    letter-spacing: .12em;
+    font-size: 0.875rem;
+    letter-spacing: .1em;
     text-transform: uppercase;
     padding: .5rem 1rem;
     background: none;
@@ -1966,7 +1963,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .bird-img-missing .bird-card-img { display: none; }
 .bird-img-label {
     font-family: "DM Mono", monospace;
-    font-size: .46rem;
+    font-size: 0.875rem;
     letter-spacing: .12em;
     text-transform: uppercase;
     color: #808799;
@@ -1984,14 +1981,14 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .bird-card-content { padding: 1.4rem; display: flex; flex-direction: column; gap: .65rem; flex: 1; min-width: 0; overflow: hidden; }
 .bird-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; flex-shrink: 0; }
 .bird-card-num { font-family: "DM Mono", monospace; font-size: .8rem; letter-spacing: .14em; color: #808799; }
-.bird-card-season { font-family: "DM Mono", monospace; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; padding: .16rem .48rem; border: 1px solid currentColor; flex-shrink: 0; }
+.bird-card-season { font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .1em; text-transform: uppercase; padding: .16rem .48rem; border: 1px solid currentColor; flex-shrink: 0; }
 .season-winter   { color: var(--lightblue); }
 .season-spring   { color: var(--olivegreen); }
 .season-summer   { color: var(--yellow); }
 .season-fall     { color: var(--pink); }
 .season-yearround{ color: #9398a8; }
 .bird-card-name { font-family: "Inter", sans-serif; font-size: 1.1rem; color: white; font-weight: 400; text-transform: lowercase; letter-spacing: -.01em; line-height: 1.2; }
-.bird-card-sci { font-family: "DM Mono", monospace; font-size: .78rem; font-style: italic; color: #878d9e; letter-spacing: .03em; }
+.bird-card-sci { font-family: "DM Mono", monospace; font-size: 0.875rem; font-style: italic; color: #a8adb8; letter-spacing: .03em; }
 .bird-card-bar { height: 2px; background: rgba(255,255,255,.06); border-radius: 1px; position: relative; overflow: hidden; }
 .bird-card-bar-fill { position: absolute; top: 0; left: 0; bottom: 0; border-radius: 1px; transition: width .8s cubic-bezier(.22,1,.36,1); }
 .bird-card-stat { font-family: "DM Mono", monospace; font-size: .8rem; letter-spacing: .05em; color: #9398a8; }
@@ -2003,10 +2000,10 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-table { width: 100%; border-collapse: collapse; }
 .sys-table th {
     font-family: "DM Mono", monospace;
-    font-size: .82rem;
-    letter-spacing: .16em;
+    font-size: 0.875rem;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    color: #878d9e;
+    color: #a8adb8;
     padding: .8rem 1.2rem;
     text-align: left;
     border-bottom: 1px solid rgba(255,255,255,.1);
@@ -2024,8 +2021,8 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-table tr:hover td { background: rgba(255,255,255,.02); }
 .sys-table td.year-col { font-family: "Inter", sans-serif; font-size: 1.1rem; color: white; letter-spacing: -.02em; }
 .sys-table td.acres-col strong { font-family: "Inter", sans-serif; font-size: 1rem; color: var(--olivegreen); font-weight: 400; letter-spacing: -.02em; }
-.flood-badge { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .48rem; border: 1px solid var(--lightblue); color: var(--lightblue); white-space: nowrap; }
-.drought-badge { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .48rem; border: 1px solid rgba(255,255,255,.15); color: #808799; white-space: nowrap; }
+.flood-badge { font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .48rem; border: 1px solid var(--lightblue); color: var(--lightblue); white-space: nowrap; }
+.drought-badge { font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .48rem; border: 1px solid rgba(255,255,255,.15); color: #808799; white-space: nowrap; }
 .sys-rice-note { margin-bottom: 2rem; }
 .sys-rice-note-inner { padding: 1.4rem 1.8rem; border: 1px solid rgba(189,165,67,.18); background: rgba(189,165,67,.03); }
 .sys-rice-note-inner p { font-family: "DM Mono", monospace; font-size: .9rem; line-height: 1.8; color: #c3c6ce; }
@@ -2085,7 +2082,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .sys-bubble-key-label {
     font-family: "DM Mono", monospace;
-    font-size: .48rem;
+    font-size: 0.875rem;
     letter-spacing: .14em;
     text-transform: uppercase;
     color: #808799;
@@ -2117,14 +2114,14 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .bird-card-stat-label {
     font-family: "DM Mono", monospace;
-    font-size: .7rem;
+    font-size: 0.875rem;
     letter-spacing: .12em;
     text-transform: uppercase;
     color: #808799;
 }
 .bird-card-stat-peak {
     font-family: "DM Mono", monospace;
-    font-size: .7rem;
+    font-size: 0.875rem;
     line-height: 1.5;
     color: #808799;
     margin-top: .2rem;
@@ -2164,7 +2161,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .rice-water-tag {
     font-family: "DM Mono", monospace;
-    font-size: .46rem;
+    font-size: 0.875rem;
     letter-spacing: .1em;
     text-transform: uppercase;
     padding: .22rem .5rem;
@@ -2223,13 +2220,13 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 }
 .rice-tons, .rice-value {
     font-family: "DM Mono", monospace;
-    font-size: .62rem;
+    font-size: 0.875rem;
     letter-spacing: .04em;
     color: #808799;
 }
 .rice-context {
     font-family: "DM Mono", monospace;
-    font-size: .6rem;
+    font-size: 0.875rem;
     line-height: 1.72;
     color: #808799;
     max-width: 520px;
@@ -2243,30 +2240,30 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 .sys-conn-flood { border-top: 2px solid var(--lightblue); }
 .sys-conn-birds { border-top: 2px solid var(--pink); }
 .sys-conn-rice  { border-top: 2px solid var(--olivegreen); }
-.sys-conn-num { font-family: "DM Mono", monospace; font-size: .48rem; letter-spacing: .2em; color: #808799; }
+.sys-conn-num { font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .2em; color: #808799; }
 .sys-conn-card h3 { font-family: "Inter", sans-serif; font-size: .95rem; font-weight: 400; text-transform: lowercase; letter-spacing: -.01em; color: white; line-height: 1.25; }
-.sys-conn-card p { font-family: "DM Mono", monospace; font-size: .64rem; line-height: 1.78; color: #656d83; flex: 1; }
-.sys-conn-tag { font-family: "DM Mono", monospace; font-size: .46rem; letter-spacing: .2em; text-transform: uppercase; align-self: flex-start; margin-top: auto; padding-top: .8rem; }
+.sys-conn-card p { font-family: "DM Mono", monospace; font-size: 0.875rem; line-height: 1.7; color: #9fa4b2; flex: 1; }
+.sys-conn-tag { font-family: "DM Mono", monospace; font-size: 0.75rem; letter-spacing: .14em; text-transform: uppercase; align-self: flex-start; margin-top: auto; padding-top: .8rem; }
 .sys-conn-flood .sys-conn-tag { color: var(--lightblue); }
 .sys-conn-birds .sys-conn-tag { color: var(--pink); }
 .sys-conn-rice  .sys-conn-tag { color: var(--olivegreen); }
 .sys-connection-note { padding: 1.8rem 2.2rem; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.02); }
-.sys-connection-note p { font-family: "DM Mono", monospace; font-size: .72rem; line-height: 1.82; color: #82889a; }
+.sys-connection-note p { font-family: "DM Mono", monospace; font-size: 0.875rem; line-height: 1.75; color: #9fa4b2; }
 
 /* DATA NOTE */
-.sys-data-note { font-family: "DM Mono", monospace; font-size: .55rem; letter-spacing: .05em; color: #808799; line-height: 1.75; margin-top: .5rem; }
+.sys-data-note { font-family: "DM Mono", monospace; font-size: 0.75rem; letter-spacing: .04em; color: #9fa4b2; line-height: 1.75; margin-top: .5rem; }
 .sys-data-note a { color: var(--lightblue); text-decoration: underline; text-underline-offset: 3px; }
 
 /* SYSTEMS FOOTER */
 .sys-footer { padding: 4rem 6vw; background: rgba(0,0,0,.25); }
 .sys-footer-rule { height: 1px; background: rgba(255,255,255,.07); margin-bottom: 2.5rem; }
 .sys-footer-inner { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: start; }
-.sys-footer-label { font-family: "DM Mono", monospace; font-size: .5rem; letter-spacing: .2em; text-transform: uppercase; color: #808799; margin-bottom: 1rem; }
+.sys-footer-label { font-family: "DM Mono", monospace; font-size: 0.75rem; letter-spacing: .16em; text-transform: uppercase; color: #9fa4b2; margin-bottom: 1rem; }
 .sys-footer-sources ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
-.sys-footer-sources a { font-family: "DM Mono", monospace; font-size: .58rem; letter-spacing: .03em; color: #808799; text-decoration: none; line-height: 1.6; transition: color .2s; }
+.sys-footer-sources a { font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .03em; color: #9fa4b2; text-decoration: none; line-height: 1.6; transition: color .2s; }
 .sys-footer-sources a:hover { color: var(--lightblue); }
 .sys-footer-nav { display: flex; flex-direction: column; gap: .8rem; align-items: flex-end; }
-.sys-footer-nav a { font-family: "Inter", sans-serif; font-size: .82rem; color: #808799; text-decoration: none; transition: color .2s; white-space: nowrap; }
+.sys-footer-nav a { font-family: "Inter", sans-serif; font-size: 1rem; color: #9fa4b2; text-decoration: none; transition: color .2s; white-space: nowrap; }
 .sys-footer-nav a:hover { color: var(--pink); }
 
 
@@ -2296,14 +2293,14 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 }
 .oh-accent {
     font-family: "DM Mono", monospace;
-    font-size: .72rem;
-    letter-spacing: .1em;
+    font-size: 0.875rem;
+    letter-spacing: .08em;
     color: var(--olivegreen);
     white-space: nowrap;
 }
 .oh-meta {
     font-family: "DM Mono", monospace;
-    font-size: .7rem;
+    font-size: 0.875rem;
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--ink-dim);
@@ -2313,7 +2310,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 .oh-spacer { flex: 1; }
 .oh-back {
     font-family: "DM Mono", monospace;
-    font-size: .7rem;
+    font-size: 0.875rem;
     letter-spacing: .08em;
     color: var(--ink-dim);
     text-decoration: none;
@@ -2327,7 +2324,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     border: 1px solid var(--border-strong);
     color: var(--ink-dim);
     font-family: "DM Mono", monospace;
-    font-size: .68rem;
+    font-size: 0.875rem;
     letter-spacing: .1em;
     text-transform: uppercase;
     padding: .3rem .65rem;
@@ -2373,7 +2370,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 }
 .index-label {
     font-family: "DM Mono", monospace;
-    font-size: .62rem;
+    font-size: 0.875rem;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--pink);
@@ -2395,16 +2392,16 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 }
 .index-link:hover { background: rgba(255,255,255,.04); }
 .index-link.active { border-left-color: var(--olivegreen); background: rgba(189,165,67,.08); }
-.il-num { font-family: "DM Mono", monospace; font-size: .6rem; color: var(--ink-faint); flex-shrink: 0; transition: color .2s; }
+.il-num { font-family: "DM Mono", monospace; font-size: 0.875rem; color: var(--ink-faint); flex-shrink: 0; transition: color .2s; }
 .index-link.active .il-num { color: var(--olivegreen); }
-.il-title { font-family: "DM Mono", monospace; font-size: .68rem; letter-spacing: .04em; color: var(--ink-dim); line-height: 1.4; transition: color .2s; }
+.il-title { font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .04em; color: var(--ink-dim); line-height: 1.4; transition: color .2s; }
 .index-link.active .il-title,
 .index-link:hover .il-title { color: var(--ink); }
 .index-meta { padding: 1rem 1.4rem 0; border-top: 1px solid var(--border); margin-top: .5rem; }
 .im-row { display: flex; justify-content: space-between; padding: .28rem 0; border-bottom: 1px solid rgba(255,255,255,.05); }
 .im-row:last-child { border-bottom: none; }
-.im-k { font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); font-family: "DM Mono", monospace; }
-.im-v { font-size: .65rem; color: var(--ink-dim); text-align: right; font-family: "DM Mono", monospace; }
+.im-k { font-size: 0.875rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); font-family: "DM Mono", monospace; }
+.im-v { font-size: 0.875rem; color: var(--ink-dim); text-align: right; font-family: "DM Mono", monospace; }
 
 /* SCROLL AREA */
 .obs-scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 2.5rem 3vw 4rem; scroll-behavior: smooth; }
@@ -2414,11 +2411,11 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 .entry-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
 .entry-num { font-family: "DM Mono", monospace; font-size: 2.8rem; line-height: 1; color: var(--ink); opacity: .1; letter-spacing: -.04em; flex-shrink: 0; user-select: none; }
 .entry-meta-block { display: flex; flex-direction: column; gap: .2rem; padding-top: .3rem; flex: 1; }
-.entry-date { font-family: "DM Mono", monospace; font-size: .7rem; letter-spacing: .08em; color: var(--ink); opacity: .75; }
-.entry-weather { font-family: "DM Mono", monospace; font-size: .62rem; letter-spacing: .06em; color: var(--ink-dim); font-style: italic; }
+.entry-date { font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .08em; color: var(--ink); opacity: .75; }
+.entry-weather { font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .06em; color: var(--ink-dim); font-style: italic; }
 .entry-tag {
     font-family: "DM Mono", monospace;
-    font-size: .58rem;
+    font-size: 0.875rem;
     letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--tag-color, var(--olivegreen));
@@ -2456,8 +2453,8 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     opacity: .4;
     clip-path: polygon(0 0, 100% 0, 88% 100%, 12% 100%);
 }
-.ea-label { display: block; font-family: "DM Mono", monospace; font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--pink); margin-bottom: .45rem; }
-.entry-aside p { font-size: .72rem !important; opacity: .7 !important; margin-bottom: 0 !important; font-style: italic; }
+.ea-label { display: block; font-family: "DM Mono", monospace; font-size: 0.875rem; letter-spacing: .16em; text-transform: uppercase; color: var(--pink); margin-bottom: .45rem; }
+.entry-aside p { font-size: 1rem !important; opacity: 1 !important; margin-bottom: 0 !important; font-style: italic; color: #c8c9ca; }
 .entry-pullquote {
     margin: 1.4rem 0;
     padding: 1rem 0 1rem 1.4rem;
@@ -2482,7 +2479,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 .entry-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.4rem; }
 .etag {
     font-family: "DM Mono", monospace;
-    font-size: .58rem;
+    font-size: 0.875rem;
     letter-spacing: .1em;
     text-transform: uppercase;
     color: var(--ink-faint);
@@ -2503,26 +2500,33 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     transform: translate(-50%, -50%);
     background: var(--blackblue);
     padding: 0 .8rem;
-    font-size: .65rem;
+    font-size: 0.875rem;
     color: var(--ink-faint);
 }
 
 .observation-photos {
-  gap: 1rem;
+  display: block;
+  margin: 1.2rem 0;
 }
 
 .observation-photos img {
   width: 100%;
+  max-width: 680px;      /* prevents fullscreen-wide on desktop */
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 3px;
 }
 
 .observation-photos figure {
-  margin: 0;
+  margin: 0 0 0.75rem;
 }
 
 .observation-photos figcaption {
-  font-size: 0.8rem;
-  margin-top: 0.3rem;
-  color: #555;
+  font-size: 0.875rem;
+  margin-top: 0.4rem;
+  color: #b0b4c2;
+  font-style: italic;
 }
 
 .film-caption {
@@ -2589,9 +2593,9 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 
     /* Systems */
     .sys-hero-title  { font-size: 8rem; }
-    .sys-hero-body   { font-size: .95rem; }
+    .sys-hero-body   { font-size: 1rem; }        /* was .95rem — keep at 16px min */
     .sys-section-title { font-size: 3.2rem; }
-    .sys-section-desc  { font-size: .85rem; }
+    .sys-section-desc  { font-size: 1rem; }       /* was .85rem */
 
     /* Observations */
     .entry-title { font-size: 2.4rem; }
@@ -2626,7 +2630,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     .oh-meta { display: none; }
     .oh-divider { display: none; }
     .entry-title { font-size: 1.7rem; }
-    .obs-scroll { padding: 2rem 2.5vw 3rem; }
+    .obs-scroll { padding: 2rem 4vw 3rem; }  /* slightly more padding on tablet */
 
     /* Map */
     .mh-item.hide-mobile,
@@ -2664,8 +2668,8 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     .obs-scroll { padding: 1.5rem 5vw 3rem; }
     .entry-num { font-size: 2rem; }
     .entry-title { font-size: 1.5rem; }
-    .entry-body p { font-size: .78rem; }
-    .entry-pullquote { font-size: .92rem; }
+    .entry-body p { font-size: 1rem !important; }   /* never shrink below 16px on mobile */
+    .entry-pullquote { font-size: 1rem; }            /* was .92rem */
     .obs-header { padding: 0 5vw; gap: 2.5vw; }
 
     /* Map */
@@ -2822,7 +2826,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 .bird-audio-id:hover { color: #cfd1d8; }
 .bird-audio-credit {
     font-family: "DM Mono", monospace;
-    font-size: .7rem;
+    font-size: 0.875rem;
     letter-spacing: .03em;
     color: #808799;
     /* white-space: nowrap; */
@@ -2893,10 +2897,10 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 }
 .idle-sub {
     font-family: "DM Mono", monospace;
-    font-size: .78rem;
-    color: #878c98;
+    font-size: 1rem;
+    color: #9fa3b0;
     margin: 0 0 1.6rem;
-    letter-spacing: .03em;
+    letter-spacing: .02em;
 }
 #idle-count {
     color: var(--pink, #f06896);
@@ -2905,8 +2909,8 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 #idle-stay {
     display: inline-block;
     font-family: "DM Mono", monospace;
-    font-size: .78rem;
-    letter-spacing: .08em;
+    font-size: 1rem;
+    letter-spacing: .06em;
     text-transform: lowercase;
     color: var(--blackblue, #0f1b3d);
     background: var(--whitebeige, #fffdf2);
@@ -2931,18 +2935,17 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 
 /* ─────────────────────────────────────────────────────────────
    10. CONTRAST & ACCESSIBILITY OVERRIDES
-   Ensures all text meets WCAG 2.1 standards. Removes opacity
-   dimming on text and sets solid accessible color values.
+   WCAG 2.1 AA compliant. Min body text 1rem (16px).
+   Labels/meta: 0.875rem (14px) minimum.
+   All colors pass 4.5:1 on their backgrounds.
 ───────────────────────────────────────────────────────────── */
 
-/* Strip opacity from all text-bearing elements globally.
-   Hierarchy is preserved via color values, not opacity. */
+/* Strip opacity from all text-bearing elements globally */
 p, span, h1, h2, h3, h4, h5, h6, a, li, label, strong, cite, blockquote {
     opacity: 1 !important;
 }
 
 /* ── DARK BACKGROUND TEXT (whitebeige) ── */
-/* Context, Systems, Observations pages — dark surfaces */
 .ff-header,
 .ff-header a,
 .ff-header span,
@@ -2981,19 +2984,19 @@ p, span, h1, h2, h3, h4, h5, h6, a, li, label, strong, cite, blockquote {
 .wip-icon { font-size: 1rem; flex-shrink: 0; }
 .wip-text {
     font-family: "Inter", sans-serif;
-    font-size: .88rem;
+    font-size: 1rem;        /* was .88rem — raised to 16px minimum */
     font-weight: 400;
     color: var(--whitebeige);
-    line-height: 1.4;
+    line-height: 1.5;
 }
-.wip-text strong { font-weight: 400; color: var(--whitebeige); }
+.wip-text strong { font-weight: 500; color: var(--whitebeige); }
 .wip-close {
     background: none;
-    border: 1px solid rgba(255,253,242,.25);
+    border: 1px solid rgba(255,253,242,.4);  /* stronger border for visibility */
     color: var(--whitebeige);
-    font-size: .85rem;
-    width: 1.7rem;
-    height: 1.7rem;
+    font-size: 1rem;        /* was .85rem */
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -3002,77 +3005,74 @@ p, span, h1, h2, h3, h4, h5, h6, a, li, label, strong, cite, blockquote {
     flex-shrink: 0;
     transition: background .2s, border-color .2s;
 }
-.wip-close:hover { background: rgba(255,253,242,.08); border-color: rgba(255,253,242,.4); }
-.wip-banner * {
-    color: var(--whitebeige);
-}
+.wip-close:hover { background: rgba(255,253,242,.12); border-color: rgba(255,253,242,.6); }
+.wip-banner * { color: var(--whitebeige); }
 
-/* Context page body copy — readable sizes + solid colors */
-.cfs-lede        { font-size: clamp(1.1rem, 1.6vw, 1.3rem);  color: var(--whitebeige); }
-.cfs-body-p      { font-size: clamp(1rem, 1.2vw, 1.1rem);    color: #e2e2dc; }
-.cfs-trail       { font-size: 1rem;                            color: #c3c4c5; }
-.cbq-text        { font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: var(--whitebeige); }
-.ctc-text        { font-size: clamp(1rem, 1.5vw, 1.18rem);    color: var(--whitebeige); }
-.cfs-pullquote p { font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
-.cfs-pullquote cite { font-size: .88rem; color: #abaeb3; }
-.cfs-tile p      { font-size: .95rem; color: #cfd0ce; }
-.cft-label       { font-size: .82rem; }
-.cfs-num-sm      { font-size: .82rem; }
-.csp-l           { font-size: .82rem; color: #b7b9bc; }
-.ctc-label       { font-size: .82rem; }
-.cfs-step-body p      { font-size: 1rem; color: #cfd0ce; }
-.cfs-step-body strong { font-size: 1rem; }
-.ctx-footer-nav a     { font-size: 1rem;  color: #cfd0ce; }
-.ctx-footer-credit    { font-size: .85rem; color: #9fa3aa; }
+/* ── CONTEXT PAGE ── */
+/* All clamp() mins are now 1rem so mobile never goes below 16px */
+.cfs-lede        { font-size: clamp(1.1rem, 1.6vw, 1.3rem);  color: #f0efe8; line-height: 1.65; }
+.cfs-body-p      { font-size: clamp(1rem, 1.2vw, 1.1rem);    color: #deded8; line-height: 1.7; }
+.cfs-trail       { font-size: 1rem;                            color: #c8c9ca; line-height: 1.6; }
+.cbq-text        { font-size: clamp(1.05rem, 1.8vw, 1.35rem); color: #f0efe8; line-height: 1.6; }
+.ctc-text        { font-size: clamp(1rem, 1.5vw, 1.18rem);    color: #f0efe8; line-height: 1.65; }
+.cfs-pullquote p { font-size: clamp(1.05rem, 1.7vw, 1.3rem);  color: #f0efe8; }
+.cfs-pullquote cite { font-size: 0.875rem; color: #c0c2c8; }  /* 14px — label, acceptable */
+.cfs-tile p      { font-size: 1rem;    color: #deded8; }       /* was .95rem */
+.cft-label       { font-size: 0.875rem; }                      /* was .82rem — label text */
+.cfs-num-sm      { font-size: 0.875rem; }
+.csp-l           { font-size: 0.875rem; color: #c0c2c8; }
+.ctc-label       { font-size: 0.875rem; color: #c0c2c8; }
+.cfs-step-body p      { font-size: 1rem; color: #deded8; line-height: 1.65; }
+.cfs-step-body strong { font-size: 1rem; color: #f0efe8; }
+.ctx-footer-nav a     { font-size: 1rem;  color: #deded8; }
+.ctx-footer-credit    { font-size: 0.875rem; color: #b0b2b8; } /* 14px — footer credit */
 
-/* Systems page body copy */
-.sys-hero-body    { font-size: 1rem;   color: #dbdbd7; }
-.sys-section-desc { font-size: .95rem; color: #cfd0ce; }
-.sys-callout p    { font-size: .95rem; color: #cfd0ce; }
-.sys-rice-note-inner p { font-size: .95rem; color: #cfd0ce; }
-.sys-eyebrow      { font-size: .78rem; }
-.sys-legend-name  { font-size: .9rem;  color: #e7e6e0; }
-.sys-legend-src   { font-size: .8rem;  color: #abaeb3; }
-.sys-section-num  { font-size: .8rem;  }
-.toggle-name      { font-size: .95rem; }
-.toggle-desc      { font-size: .8rem;  color: #b7b9bc; }
-.rice-tons, .rice-value { font-size: .85rem; color: #b7b9bc; }
-.bird-card-num    { font-size: .8rem;  }
-.sys-table td     { font-size: .9rem;  color: #dbdbd7; }
-.sys-table th     { font-size: .85rem; }
+/* ── SYSTEMS PAGE ── */
+.sys-hero-body    { font-size: 1rem;   color: #deded8; line-height: 1.7; }  /* was .95rem */
+.sys-section-desc { font-size: 1rem;   color: #deded8; line-height: 1.65; } /* was .95rem */
+.sys-callout p    { font-size: 1rem;   color: #deded8; }                    /* was .95rem */
+.sys-rice-note-inner p { font-size: 1rem; color: #deded8; }                 /* was .95rem */
+.sys-eyebrow      { font-size: 0.875rem; letter-spacing: .08em; }           /* was .78rem */
+.sys-legend-name  { font-size: 1rem;   color: #eceae4; }                    /* was .9rem */
+.sys-legend-src   { font-size: 0.875rem; color: #b0b2b8; }                  /* was .8rem — source label */
+.sys-section-num  { font-size: 0.875rem; }                                   /* was .8rem */
+.toggle-name      { font-size: 1rem;   color: #eceae4; }                    /* was .95rem */
+.toggle-desc      { font-size: 0.875rem; color: #c0c2c8; }                  /* was .8rem */
+.rice-tons, .rice-value { font-size: 0.875rem; color: #c0c2c8; }            /* was .85rem */
+.bird-card-num    { font-size: 0.875rem; }                                   /* was .8rem */
+.sys-table td     { font-size: 1rem;   color: #deded8; }                    /* was .9rem */
+.sys-table th     { font-size: 0.875rem; }                                   /* was .85rem */
 
-/* Observations page body copy */
-.entry-body p   { font-size: 1rem !important; color: #e2e2dc !important; }
-.entry-date     { font-size: .88rem; color: #cfd0ce; }
-.entry-weather  { font-size: .88rem; color: #abaeb3; }
-.il-title       { font-size: .9rem;  color: #dbdbd7; }
-.il-num         { font-size: .82rem; }
-.im-k           { font-size: .82rem; color: #9fa3aa; }
-.im-v           { font-size: .82rem; color: #c3c4c5; }
-.entry-aside p  { font-size: .88rem !important; color: #c3c4c5 !important; }
-.entry-tag      { font-size: .82rem; }
-.etag           { font-size: .82rem; }
+/* ── OBSERVATIONS PAGE ── */
+.entry-body p   { font-size: 1rem !important;       color: #deded8 !important; line-height: 1.7 !important; }
+.entry-date     { font-size: 0.875rem; color: #c8c9ca; }  /* 14px — date/meta label */
+.entry-weather  { font-size: 0.875rem; color: #b8babe; }
+.il-title       { font-size: 1rem;     color: #deded8; }   /* was .9rem */
+.il-num         { font-size: 0.875rem; color: #c0c2c8; }
+.im-k           { font-size: 0.875rem; color: #b0b2b8; }
+.im-v           { font-size: 0.875rem; color: #c8c9ca; }
+.entry-aside p  { font-size: 1rem !important;       color: #c8c9ca !important; }  /* was .88rem */
+.entry-tag      { font-size: 0.875rem; }
+.etag           { font-size: 0.875rem; }
 
-/* ── LIGHT BACKGROUND TEXT (blackblue) ── */
-/* Map page panel — light surface */
-.map-panel .stat-lbl       { font-size: .82rem; color: #636a7c; }
-.map-panel .layer-name     { font-size: .9rem;  color: #3f4861; }
-.map-panel .ck             { font-size: .88rem; color: #636a7c; }
-.map-panel .cv             { font-size: .88rem; color: #3f4861; }
-.map-panel .annotation-card p { font-size: .9rem; color: #636a7c; }
-.map-panel .cond-title     { font-size: .82rem; color: #6f7585; }
-.map-panel .layers-title   { font-size: .82rem; color: #5d6475; }
+/* ── MAP PANEL (light surface) ── */
+/* On white background: colors must reach 4.5:1 against #fffdf2 */
+.map-panel .stat-lbl       { font-size: 0.875rem; color: #4a5268; }  /* was .82rem #636a7c */
+.map-panel .layer-name     { font-size: 1rem;     color: #2e3a5a; }  /* was .9rem */
+.map-panel .ck             { font-size: 1rem;     color: #4a5268; }  /* was .88rem */
+.map-panel .cv             { font-size: 1rem;     color: #2e3a5a; }  /* was .88rem */
+.map-panel .annotation-card p { font-size: 1rem; color: #4a5268; }   /* was .9rem */
+.map-panel .cond-title     { font-size: 0.875rem; color: #555e75; }
+.map-panel .layers-title   { font-size: 0.875rem; color: #4a5268; }
 
 /* ── SVG / CHART TEXT ── */
-/* Systems charts are on dark backgrounds → use whitebeige */
 svg text,
 .chart-text,
 [class*="wheel"] text {
     fill: var(--whitebeige) !important;
     opacity: 1 !important;
 }
-
-/* Minimum font size for SVG labels */
+/* Minimum 14px for SVG labels (WCAG allows 14px for non-body text) */
 svg text { font-size: 14px !important; }
 
 

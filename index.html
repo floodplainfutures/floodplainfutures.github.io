@@ -30,7 +30,17 @@
     </div>
 
     <!-- Video background -->
-    <video id="myVideo" poster="images/formationflight.JPG" muted loop playsinline preload="auto">
+    <video id="myVideo"
+       poster="images/formationflight.JPG"
+       autoplay
+       muted
+       loop
+       playsinline
+       webkit-playsinline
+       preload="auto"
+       disablepictureinpicture
+       x-webkit-airplay="deny"
+       controlslist="nodownload noplaybackrate noremoteplayback">
         <source src="media/myVideo.mp4" type="video/mp4">
         <p>Your browser doesn't support HTML5 video.
         Here is a <a href="media/myVideo.mp4">link to the video</a> instead.</p>
@@ -54,4 +64,39 @@
 
     <script src="scripts.js" defer></script>
 </body>
+<script>
+  (function () {
+    function tryPlay() {
+      var v = document.getElementById('myVideo');
+      if (!v) return;
+      v.muted = true;
+      v.setAttribute('muted', '');
+      // Suppress controls at the DOM level too
+      v.removeAttribute('controls');
+      var p = v.play();
+      if (p !== undefined) {
+        p.catch(function () {
+          // Safari blocked autoplay — silently resume on ANY first interaction.
+          // This covers the loading screen tap, begin button, anything.
+          var events = ['touchstart', 'touchend', 'click', 'keydown', 'pointerdown'];
+          function resume() {
+            v.play().catch(function () {});
+            events.forEach(function (ev) {
+              document.removeEventListener(ev, resume);
+            });
+          }
+          events.forEach(function (ev) {
+            document.addEventListener(ev, resume, { once: true, passive: true });
+          });
+        });
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryPlay);
+    } else {
+      tryPlay();
+    }
+    window.addEventListener('load', tryPlay);
+  })();
+</script>
 </html>

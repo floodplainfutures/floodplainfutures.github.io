@@ -160,128 +160,6 @@
 
 
     /* ───────────────────────────────────────────────────────────
-       SCROLL NAV — ↑ ↓ buttons injected on all non-home pages
-    ─────────────────────────────────────────────────────────── */
-    function initScrollNav() {
-        if (body.classList.contains('home-page')) { return; }
-
-        var isSys = body.classList.contains('systems-page');
-        var isCtx = body.classList.contains('context-page');
-        var isObs = body.classList.contains('observations-page');
-
-        var wrap = document.createElement('div');
-        wrap.className = 'scroll-nav';
-
-        var upBtn = document.createElement('button');
-        upBtn.className = 'scroll-nav-btn';
-        upBtn.type = 'button';
-        upBtn.setAttribute('aria-label', 'Scroll up');
-        upBtn.textContent = '↑';
-
-        var downBtn = document.createElement('button');
-        downBtn.className = 'scroll-nav-btn';
-        downBtn.type = 'button';
-        downBtn.setAttribute('aria-label', 'Scroll down');
-        downBtn.textContent = '↓';
-
-        wrap.appendChild(upBtn);
-        wrap.appendChild(downBtn);
-        document.body.appendChild(wrap);
-
-        var STEP = window.innerHeight * 0.82;
-
-        function getContainer() {
-            if (isSys) { return document.querySelector('.sys-main'); }
-            if (isCtx) { return document.getElementById('ctxPageScroll'); }
-            if (isObs) { return document.getElementById('obsScroll'); }
-            return null;
-        }
-
-        function topRelToContainer(el, container) {
-            var top = 0;
-            while (el && el !== container) {
-                top += el.offsetTop;
-                el = el.offsetParent;
-            }
-            return top;
-        }
-
-        function snapToSection(selector) {
-            var c = getContainer();
-            if (!c) { return; }
-            var sections = Array.prototype.slice.call(c.querySelectorAll(selector));
-            if (!sections.length) { return; }
-            return { c: c, sections: sections };
-        }
-
-        function snapScroll(dir, selector) {
-            var s = snapToSection(selector);
-            if (!s) { return; }
-            var scrollTop = s.c.scrollTop;
-            var target = null;
-            if (dir === 1) {
-                for (var i = 0; i < s.sections.length; i++) {
-                    var t = topRelToContainer(s.sections[i], s.c);
-                    if (t > scrollTop + 10) { target = t; break; }
-                }
-            } else {
-                for (var j = s.sections.length - 1; j >= 0; j--) {
-                    var t2 = topRelToContainer(s.sections[j], s.c);
-                    if (t2 < scrollTop - 10) { target = t2; break; }
-                }
-            }
-            if (target !== null) { s.c.scrollTo({ top: target, behavior: 'smooth' }); }
-        }
-
-        function doScroll(dir) {
-            if (isSys) { snapScroll(dir, '.sys-hero, .sys-section'); return; }
-            if (isCtx) { snapScroll(dir, '.ctx-hero, .cfs');         return; }
-            var c = getContainer();
-            if (c) { c.scrollBy({ top: dir * STEP, behavior: 'smooth' }); }
-            else   { window.scrollBy({ top: dir * STEP, behavior: 'smooth' }); }
-        }
-
-        function updateBtns() {
-            var c = getContainer();
-            var top, total, visible;
-            if (c) {
-                top = c.scrollTop; total = c.scrollHeight; visible = c.clientHeight;
-            } else {
-                top = window.scrollY || window.pageYOffset;
-                total = document.documentElement.scrollHeight;
-                visible = window.innerHeight;
-            }
-            upBtn.disabled   = top <= 4;
-            downBtn.disabled = top + visible >= total - 4;
-        }
-
-        upBtn.addEventListener('click',   function () { doScroll(-1); });
-        downBtn.addEventListener('click', function () { doScroll(1); });
-
-        // Attach scroll listener once DOM + container are ready
-        var c = getContainer();
-        if (c) {
-            c.addEventListener('scroll', updateBtns, { passive: true });
-        } else {
-            // Fallback: window scroll (map page, or if container not yet in DOM)
-            window.addEventListener('scroll', updateBtns, { passive: true });
-        }
-        window.addEventListener('resize', function () {
-            STEP = window.innerHeight * 0.82;
-            updateBtns();
-        });
-
-        updateBtns();
-    }
-
-    // Run after DOM is ready so containers like #ctxPageScroll exist
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initScrollNav);
-    } else {
-        initScrollNav();
-    }
-
-    /* ───────────────────────────────────────────────────────────
        1. HOME PAGE
     ─────────────────────────────────────────────────────────── */
     if (body.classList.contains('home-page')) {
@@ -294,6 +172,27 @@
         var landing        = document.querySelector('#landing');
 
         var hasVisited = sessionStorage.getItem('hasVisited');
+
+        function safeVideoInit() {
+            if (!myVideo) return;
+            myVideo.muted = true;
+            myVideo.setAttribute('muted', '');
+            var p = myVideo.play();
+            if (p !== undefined) {
+                p.catch(function () {
+                    // Gesture fallback handled by inline script in index.html
+                });
+            }
+        }
+
+        // Fire at DOMContentLoaded (not window load) for Safari compatibility
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', safeVideoInit);
+        } else {
+            safeVideoInit();
+        }
+
+
 
         if (hasVisited) {
             loading.classList.add('hidden');
