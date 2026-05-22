@@ -79,7 +79,6 @@
       if (p !== undefined) {
         p.catch(function () {
           // Safari blocked autoplay — silently resume on ANY first interaction.
-          // This covers the loading screen tap, begin button, anything.
           var events = ['touchstart', 'touchend', 'click', 'keydown', 'pointerdown'];
           function resume() {
             v.play().catch(function () {});
