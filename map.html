@@ -8,6 +8,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
     <link href="styles.css" rel="stylesheet">
+    <style>
+        /* ── Panel intro text ── */
+        .panel-intro {
+            font-family: "DM Mono", monospace;
+            font-size: .9rem;
+            line-height: 1.75;
+            color: var(--blackblue);
+            opacity: .55;
+            text-transform: lowercase;
+            margin-top: -.2rem;
+        }
+
+        .layer-info {
+            display: flex;
+            flex-direction: column;
+            /* gap: .04rem; */
+            flex: 1;
+            min-width: 0;
+        }
+        .layer-hint {
+            font-family: "DM Mono", monospace;
+            font-size: .72rem;
+            letter-spacing: .03em;
+            color: var(--blackblue);
+            opacity: .38;
+            line-height: 1.3;
+            /* white-space: nowrap; */
+            /* overflow: hidden; */
+            /* text-overflow: ellipsis; */
+        }
+        .layer-row {
+            padding: .55rem .8rem;
+            align-items: center;
+        }
+        .layer-name {
+            font-size: .82rem;
+            opacity: .8;
+        }
+    </style>
 </head>
 <body class="map-page">
 
@@ -27,88 +66,69 @@
         <div class="panel-drag-handle" id="dragHandle"></div>
 
         <h1 class="panel-title">the<br/>basin.</h1>
-        <!-- <div class="panel-rule"></div> -->
 
-        <!-- <div class="panel-stats">
-            <div class="p-stat">
-                <span class="stat-lbl">Wildlife Area</span>
-                <span class="stat-val pink">16,000 ac</span>
-            </div>
-            <div class="p-stat">
-                <span class="stat-lbl">Full Bypass</span>
-                <span class="stat-val blue">59,000 ac</span>
-            </div>
-            <div class="p-stat">
-                <span class="stat-lbl">Length</span>
-                <span class="stat-val olive">41 mi</span>
-            </div>
-            <div class="p-stat">
-                <span class="stat-lbl">From Davis</span>
-                <span class="stat-val">3.2 mi</span>
-            </div>
-        </div> -->
+        <p class="panel-intro">explore the Yolo Bypass — a 59,000-acre seasonal floodplain 3 miles from Davis. toggle layers below to reveal land use, habitat zones, and salmon restoration sites.</p>
 
-        <div class="panel-rule" style="margin-top:.4rem"></div>
+        <div class="panel-rule"></div>
 
         <div class="layers-wrap">
-            <span class="layers-title">map layers</span>
+            <span class="layers-title">toggle layers</span>
+
             <div class="layer-row active" data-layer="basin">
                 <div class="l-swatch" style="background:#7292cb80;border-color:#7292cbcc"></div>
-                <span class="layer-name">Yolo Basin</span>
+                <div class="layer-info">
+                    <span class="layer-name">Yolo Basin</span>
+                    <span class="layer-hint">full floodway boundary</span>
+                </div>
                 <div class="l-toggle"></div>
             </div>
+
             <div class="layer-row active" data-layer="wildlife">
                 <div class="l-swatch" style="background:#0f1b3d80;border-color:#0f1b3dcc"></div>
-                <span class="layer-name">Yolo Bypass Wildlife Area</span>
+                <div class="layer-info">
+                    <span class="layer-name">Wildlife Area</span>
+                    <span class="layer-hint">managed waterfowl habitat, 16,000 ac</span>
+                </div>
                 <div class="l-toggle"></div>
             </div>
-                        <div class="layer-row active" data-layer="hunting">
+
+            <div class="layer-row active" data-layer="hunting">
                 <div class="l-swatch" style="background:#ef624480;border-color:#ef6244cc"></div>
-                <span class="layer-name">Yolo Bypass Hunting Area</span>
+                <div class="layer-info">
+                    <span class="layer-name">Hunting Area</span>
+                    <span class="layer-hint">seasonal public hunting zone</span>
+                </div>
                 <div class="l-toggle"></div>
             </div>
+
             <div class="layer-row active" data-layer="nigirione">
                 <div class="l-swatch" style="background:#bda543ff;border-color:rgb(77, 67, 25)"></div>
-                <span class="layer-name">Conway Ranch - Nigiri Project</span>
+                <div class="layer-info">
+                    <span class="layer-name">Conway Ranch</span>
+                    <span class="layer-hint">Nigiri Project — salmon on rice fields</span>
+                </div>
                 <div class="l-toggle"></div>
             </div>
+
             <div class="layer-row active" data-layer="nigiritwo">
                 <div class="l-swatch" style="background:#f1b93f;border-color:#9b7728"></div>
-                <span class="layer-name">Knaggs Ranch - Nigiri Project</span>
+                <div class="layer-info">
+                    <span class="layer-name">Knaggs Ranch</span>
+                    <span class="layer-hint">Nigiri Project — larger restoration site</span>
+                </div>
                 <div class="l-toggle"></div>
             </div>
+
             <div class="layer-row active" data-layer="roads">
                 <div class="l-swatch" style="background:#f0689680;border-color:#f06896cc"></div>
-                <span class="layer-name">I-80 / Yolo Causeway</span>
+                <div class="layer-info">
+                    <span class="layer-name">I-80 / Causeway</span>
+                    <span class="layer-hint">41-mile overwater highway crossing</span>
+                </div>
                 <div class="l-toggle"></div>
             </div>
-
         </div>
 
-        <div class="annotation-card">
-            <p>a seasonal floodplain managed for rice, waterfowl, and
-            migratory habitat. the basin floods every winter, then dries.</p>
-        </div>
-
-        <div class="conditions">
-            <span class="cond-title">right now</span>
-            <div class="cond-row">
-                <span class="ck">Season</span>
-                <span class="cv" id="cSeason">—</span>
-            </div>
-            <div class="cond-row">
-                <span class="ck">Flood Status</span>
-                <span class="cv" id="cFlood">—</span>
-            </div>
-            <div class="cond-row">
-                <span class="ck">Species</span>
-                <span class="cv" id="cSpecies">—</span>
-            </div>
-            <div class="cond-row">
-                <span class="ck">Access</span>
-                <span class="cv">CR 32B, east of Davis</span>
-            </div>
-        </div>
     </aside>
 
     <!-- MAP -->
@@ -152,6 +172,3 @@
 </body>
 </html>
 
-
-<!-- left panel better match -->
- <!-- make things more accessible -->

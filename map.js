@@ -6,9 +6,9 @@
     const seasons = ['Winter','Winter','Spring','Spring','Spring','Summer','Summer','Summer','Fall','Fall','Fall','Winter'];
     const floods  = ['Active flood season','Active flood season','Draw-down in progress','Draw-down in progress','Low — fields drying','Dry','Dry','Dry','Refilling begins','Refilling begins','Refilling begins','Active flood season'];
     const spp     = ['Pintail, crane, dunlin','Pintail, crane, dunlin','Shorebirds, blackbird','Shorebirds, blackbird','Ibis, stilt, meadowlark','Ibis, bittern','Ibis, bittern','Ibis, bittern','Early ducks, shorebirds','Early ducks, shorebirds','Early ducks, shorebirds','Pintail, crane, dunlin'];
-    document.querySelector('#cSeason').textContent  = seasons[m];
-    document.querySelector('#cFlood').textContent   = floods[m];
-    document.querySelector('#cSpecies').textContent = spp[m];
+    const cSeason = document.querySelector('#cSeason'); if (cSeason) cSeason.textContent = seasons[m];
+    const cFlood = document.querySelector('#cFlood'); if (cFlood) cFlood.textContent = floods[m];
+    const cSpecies = document.querySelector('#cSpecies'); if (cSpecies) cSpecies.textContent = spp[m];
 
     const map = L.map('leafletMap', {
         center: [38.455, -121.64],
