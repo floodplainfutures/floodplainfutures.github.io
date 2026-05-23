@@ -140,13 +140,6 @@ a:hover {
 }
 
 /* LANDING */
-/* Force hide Safari's native play button on paused background videos */
-#myVideo::-webkit-media-controls { display: none !important; }
-#myVideo::-webkit-media-controls-enclosure { display: none !important; }
-#myVideo::-webkit-media-controls-panel { display: none !important; }
-#myVideo::-webkit-media-controls-play-button { display: none !important; }
-#myVideo::-webkit-media-controls-start-playback-button { display: none !important; }
-
 #landing {
     position: fixed;
     inset: 0;
@@ -3211,6 +3204,7 @@ body.systems-page {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     text-align: center;
+<<<<<<< HEAD
 }
 
 
@@ -3245,4 +3239,6 @@ body.home-page {
 /* This class is added by JS when 'Begin' is clicked */
 #myVideo.video-active {
     opacity: 1;
+=======
+>>>>>>> parent of a62a36e (js fixes for auto play on safari partial work)
 }

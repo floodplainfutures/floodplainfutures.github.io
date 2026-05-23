@@ -21,12 +21,29 @@
     </div>
 
     <!-- Video background -->
+<<<<<<< HEAD
     <<video id="myVideo" muted defaultMuted loop playsinline webkit-playsinline preload="auto">
         <source src="media/myVideo-fixed.mp4" type="video/mp4">
          <source src="media/myVideo-fixed.mp4" type="video/mp4">
         <p>Your browser doesn't support HTML5 video.</p>
     </video>
        
+=======
+    <video
+      id="myVideo"
+      poster="images/formationflight.JPG"
+      autoplay
+      muted
+      defaultMuted
+      loop
+      playsinline
+      webkit-playsinline
+      preload="auto">
+        <source src="media/myVideo-fixed.mp4" type="video/mp4">
+        <p>Your browser doesn't support HTML5 video.
+        Here is a <a href="media/myVideo-fixed.mp4">link to the video</a> instead.</p>
+    </video>
+>>>>>>> parent of a62a36e (js fixes for auto play on safari partial work)
 
     <div id="landing" class="state-intro">
         <div class="title-block">
@@ -45,4 +62,41 @@
 
     <script src="scripts.js" defer></script>
 </body>
+<<<<<<< HEAD
+=======
+<script>
+  (function () {
+    function tryPlay() {
+      var v = document.getElementById('myVideo');
+      if (!v) return;
+      v.muted = true;
+      v.setAttribute('muted', '');
+      // Suppress controls at the DOM level too
+      v.removeAttribute('controls');
+      var p = v.play();
+      if (p !== undefined) {
+        p.catch(function () {
+          // Safari blocked autoplay — silently resume on ANY first interaction.
+          var events = ['touchstart', 'touchend', 'click', 'keydown', 'pointerdown'];
+          function resume() {
+            v.play().catch(function () {});
+            events.forEach(function (ev) {
+              document.removeEventListener(ev, resume);
+            });
+          }
+          events.forEach(function (ev) {
+            document.addEventListener(ev, resume, { once: true, passive: true });
+          });
+        });
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryPlay);
+    } else {
+      tryPlay();
+    }
+    window.addEventListener('load', tryPlay);
+  })();
+</script>
+>>>>>>> parent of a62a36e (js fixes for auto play on safari partial work)
 </html>
