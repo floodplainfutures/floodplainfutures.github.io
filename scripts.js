@@ -173,83 +173,89 @@
 
         var hasVisited = sessionStorage.getItem('hasVisited');
 
-        function safeVideoInit() {
-            if (!myVideo) return;
-            myVideo.muted = true;
-            myVideo.setAttribute('muted', '');
-            var p = myVideo.play();
-            if (p !== undefined) {
-                p.catch(function () {
-                    // Gesture fallback handled by inline script in index.html
-                });
+        // 1. THE GOLDEN UNLOCK: Clicking begin fades the video in AND plays it
+        if (beginBtn) {
+            beginBtn.addEventListener('click', function () {
+                landing.classList.add('state-open');
+                sessionStorage.setItem('hasVisited', 'true');
+                
+                if (myVideo) {
+                    myVideo.classList.add('video-active'); // Trigger CSS fade-in
+                    myVideo.play().catch(function(e) { console.log("Playback error:", e); });
+                }
+            });
+        }
+
+        // 2. BACK BUTTON RESET: Hide the video and show the Begin button
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                window.location.reload(); // Hard reset if Safari froze the page
+                return;
             }
-        }
+            landing.classList.remove('state-open');
+            if (myVideo) {
+                myVideo.classList.remove('video-active'); // Fade out to blue
+                myVideo.pause(); 
+            }
+        });
 
-        // Fire at DOMContentLoaded (not window load) for Safari compatibility
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', safeVideoInit);
-        } else {
-            safeVideoInit();
-        }
-
-
-
+        // 3. PAGE LOAD LOGIC
         if (hasVisited) {
+            // Returning user: Hide loading screen, but WAIT for Begin click
             loading.classList.add('hidden');
-            myVideo.classList.add('visible');
-            landing.classList.add('state-open');
-            myVideo.play().catch(function () {});
-            return;
-        }
+            
+        } else {
+            // First time user: Run the full percent animation
+            var percent    = 0;
+            var videoReady = false;
 
-        var percent    = 0;
-        var videoReady = false;
-
-        function animatePercent() {
-            if (percent < 99) {
-                percent += Math.random() * 1.5;
-                percent  = Math.min(99, percent);
-                loadingPercent.innerHTML = Math.floor(percent) + '%';
-                requestAnimationFrame(animatePercent);
-            } else {
-                loadingText.innerHTML = 'almost there';
-                setTimeout(finishLoading, 2000);
-            }
-        }
-
-        function finishLoading() {
-            var fp = percent;
-            function fin() {
-                if (fp < 100) {
-                    fp += 1;
-                    loadingPercent.innerHTML = Math.floor(fp) + '%';
-                    requestAnimationFrame(fin);
+            function animatePercent() {
+                if (percent < 99) {
+                    percent += Math.random() * 1.5;
+                    percent  = Math.min(99, percent);
+                    loadingPercent.innerHTML = Math.floor(percent) + '%';
+                    requestAnimationFrame(animatePercent);
                 } else {
-                    loading.classList.add('hidden');
-                    myVideo.classList.add('visible');
+                    loadingText.innerHTML = 'almost there';
+                    setTimeout(finishLoading, 2000);
                 }
             }
-            fin();
-        }
 
-        animatePercent();
-
-        myVideo.addEventListener('loadeddata', function () {
-            if (!videoReady) {
-                videoReady = true;
-                finishLoading();
+            function finishLoading() {
+                var fp = percent;
+                function fin() {
+                    if (fp < 100) {
+                        fp += 1;
+                        loadingPercent.innerHTML = Math.floor(fp) + '%';
+                        requestAnimationFrame(fin);
+                    } else {
+                        loading.classList.add('hidden');
+                        // Video stays hidden until they click "Begin"
+                    }
+                }
+                fin();
             }
-        });
-        window.addEventListener('load', function () {
-            myVideo.play().catch(function () {});
-        });
 
-        beginBtn.addEventListener('click', function () {
-            landing.classList.add('state-open');
-            sessionStorage.setItem('hasVisited', 'true');
-        });
+            animatePercent();
+
+            if (myVideo) {
+                myVideo.addEventListener('loadeddata', function () {
+                    if (!videoReady) {
+                        videoReady = true;
+                        finishLoading();
+                    }
+                });
+                
+                // Safety fallback just in case the video takes too long
+                setTimeout(function() {
+                    if (!videoReady) {
+                        videoReady = true;
+                        finishLoading();
+                    }
+                }, 3000);
+            }
+        }
     }
-
 
     /* ───────────────────────────────────────────────────────────
        2. CONTEXT PAGE

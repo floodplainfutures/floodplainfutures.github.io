@@ -3229,3 +3229,20 @@ body.systems-page {
     transition: opacity 0.4s ease; /* Smooth fade reveal */
     opacity: 1; /* Visible by default */
 }
+
+/* ==========================================================================
+   HOME PAGE VIDEO FADE-IN
+========================================================================== */
+body.home-page {
+    background-color: var(--blackblue);
+}
+
+#myVideo {
+    opacity: 0; /* Hidden by default, showing the --blackblue background */
+    transition: opacity 1.5s ease; /* Smooth cinematic fade */
+}
+
+/* This class is added by JS when 'Begin' is clicked */
+#myVideo.video-active {
+    opacity: 1;
+}
