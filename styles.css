@@ -140,6 +140,13 @@ a:hover {
 }
 
 /* LANDING */
+/* Force hide Safari's native play button on paused background videos */
+#myVideo::-webkit-media-controls { display: none !important; }
+#myVideo::-webkit-media-controls-enclosure { display: none !important; }
+#myVideo::-webkit-media-controls-panel { display: none !important; }
+#myVideo::-webkit-media-controls-play-button { display: none !important; }
+#myVideo::-webkit-media-controls-start-playback-button { display: none !important; }
+
 #landing {
     position: fixed;
     inset: 0;
@@ -3204,4 +3211,21 @@ body.systems-page {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     text-align: center;
+}
+
+
+
+#videoCover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--blackblue);
+    z-index: 1; /* Sits above the video, but below your UI */
+    pointer-events: none; /* Crucial: Lets clicks pass through to the document */
+    transition: opacity 0.4s ease; /* Smooth fade reveal */
+    opacity: 1; /* Visible by default */
 }

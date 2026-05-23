@@ -21,20 +21,11 @@
     </div>
 
     <!-- Video background -->
-    <video
-      id="myVideo"
-      poster="images/formationflight.JPG"
-      autoplay
-      muted
-      defaultMuted
-      loop
-      playsinline
-      webkit-playsinline
-      preload="auto">
+    <video id="myVideo" poster="images/formationflight.JPG" autoplay muted defaultMuted loop playsinline webkit-playsinline preload="auto">
         <source src="media/myVideo-fixed.mp4" type="video/mp4">
-        <p>Your browser doesn't support HTML5 video.
-        Here is a <a href="media/myVideo-fixed.mp4">link to the video</a> instead.</p>
     </video>
+    
+    <div id="videoCover" style="background-image: url('images/formationflight.JPG');"></div>
 
     <div id="landing" class="state-intro">
         <div class="title-block">
@@ -56,36 +47,64 @@
 </body>
 <script>
   (function () {
-    function tryPlay() {
-      var v = document.getElementById('myVideo');
-      if (!v) return;
+    var v = document.getElementById('myVideo');
+    var cover = document.getElementById('videoCover');
+    if (!v) return;
+
+    function forcePlay() {
       v.muted = true;
-      v.setAttribute('muted', '');
-      // Suppress controls at the DOM level too
       v.removeAttribute('controls');
+      v.setAttribute('muted', '');
+      
+      // Ensure cover is visible while we negotiate with Safari
+      if (cover) cover.style.opacity = '1';
+      
       var p = v.play();
       if (p !== undefined) {
-        p.catch(function () {
-          // Safari blocked autoplay — silently resume on ANY first interaction.
+        // If play is successful (first load, or Safari allows it)
+        p.then(function() {
+            if (cover) cover.style.opacity = '0'; // Fade out cover!
+        }).catch(function () {
+          // BLOCKED: Safari forced a pause and showed the ugly button.
+          // Because the cover is opacity: 1, the user cannot see the button.
           var events = ['touchstart', 'touchend', 'click', 'keydown', 'pointerdown'];
+          
           function resume() {
-            v.play().catch(function () {});
-            events.forEach(function (ev) {
-              document.removeEventListener(ev, resume);
+            // User touched the screen! Play video, then hide cover.
+            v.play().then(function() {
+                if (cover) cover.style.opacity = '0';
+            }).catch(function(){});
+            
+            // Clean up listeners
+            events.forEach(function (ev) { 
+                document.removeEventListener(ev, resume); 
             });
           }
+          
           events.forEach(function (ev) {
-            document.addEventListener(ev, resume, { once: true, passive: true });
+            document.addEventListener(ev, resume, { once: true });
           });
         });
       }
     }
+
+    // 1. Initial Load
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', tryPlay);
+      document.addEventListener('DOMContentLoaded', forcePlay);
     } else {
-      tryPlay();
+      forcePlay();
     }
-    window.addEventListener('load', tryPlay);
+    
+    // 2. Returning via Back Button
+    window.addEventListener('pageshow', forcePlay);
+    
+    // 3. Returning from another Browser Tab
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            forcePlay();
+        }
+    });
+
   })();
 </script>
 </html>
