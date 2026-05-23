@@ -81,8 +81,8 @@ strong, b, h1, h2, h3, h4, h5, h6 {
 }
 
 a:visited, a:link, a:active {
-    /* color: inherit; */
-    color: var(--pink);
+    color: inherit;
+    /* color: var(--pink); */
 }
 a:hover {
     color: var(--lightblue);
