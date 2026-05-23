@@ -234,10 +234,12 @@
 
         animatePercent();
 
-        myVideo.addEventListener('canplaythrough', function () {
-            if (!videoReady) { videoReady = true; finishLoading(); }
+        myVideo.addEventListener('loadeddata', function () {
+            if (!videoReady) {
+                videoReady = true;
+                finishLoading();
+            }
         });
-
         window.addEventListener('load', function () {
             myVideo.play().catch(function () {});
         });
