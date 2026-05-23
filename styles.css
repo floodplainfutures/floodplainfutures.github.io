@@ -140,6 +140,13 @@ a:hover {
 }
 
 /* LANDING */
+/* Force hide Safari's native play button on paused background videos */
+#myVideo::-webkit-media-controls { display: none !important; }
+#myVideo::-webkit-media-controls-enclosure { display: none !important; }
+#myVideo::-webkit-media-controls-panel { display: none !important; }
+#myVideo::-webkit-media-controls-play-button { display: none !important; }
+#myVideo::-webkit-media-controls-start-playback-button { display: none !important; }
+
 #landing {
     position: fixed;
     inset: 0;
@@ -3204,8 +3211,6 @@ body.systems-page {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     text-align: center;
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
 
 
@@ -3223,28 +3228,4 @@ body.systems-page {
     pointer-events: none; /* Crucial: Lets clicks pass through to the document */
     transition: opacity 0.4s ease; /* Smooth fade reveal */
     opacity: 1; /* Visible by default */
-<<<<<<< HEAD
-}
-
-/* ==========================================================================
-   HOME PAGE VIDEO FADE-IN
-========================================================================== */
-body.home-page {
-    background-color: var(--blackblue);
-}
-
-#myVideo {
-    opacity: 0; /* Hidden by default, showing the --blackblue background */
-    transition: opacity 1.5s ease; /* Smooth cinematic fade */
-}
-
-/* This class is added by JS when 'Begin' is clicked */
-#myVideo.video-active {
-    opacity: 1;
-=======
->>>>>>> parent of a62a36e (js fixes for auto play on safari partial work)
-=======
->>>>>>> parent of c5cd0ed (dealing with safari autoplay this is the best bet)
-=======
->>>>>>> parent of a62a36e (js fixes for auto play on safari partial work)
 }
