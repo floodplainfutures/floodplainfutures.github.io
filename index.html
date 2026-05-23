@@ -33,11 +33,14 @@
 
     <!-- Video background -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <<video id="myVideo" muted defaultMuted loop playsinline webkit-playsinline preload="auto">
+=======
+    <video id="myVideo" poster="images/formationflight.JPG" autoplay muted defaultMuted loop playsinline webkit-playsinline preload="auto">
+>>>>>>> parent of c5cd0ed (dealing with safari autoplay this is the best bet)
         <source src="media/myVideo-fixed.mp4" type="video/mp4">
-         <source src="media/myVideo-fixed.mp4" type="video/mp4">
-        <p>Your browser doesn't support HTML5 video.</p>
     </video>
+<<<<<<< HEAD
        
 =======
     <video
@@ -55,6 +58,10 @@
         Here is a <a href="media/myVideo-fixed.mp4">link to the video</a> instead.</p>
     </video>
 >>>>>>> parent of a62a36e (js fixes for auto play on safari partial work)
+=======
+    
+    <div id="videoCover" style="background-image: url('images/formationflight.JPG');"></div>
+>>>>>>> parent of c5cd0ed (dealing with safari autoplay this is the best bet)
 
     <div id="landing" class="state-intro">
         <div class="title-block">
@@ -65,6 +72,7 @@
         </div>
         <nav class="menu">
             <a href="context.html"      class="cAbout"><span class="material-symbols-outlined">info</span> context</a>
+            
             <a href="map.html"          class="cMap"><span class="material-symbols-outlined">water_lux</span> the basin</a>
             <a href="systems.html"      class="cResearch"><span class="material-symbols-outlined">graph_2</span> systems</a>
             <a href="observations.html" class="cNotes"><span class="material-symbols-outlined">keep</span>observations</a>
@@ -73,6 +81,7 @@
 
     <script src="scripts.js" defer></script>
 </body>
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <script>
@@ -97,10 +106,51 @@
           }
           events.forEach(function (ev) {
             document.addEventListener(ev, resume, { once: true, passive: true });
+=======
+<script>
+  (function () {
+    var v = document.getElementById('myVideo');
+    var cover = document.getElementById('videoCover');
+    if (!v) return;
+
+    function forcePlay() {
+      v.muted = true;
+      v.removeAttribute('controls');
+      v.setAttribute('muted', '');
+      
+      // Ensure cover is visible while we negotiate with Safari
+      if (cover) cover.style.opacity = '1';
+      
+      var p = v.play();
+      if (p !== undefined) {
+        // If play is successful (first load, or Safari allows it)
+        p.then(function() {
+            if (cover) cover.style.opacity = '0'; // Fade out cover!
+        }).catch(function () {
+          // BLOCKED: Safari forced a pause and showed the ugly button.
+          // Because the cover is opacity: 1, the user cannot see the button.
+          var events = ['touchstart', 'touchend', 'click', 'keydown', 'pointerdown'];
+          
+          function resume() {
+            // User touched the screen! Play video, then hide cover.
+            v.play().then(function() {
+                if (cover) cover.style.opacity = '0';
+            }).catch(function(){});
+            
+            // Clean up listeners
+            events.forEach(function (ev) { 
+                document.removeEventListener(ev, resume); 
+            });
+          }
+          
+          events.forEach(function (ev) {
+            document.addEventListener(ev, resume, { once: true });
+>>>>>>> parent of c5cd0ed (dealing with safari autoplay this is the best bet)
           });
         });
       }
     }
+<<<<<<< HEAD
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', tryPlay);
     } else {
@@ -110,4 +160,26 @@
   })();
 </script>
 >>>>>>> parent of a62a36e (js fixes for auto play on safari partial work)
+=======
+
+    // 1. Initial Load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', forcePlay);
+    } else {
+      forcePlay();
+    }
+    
+    // 2. Returning via Back Button
+    window.addEventListener('pageshow', forcePlay);
+    
+    // 3. Returning from another Browser Tab
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            forcePlay();
+        }
+    });
+
+  })();
+</script>
+>>>>>>> parent of c5cd0ed (dealing with safari autoplay this is the best bet)
 </html>
