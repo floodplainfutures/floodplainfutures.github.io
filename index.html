@@ -49,6 +49,8 @@
   (function () {
     var v = document.getElementById('myVideo');
     var cover = document.getElementById('videoCover');
+    var loading = document.getElementById('loadingScreen');
+    var landing = document.getElementById('landing');
     if (!v) return;
 
     function forcePlay() {
@@ -56,55 +58,36 @@
       v.removeAttribute('controls');
       v.setAttribute('muted', '');
       
-      // Ensure cover is visible while we negotiate with Safari
-      if (cover) cover.style.opacity = '1';
-      
       var p = v.play();
       if (p !== undefined) {
-        // If play is successful (first load, or Safari allows it)
         p.then(function() {
-            if (cover) cover.style.opacity = '0'; // Fade out cover!
+            if (cover) cover.style.opacity = '0';
         }).catch(function () {
-          // BLOCKED: Safari forced a pause and showed the ugly button.
-          // Because the cover is opacity: 1, the user cannot see the button.
           var events = ['touchstart', 'touchend', 'click', 'keydown', 'pointerdown'];
-          
           function resume() {
-            // User touched the screen! Play video, then hide cover.
             v.play().then(function() {
                 if (cover) cover.style.opacity = '0';
             }).catch(function(){});
-            
-            // Clean up listeners
-            events.forEach(function (ev) { 
-                document.removeEventListener(ev, resume); 
-            });
+            events.forEach(function (ev) { document.removeEventListener(ev, resume); });
           }
-          
-          events.forEach(function (ev) {
-            document.addEventListener(ev, resume, { once: true });
-          });
+          events.forEach(function (ev) { document.addEventListener(ev, resume, { once: true }); });
         });
       }
     }
 
-    // 1. Initial Load
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', forcePlay);
-    } else {
-      forcePlay();
-    }
-    
-    // 2. Returning via Back Button
-    window.addEventListener('pageshow', forcePlay);
-    
-    // 3. Returning from another Browser Tab
-    document.addEventListener('visibilitychange', function() {
-        if (document.visibilityState === 'visible') {
-            forcePlay();
+    window.addEventListener('pageshow', function(e) {
+        // If loaded from Safari's hardware/back-forward cache
+        if (e.persisted || sessionStorage.getItem('hasVisited')) {
+            if (loading) {
+                loading.style.display = 'none'; // Directly force the overlay away
+                loading.classList.add('hidden');
+            }
+            if (cover) {
+                cover.style.opacity = '0';
+            }
         }
+        forcePlay();
     });
-
   })();
 </script>
 </html>

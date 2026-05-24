@@ -15,29 +15,6 @@
 
     var body = document.body;
 
-    /* ───────────────────────────────────────────────────────────
-       CONSTRUCTION BANNER TOGGLE (Shows on Every Fresh Load)
-    ─────────────────────────────────────────────────────────── */
-    document.addEventListener('DOMContentLoaded', function() {
-        var wipBanner = document.getElementById('wip-banner');
-        var closeWipBtn = document.getElementById('close-wip');
-
-        if (wipBanner && closeWipBtn) {
-            wipBanner.classList.remove('hidden');
-
-            // Close button hides the banner
-            closeWipBtn.addEventListener('click', function() {
-                wipBanner.classList.add('hidden');
-            });
-
-            // Shift+W toggles it back on/off — useful for kiosk mode
-            document.addEventListener('keydown', function(e) {
-                if (e.shiftKey && e.key === 'W') {
-                    wipBanner.classList.toggle('hidden');
-                }
-            });
-        }
-    });
 
 
     /* ───────────────────────────────────────────────────────────
@@ -159,48 +136,31 @@
     })();
 
 
-    /* ───────────────────────────────────────────────────────────
-       1. HOME PAGE
-    ─────────────────────────────────────────────────────────── */
-    if (body.classList.contains('home-page')) {
+/* ───────────────────────────────────────────────────────────
+   1. HOME PAGE
+─────────────────────────────────────────────────────────── */
+	if (body.classList.contains('home-page')) {
+		var loading = document.getElementById('loadingScreen');
+		var landing = document.getElementById('landing');
+		var myVideo = document.getElementById('myVideo');
+		var textEl  = document.getElementById('loadingText');
+		var percentEl = document.getElementById('loadingPercent');
 
-        var myVideo        = document.querySelector('#myVideo');
-        var loading        = document.querySelector('#loadingScreen');
-        var loadingPercent = document.querySelector('#loadingPercent');
-        var loadingText    = document.querySelector('#loadingText');
-        var beginBtn       = document.querySelector('#beginBtn');
-        var landing        = document.querySelector('#landing');
+		var hasVisited = sessionStorage.getItem('hasVisited');
 
-        var hasVisited = sessionStorage.getItem('hasVisited');
-
-        function safeVideoInit() {
-            if (!myVideo) return;
-            myVideo.muted = true;
-            myVideo.setAttribute('muted', '');
-            var p = myVideo.play();
-            if (p !== undefined) {
-                p.catch(function () {
-                    // Gesture fallback handled by inline script in index.html
-                });
-            }
-        }
-
-        // Fire at DOMContentLoaded (not window load) for Safari compatibility
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', safeVideoInit);
-        } else {
-            safeVideoInit();
-        }
-
-
-
-        if (hasVisited) {
-            loading.classList.add('hidden');
-            myVideo.classList.add('visible');
-            landing.classList.add('state-open');
-            myVideo.play().catch(function () {});
-            return;
-        }
+		if (hasVisited) {
+			// Clear out the overlays immediately for returning users
+			if (loading) loading.classList.add('hidden');
+			if (myVideo) myVideo.classList.add('visible');
+			if (landing) landing.classList.add('state-open');
+			
+			if (myVideo) {
+				myVideo.muted = true;
+				myVideo.play().catch(function () {});
+			}
+			// REMOVED: the early 'return;' statement here was preventing 
+			// fallback behaviors and structural bindings from re-initializing in Safari
+		}
 
         var percent    = 0;
         var videoReady = false;
