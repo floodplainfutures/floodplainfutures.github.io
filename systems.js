@@ -53,17 +53,17 @@ var YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
 
 var RICE_TABLE = [
     { year: 2023, acres: '29,974', prod: '128,000 tons', value: '$54.3M', flood: true,
-      context: 'A wet winter brought water back. The Ag Commissioner called it a reliable water year. Rice acreage went up more than 200% from 2022.' },
+      context: 'The rains came back and so did the rice. After the 2022 drought stripped planting down to almost nothing, farmers came back strong. Acreage jumped more than 200% in a single year.' },
     { year: 2022, acres: '9,507',  prod: '30,200 tons',  value: '$23.2M', flood: false,
-      context: 'Worst drought in years. Farmers could not get enough water to plant. Acreage fell 59% from the year before. Many fields sat empty.' },
+      context: 'The worst drought in the six-year stretch. Farmers could not get enough water to plant, so most of the fields sat dry. Acreage fell 59% from the year before and bird numbers at the wildlife area fell with it.' },
     { year: 2021, acres: '17,800', prod: '60,100 tons',  value: '$20.1M', flood: false,
-      context: 'Another dry year. The Fremont Weir did not overtop at all. Lower planting than 2020.' },
+      context: 'A second dry year in a row. The Fremont Weir did not overtop at all. Planting was down from 2020 but the real crash was still coming.' },
     { year: 2020, acres: '36,000', prod: '60,100 tons',  value: '$13.9M', flood: true,
-      context: 'Good planting year. Post-harvest flooding supported strong bird numbers. Birding activity spiked nationally during COVID.' },
+      context: 'The best planting year in the dataset. Post-harvest flooding supported strong bird numbers, and with people stuck at home, birding activity jumped nationally too. Checklist submissions spiked.' },
     { year: 2019, acres: '23,393', prod: '77,800 tons',  value: '$16.4M', flood: true,
-      context: 'Normal water year with some winter storms. Fremont Weir overtopped for about 31 days.' },
+      context: 'A solid but unremarkable water year. Some winter storms pushed the Fremont Weir over for about 31 days. Steady conditions for birds and rice alike.' },
     { year: 2018, acres: '22,800', prod: '67,400 tons',  value: '$18.4M', flood: true,
-      context: 'Wet winter — 42 days of flooding. Normal rice acreage for the county. Overall ag value was $676M that year.' }
+      context: 'A wet winter with 42 days of flooding. Normal rice acreage for the county. Overall ag value hit $676M that year.' }
 ];
 
 /*
@@ -77,70 +77,70 @@ var BIRDS_DATA = [
         num: '01', name: 'northern pintail', sci: 'Anas acuta', slug: 'northern-pintail',
         season: 'winter', seasonLabel: 'Oct–Mar', freq: 78,
         peak: 'Nov–Jan: flocks of 10,000–50,000',
-        connection: 'Pintails show up right after rice harvest when the fields begin to flood. They will eat leftover grain and small bugs in the shallow water. In a wet year you can see tens of thousands of them at once.',
+        connection: 'Pintails arrive right after rice harvest, when the fields start to flood. They pick through leftover grain and small invertebrates in the shallow water. In a wet year you can see tens of thousands of them from the levee road.',
         color: 'var(--lightblue)', callNo: 'XC621202', recordist: 'Paul Marvin'
     },
     {
         num: '02', name: 'sandhill crane', sci: 'Antigone canadensis', slug: 'sandhill-crane',
         season: 'winter', seasonLabel: 'Oct–Mar', freq: 62,
         peak: 'Nov–Feb: roosts of 2,000–8,000',
-        connection: 'Cranes eat in the rice stubble during the day and fly to the wetlands at dusk to sleep. They come back year after year.',
+        connection: 'Cranes feed in the rice stubble all day, then fly in formation to the wetlands at dusk to roost. They return to the same spots year after year, which makes watching them feel like running into old friends.',
         color: 'var(--lightblue)', callNo: 'XC539728', recordist: 'Thomas Magarian'
     },
     {
         num: '03', name: 'american coot', sci: 'Fulica americana', slug: 'american-coot',
         season: 'yearround', seasonLabel: 'Year-round', freq: 85,
         peak: 'Year-round; winter counts up to 5,000',
-        connection: 'ONe of the most commonly seen waterbirds at the basin. They stay year-round in the permanent wetlands and pack in by the thousands when the seasonal fields flood.',
+        connection: 'One of the most reliably spotted waterbirds at the basin. They live year-round in the permanent wetlands and pack in by the thousands once the seasonal fields flood.',
         color: 'rgba(255,255,255,.4)', callNo: 'XC452164', recordist: 'Paul Marvin'
     },
     {
         num: '04', name: 'white-faced ibis', sci: 'Plegadis chihi', slug: 'white-faced-ibis',
         season: 'summer', seasonLabel: 'Mar–Oct', freq: 70,
         peak: 'Apr–Sep: breeding colonies of 500–3,000',
-        connection: 'Ibis nest in the tule reeds and feed in wet farm fields through spring and summer. Spring flooding of rice paddies is part of why they breed here. You can spot them by the way they walk, probing the mud with their curved bills.',
+        connection: 'Ibis nest in the tule reeds and spend spring and summer feeding in the wet fields. The flooded rice paddies are a big reason they breed here. You can pick them out by the way they walk, working the mud with their curved bills.',
         color: 'var(--yellow)', callNo: 'XC452112', recordist: 'Paul Marvin'
     },
     {
         num: '05', name: 'great blue heron', sci: 'Ardea herodias', slug: 'great-blue-heron',
         season: 'yearround', seasonLabel: 'Year-round', freq: 88,
         peak: 'Year-round; nests in willows along levees',
-        connection: 'Great blue herons live here permanently. Nests in the willows along the levee roads. They tend to hunt in the flooded fields and permanent ponds. They are also one of the most popular birds spotted at the basin.',
+        connection: 'Great blue herons live here year-round. They nest in the willows along the levee roads and hunt in both the flooded fields and the permanent ponds. Probably the bird most people see first when they visit.',
         color: 'rgba(255,255,255,.4)', callNo: 'XC143575', recordist: 'Paul Marvin'
     },
     {
         num: '06', name: 'northern harrier', sci: 'Circus hudsonius', slug: 'northern-harrier',
         season: 'winter', seasonLabel: 'Oct–Apr', freq: 74,
         peak: 'Nov–Mar: several birds hunting at once',
-        connection: 'Harriers fly low and slow over flooded fields looking for voles and frogs. You can see more of them when there is more water, as more water means denser culsters of prey.',
+        connection: 'Harriers fly low and slow over flooded fields, hunting for voles and frogs. More water means denser clusters of prey, so the more the basin floods, the more harriers you tend to see.',
         color: 'var(--lightblue)', callNo: 'XC776694', recordist: 'Phoebe Barnes'
     },
     {
         num: '07', name: 'dunlin', sci: 'Calidris alpina', slug: 'dunlin',
         season: 'winter', seasonLabel: 'Nov–Apr', freq: 58,
         peak: 'Dec–Feb: flocks of 1,000–20,000',
-        connection: 'Dunlin come down from the Arctic to spend winter here. They need very shallow water to pick bugs off the mud. The Yolo Basin is one of the better wintering spots for them on the West Coast.',
+        connection: 'Dunlin travel all the way from the Arctic to spend winter in the basin. They need very shallow water to work the mud for invertebrates, and the Yolo Basin gives them exactly that. It is one of the better spots on the entire West Coast for them.',
         color: 'var(--lightblue)', callNo: 'XC169170', recordist: 'Paul Marvin'
     },
     {
         num: '08', name: 'great egret', sci: 'Ardea alba', slug: 'great-egret',
         season: 'yearround', seasonLabel: 'Year-round', freq: 81,
         peak: 'Year-round; large communal roosts in winter',
-        connection: 'You will find great egrets standing still in flooded fields waiting for fish or frogs. They are easy to spot and you can see them from the auto tour route at the Yolo Bypass Wildlife Area.',
+        connection: 'Great egrets stand perfectly still in flooded fields, waiting for fish or frogs to come within range. They are easy to find and you can usually see several from the auto tour route.',
         color: 'rgba(255,255,255,.4)', callNo: 'XC452101', recordist: 'Paul Marvin'
     },
     {
         num: '09', name: 'snow goose', sci: 'Anser caerulescens', slug: 'snow-goose',
         season: 'winter', seasonLabel: 'Nov–Mar', freq: 52,
         peak: 'Dec–Feb: flocks occasionally over 50,000',
-        connection: 'Snow geese come from the Arctic and graze on the legume fields at Tule Ranch and the rice stubble. Big flocks show up in wet years when there is more flooded area to spread out across. They are very loud!',
+        connection: 'Snow geese fly in from the Arctic and graze on the legume fields at Tule Ranch alongside the rice stubble. Big flocks show up in wet years when there is more space to spread out. They are extremely loud and hard to miss.',
         color: 'var(--lightblue)', callNo: 'XC452581', recordist: 'Paul Marvin'
     },
     {
         num: '10', name: 'tricolored blackbird', sci: 'Agelaius tricolor', slug: 'tricolored-blackbird',
         season: 'spring', seasonLabel: 'Mar–Jul', freq: 44,
         peak: 'Apr–Jun: colonies of 500–5,000',
-        connection: 'Almost the entire world population of this bird breeds in California. The Yolo Bypass is one of their main nesting sites. They build nests in the tule reeds and feed in the rice fields next door. Listed as threatened. Losing the basin would hurt this species badly.',
+        connection: 'Nearly the entire world population of tricolored blackbirds breeds in California, and the Yolo Bypass is one of their main nesting sites. They build colonies in the tule reeds and commute to the rice fields to feed. The species is listed as threatened. What happens to this basin matters directly to their survival.',
         color: 'var(--olivegreen)', callNo: 'XC344799', recordist: 'Paul Marvin'
     }
 ];
@@ -162,7 +162,7 @@ var MONTHLY = [
       birds: 'White-faced ibis nesting. Blackbird colonies active in the tules. Wading birds in the paddies.',
       rice:  'Rice in the ground and growing. Fields sitting 4–6 inches deep. Herons wade the paddies.' },
     { m: 'jun', flood: 'Driest period of the year. Little flooding except the permanent wetlands.',
-      birds: 'Summer residents — ibis, bittern, stilts. Almost no ducks.',
+      birds: 'Summer residents are here: ibis, bitterns, stilts. Almost no ducks.',
       rice:  'Rice growing fast. You can see the green from I-80. Hot and dry.' },
     { m: 'jul', flood: 'Dry. A few areas get a short summer irrigation for shorebird management.',
       birds: 'Shorebird management areas flooded on purpose. First birds coming back south.',
@@ -177,7 +177,7 @@ var MONTHLY = [
       birds: 'Duck numbers building. Sandhill cranes return. Hunting season opens.',
       rice:  'Harvest finishing up. Post-harvest flooding begins. Fields look like mirrors.' },
     { m: 'nov', flood: 'Winter flood season starting. Fremont Weir may overtop if storms arrive.',
-      birds: 'Best diversity of the year — early and late species overlap. Crane roosts forming at dusk.',
+      birds: 'Best diversity of the year. Early and late species overlap. Crane roosts form at dusk.',
       rice:  'Flooded fields with rice left in the stubble. Good food for pintails and cranes.' },
     { m: 'dec', flood: 'Full winter flooding. Multiple flood events in a wet year.',
       birds: 'Peak waterfowl. Duck hunting season open. Harriers and eagles hunting.',
@@ -221,14 +221,15 @@ document.querySelectorAll('.sys-toggle').forEach(function (btn) {
 });
 
 // ════════════════════════════════════════════════════════════════
-// CHART
+// CHART — animated SVG line chart
 // ════════════════════════════════════════════════════════════════
 
 function renderChart() {
+    var wrap = document.querySelector('#annualChartWrap');
     var chart = document.querySelector('#annualChart');
     chart.innerHTML = '';
 
-    // Add/update visually-hidden data table for screen readers
+    // SR table
     var existingTable = document.querySelector('#annualChartTable');
     if (existingTable) existingTable.remove();
     var srTable = document.createElement('table');
@@ -252,71 +253,297 @@ function renderChart() {
     srTable.appendChild(tbody);
     chart.parentNode.insertBefore(srTable, chart.nextSibling);
 
+    // Reset old bar-chart container styles so SVG can size freely
+    chart.style.display   = 'block';
+    chart.style.height    = 'auto';
+    chart.style.minHeight = '0';
+    chart.style.gridTemplateColumns = '';
+    chart.style.alignItems = '';
+    chart.removeAttribute('role');
+    chart.removeAttribute('aria-label');
+
+    // Chart dimensions (SVG viewBox — scales responsively)
+    var W = 900, H = 340;
+    var padL = 60, padR = 28, padT = 36, padB = 48;
+    var chartW = W - padL - padR;
+    var chartH = H - padT - padB;
+
     var maxFlood = Math.max.apply(null, YEARS.map(function(y){ return FLOOD[y]; }));
     var maxBirds = Math.max.apply(null, YEARS.map(function(y){ return BIRDS[y]; }));
     var maxRice  = Math.max.apply(null, YEARS.map(function(y){ return RICE[y].acres; }));
 
-    YEARS.forEach(function (year) {
-        var wrap = document.createElement('div');
-        wrap.className = 'sys-chart-year';
-        wrap.setAttribute('data-year', year);
-        // Build aria-label from active datasets
-        var parts = [];
-        if (activeFilters.flood) parts.push(FLOOD[year] + ' flood days');
-        if (activeFilters.birds) parts.push(BIRDS[year].toLocaleString() + ' bird checklists');
-        if (activeFilters.rice)  parts.push(RICE[year].acres.toLocaleString() + ' rice acres');
-        wrap.setAttribute('aria-label', year + ': ' + parts.join(', '));
-        wrap.setAttribute('role', 'img');
+    var ns = 'http://www.w3.org/2000/svg';
 
-        var group = document.createElement('div');
-        group.className = 'sys-bar-group';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '100%');
+    svg.style.display = 'block';
+    svg.style.width   = '100%';
+    svg.style.minHeight = '260px';
+    svg.classList.add('sys-line-chart-svg');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', 'Line chart: flood days, bird checklists, and rice acres 2018–2023. The accessible table below contains the same data.');
 
-        function makeBar(cls, val, max, active, label) {
-            var el = document.createElement('div');
-            el.className = 'sys-bar ' + cls + (active ? '' : ' dim');
-            el.style.height = (active && max > 0 ? Math.max(2, (val / max) * 280) : 2) + 'px';
-            if (active) {
-                el.setAttribute('aria-label', label);
-                el.setAttribute('role', 'img');
-            } else {
-                el.setAttribute('aria-hidden', 'true');
+    // Defs for gradient fills
+    var defs = document.createElementNS(ns, 'defs');
+
+    function makeGrad(id, color) {
+        var g = document.createElementNS(ns, 'linearGradient');
+        g.setAttribute('id', id);
+        g.setAttribute('x1', '0'); g.setAttribute('y1', '0');
+        g.setAttribute('x2', '0'); g.setAttribute('y2', '1');
+        var s1 = document.createElementNS(ns, 'stop');
+        s1.setAttribute('offset', '0%');
+        s1.setAttribute('stop-color', color);
+        s1.setAttribute('stop-opacity', '0.28');
+        var s2 = document.createElementNS(ns, 'stop');
+        s2.setAttribute('offset', '100%');
+        s2.setAttribute('stop-color', color);
+        s2.setAttribute('stop-opacity', '0.02');
+        g.appendChild(s1); g.appendChild(s2);
+        defs.appendChild(g);
+    }
+    makeGrad('areaFlood', '#7292cb');
+    makeGrad('areaBirds', '#f06896');
+    makeGrad('areaRice',  '#bda543');
+    svg.appendChild(defs);
+
+    // Grid lines (horizontal, 4 lines)
+    var gridG = document.createElementNS(ns, 'g');
+    for (var gi = 0; gi <= 4; gi++) {
+        var gy = padT + (chartH / 4) * gi;
+        var gl = document.createElementNS(ns, 'line');
+        gl.setAttribute('x1', padL); gl.setAttribute('x2', W - padR);
+        gl.setAttribute('y1', gy);   gl.setAttribute('y2', gy);
+        gl.setAttribute('class', 'chart-grid-line');
+        gridG.appendChild(gl);
+    }
+    svg.appendChild(gridG);
+
+    // X positions for years
+    function xPos(i) { return padL + (i / (YEARS.length - 1)) * chartW; }
+
+    // Y position normalised per dataset
+    function yNorm(val, max) {
+        if (!max) return padT + chartH;
+        return padT + chartH - (val / max) * chartH;
+    }
+
+    // Build points for each dataset
+    var datasets = [
+        { key: 'flood', cls: 'flood', color: '#7292cb', vals: YEARS.map(function(y){ return FLOOD[y]; }),      max: maxFlood, active: activeFilters.flood },
+        { key: 'birds', cls: 'birds', color: '#f06896', vals: YEARS.map(function(y){ return BIRDS[y]; }),      max: maxBirds, active: activeFilters.birds },
+        { key: 'rice',  cls: 'rice',  color: '#bda543', vals: YEARS.map(function(y){ return RICE[y].acres; }), max: maxRice,  active: activeFilters.rice }
+    ];
+
+    // Draw areas + lines
+    datasets.forEach(function (ds) {
+        var pts = ds.vals.map(function(v, i){ return { x: xPos(i), y: yNorm(v, ds.max) }; });
+        var baseY = padT + chartH;
+
+        // Area path
+        // Smooth area path — control points clamped at baseY
+        var areaD = (function(pts, baseY) {
+            if (pts.length < 2) return '';
+            var d = 'M ' + pts[0].x + ' ' + baseY + ' L ' + pts[0].x + ' ' + pts[0].y;
+            for (var i = 0; i < pts.length - 1; i++) {
+                var p0 = pts[i - 1] || pts[i];
+                var p1 = pts[i];
+                var p2 = pts[i + 1];
+                var p3 = pts[i + 2] || p2;
+                var cp1x = p1.x + (p2.x - p0.x) / 6;
+                var cp1y = Math.min(p1.y + (p2.y - p0.y) / 6, baseY);
+                var cp2x = p2.x - (p3.x - p1.x) / 6;
+                var cp2y = Math.min(p2.y - (p3.y - p1.y) / 6, baseY);
+                d += ' C ' + cp1x + ' ' + cp1y + ' ' + cp2x + ' ' + cp2y + ' ' + p2.x + ' ' + p2.y;
             }
-            return el;
-        }
+            d += ' L ' + pts[pts.length-1].x + ' ' + baseY + ' Z';
+            return d;
+        })(pts, baseY);
+        var area = document.createElementNS(ns, 'path');
+        area.setAttribute('d', areaD);
+        area.setAttribute('fill', 'url(#area' + (ds.key.charAt(0).toUpperCase() + ds.key.slice(1)) + ')');
+        area.classList.add('chart-area-path', ds.cls + '-area');
+        if (!ds.active) area.classList.add('hidden-area');
+        svg.appendChild(area);
 
-        group.appendChild(makeBar('flood-bar', FLOOD[year], maxFlood, activeFilters.flood, 'Flood: ' + FLOOD[year] + ' days'));
-        group.appendChild(makeBar('birds-bar', BIRDS[year], maxBirds, activeFilters.birds, 'Birds: ' + BIRDS[year].toLocaleString() + ' checklists'));
-        group.appendChild(makeBar('rice-bar',  RICE[year].acres, maxRice, activeFilters.rice, 'Rice: ' + RICE[year].acres.toLocaleString() + ' acres'));
+        // Line path (smooth with linear segments)
+        // Smooth catmull-rom curve — control points clamped so curve never dips below baseline
+        var lineD = (function(pts, maxY) {
+            if (pts.length < 2) return '';
+            var d = 'M ' + pts[0].x + ' ' + pts[0].y;
+            for (var i = 0; i < pts.length - 1; i++) {
+                var p0 = pts[i - 1] || pts[i];
+                var p1 = pts[i];
+                var p2 = pts[i + 1];
+                var p3 = pts[i + 2] || p2;
+                var cp1x = p1.x + (p2.x - p0.x) / 6;
+                var cp1y = Math.min(p1.y + (p2.y - p0.y) / 6, maxY);
+                var cp2x = p2.x - (p3.x - p1.x) / 6;
+                var cp2y = Math.min(p2.y - (p3.y - p1.y) / 6, maxY);
+                d += ' C ' + cp1x + ' ' + cp1y + ' ' + cp2x + ' ' + cp2y + ' ' + p2.x + ' ' + p2.y;
+            }
+            return d;
+        })(pts, baseY);
+        var line = document.createElementNS(ns, 'path');
+        line.setAttribute('d', lineD);
+        line.classList.add('chart-line-path', ds.cls + '-line');
+        if (!ds.active) line.classList.add('hidden-line');
+        svg.appendChild(line);
 
-        wrap.appendChild(group);
-        chart.appendChild(wrap);
-
-        wrap.addEventListener('mouseenter', function (e) { showTooltip(e, year); });
-        wrap.addEventListener('mousemove',  function (e) { moveTooltip(e); });
-        wrap.addEventListener('mouseleave', hideTooltip);
+        // Dots
+        pts.forEach(function(p, i) {
+            var dot = document.createElementNS(ns, 'circle');
+            dot.setAttribute('cx', p.x);
+            dot.setAttribute('cy', p.y);
+            dot.setAttribute('r', '4');
+            dot.classList.add('chart-dot', ds.cls + '-dot');
+            if (!ds.active) dot.classList.add('hidden-dot');
+            dot.dataset.year  = YEARS[i];
+            dot.dataset.ds    = ds.key;
+            dot.setAttribute('aria-label', YEARS[i] + ' ' + ds.key + ': ' + ds.vals[i].toLocaleString());
+            svg.appendChild(dot);
+        });
     });
+
+    // 2022→2023 annotation — small label anchored top-right, no arrow
+    (function() {
+        var g = document.createElementNS(ns, 'g');
+        g.classList.add('chart-annotation');
+
+        var lbl = document.createElementNS(ns, 'text');
+        lbl.setAttribute('x', W - padR - 4);
+        lbl.setAttribute('y', padT - 10);
+        lbl.setAttribute('text-anchor', 'end');
+        lbl.setAttribute('class', 'chart-annot-label');
+        lbl.textContent = '+215% rice · 73 flood days → 2023';
+
+        g.appendChild(lbl);
+        svg.appendChild(g);
+    })();
+
+    // ── Y-AXES: three columns, right-aligned flush to padL, only top+mid+zero labels ──
+    (function() {
+        var axes = [
+    { key: 'flood', max: maxFlood, color: '#7292cb', x: padL - 100, fmt: function(v){ return v; } },
+    { key: 'birds', max: maxBirds, color: '#f06896', x: padL - 50, fmt: function(v){ return Math.round(v/100)*100; } },
+    { key: 'rice', max: maxRice, color: '#bda543', x: padL - 12, fmt: function(v){ return Math.round(v/1000) + 'k'; } }
+];
+        // Only label top and zero — keeps it minimal and uncluttered
+        var tickVals = [0, 0.5, 1];
+        axes.forEach(function(ax) {
+            if (!activeFilters[ax.key]) return;
+            var g = document.createElementNS(ns, 'g');
+            g.classList.add('yaxis-group', 'yaxis-' + ax.key);
+            tickVals.forEach(function(frac) {
+                var val = ax.max * frac;
+                var y = yNorm(val, ax.max);
+                var label = document.createElementNS(ns, 'text');
+                label.setAttribute('x', ax.x);
+                label.setAttribute('y', y);
+                label.setAttribute('class', 'chart-yaxis-label');
+                label.setAttribute('fill', ax.color);
+                label.textContent = ax.fmt(val);
+                g.appendChild(label);
+            });
+            svg.appendChild(g);
+        });
+    })();
+
+    // Crosshair line
+    var crosshair = document.createElementNS(ns, 'line');
+    crosshair.setAttribute('y1', padT);
+    crosshair.setAttribute('y2', padT + chartH);
+    crosshair.classList.add('chart-crosshair');
+    svg.appendChild(crosshair);
+
+    // Year labels
+    var labelsG = document.createElementNS(ns, 'g');
+    YEARS.forEach(function(y, i) {
+        var t = document.createElementNS(ns, 'text');
+        t.setAttribute('x', xPos(i));
+        t.setAttribute('y', padT + chartH + 20);
+        t.classList.add('chart-year-label');
+        t.dataset.year = y;
+        t.textContent = y;
+        labelsG.appendChild(t);
+    });
+    svg.appendChild(labelsG);
+
+    // Hover hit zones
+    YEARS.forEach(function(year, i) {
+        var hitW = chartW / (YEARS.length);
+        var hitX = xPos(i) - hitW / 2;
+        var hit = document.createElementNS(ns, 'rect');
+        hit.setAttribute('x', hitX);
+        hit.setAttribute('y', padT);
+        hit.setAttribute('width', hitW);
+        hit.setAttribute('height', chartH);
+        hit.setAttribute('fill', 'transparent');
+        hit.setAttribute('cursor', 'pointer');
+        hit.dataset.year = year;
+        hit.dataset.xi   = xPos(i);
+
+        hit.addEventListener('mouseenter', function(e) {
+            crosshair.setAttribute('x1', xPos(i));
+            crosshair.setAttribute('x2', xPos(i));
+            crosshair.classList.add('visible');
+            svg.querySelectorAll('.chart-year-label').forEach(function(t){ t.classList.remove('active-label'); });
+            var lbl = svg.querySelector('.chart-year-label[data-year="' + year + '"]');
+            if (lbl) lbl.classList.add('active-label');
+            showTooltip(e, year);
+        });
+        hit.addEventListener('mousemove', function(e) { moveTooltip(e); });
+        hit.addEventListener('mouseleave', function() {
+            crosshair.classList.remove('visible');
+            svg.querySelectorAll('.chart-year-label').forEach(function(t){ t.classList.remove('active-label'); });
+            hideTooltip();
+        });
+        svg.appendChild(hit);
+    });
+
+    chart.appendChild(svg);
 }
 
 // ════════════════════════════════════════════════════════════════
-// TOOLTIP
+// TOOLTIP — pill style
 // ════════════════════════════════════════════════════════════════
 
-var tooltip = document.querySelector('#sysTooltip');
+// Create pill tooltip element once
+var tooltip = document.createElement('div');
+tooltip.className = 'sys-chart-tooltip-pill';
+tooltip.id = 'sysTooltipPill';
+document.body.appendChild(tooltip);
+
+// Keep old #sysTooltip hidden (still in DOM for compatibility)
+var oldTooltip = document.querySelector('#sysTooltip');
+if (oldTooltip) oldTooltip.style.display = 'none';
 
 function showTooltip(e, year) {
     var rows = '';
-    if (activeFilters.flood) rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--lightblue)">flood days</span><span class="sys-tooltip-val">' + FLOOD[year] + ' days</span></div>';
-    if (activeFilters.birds) rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--pink)">checklists</span><span class="sys-tooltip-val">' + BIRDS[year].toLocaleString() + '</span></div>';
-    if (activeFilters.rice)  rows += '<div class="sys-tooltip-row"><span class="sys-tooltip-label" style="color:var(--olivegreen)">rice acres</span><span class="sys-tooltip-val">' + parseInt(RICE[year].acres).toLocaleString() + '</span></div>';
-    tooltip.innerHTML = '<span class="sys-tooltip-year">' + year + '</span>' + rows;
+    if (activeFilters.flood) rows +=
+        '<div class="sys-chart-tooltip-pill-row">' +
+        '<span class="sys-chart-tooltip-pill-label" style="color:#7292cb">flood days</span>' +
+        '<span class="sys-chart-tooltip-pill-val">' + FLOOD[year] + '</span></div>';
+    if (activeFilters.birds) rows +=
+        '<div class="sys-chart-tooltip-pill-row">' +
+        '<span class="sys-chart-tooltip-pill-label" style="color:#f06896">checklists</span>' +
+        '<span class="sys-chart-tooltip-pill-val">' + BIRDS[year].toLocaleString() + '</span></div>';
+    if (activeFilters.rice)  rows +=
+        '<div class="sys-chart-tooltip-pill-row">' +
+        '<span class="sys-chart-tooltip-pill-label" style="color:#bda543">rice acres</span>' +
+        '<span class="sys-chart-tooltip-pill-val">' + parseInt(RICE[year].acres).toLocaleString() + '</span></div>';
+    tooltip.innerHTML = '<div class="sys-chart-tooltip-pill-year">' + year + '</div>' + rows;
     tooltip.classList.add('visible');
     moveTooltip(e);
 }
 
 function moveTooltip(e) {
-    var x = e.clientX + 16;
+    var x = e.clientX + 18;
     var w = tooltip.offsetWidth;
-    if (x + w > window.innerWidth - 20) x = e.clientX - w - 16;
+    if (x + w > window.innerWidth - 20) x = e.clientX - w - 18;
     tooltip.style.left = x + 'px';
     tooltip.style.top  = (e.clientY - 10) + 'px';
 }
@@ -649,8 +876,11 @@ function renderBirdGrid() {
             '</span>' +
             '</button>' +
             '<div class="bird-audio-meta">' +
-            '<a href="' + xcLink + '" target="_blank" rel="noopener" class="bird-audio-id">' + b.callNo + '</a>' +
-            '<span class="bird-audio-credit">rec. ' + b.recordist + ' · <a href="https://xeno-canto.org" target="_blank" rel="noopener" class="bird-xc-link">xeno-canto.org</a> · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" class="bird-cc-link">CC BY-NC-SA</a></span>' +
+            /* KIOSK MODE: links replaced with plain text. To restore, remove <span> lines and uncomment <a> lines below. */
+            /* '<a href="' + xcLink + '" target="_blank" rel="noopener" class="bird-audio-id">' + b.callNo + '</a>' + */
+            '<span class="bird-audio-id">' + b.callNo + '</span>' +
+            /* '<span class="bird-audio-credit">rec. ' + b.recordist + ' \u00b7 <a href="https://xeno-canto.org" target="_blank" rel="noopener" class="bird-xc-link">xeno-canto.org</a> \u00b7 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener" class="bird-cc-link">CC BY-NC-SA</a></span>' + */
+            '<span class="bird-audio-credit">rec. ' + b.recordist + ' \u00b7 xeno-canto.org \u00b7 CC BY-NC-SA</span>' +
             '</div>' +
             '</div>' +
             '</div>';
@@ -698,80 +928,300 @@ document.querySelectorAll('.sys-bird-filter').forEach(function (btn) {
 });
 
 // ════════════════════════════════════════════════════════════════
-// RICE VISUAL TIMELINE
+// RICE INTERACTIVE CARDS — with paddy grid + animated counter
 // ════════════════════════════════════════════════════════════════
 
 function renderRiceTable() {
-    var tableWrap = document.querySelector('#riceTable');
-    if (!tableWrap) return;
+    var wrap = document.querySelector('#riceInteractive');
+    if (!wrap) return;
 
-    tableWrap.style.display = 'none';
+    var MAX_ACRES = 36000;
+    var rows = RICE_TABLE.slice().reverse(); // chronological
 
-    var container = document.createElement('div');
-    container.className = 'rice-timeline';
-    tableWrap.parentNode.insertBefore(container, tableWrap);
+    var grid = document.createElement('div');
+    grid.className = 'rice-cards-wrap';
+    grid.setAttribute('role', 'list');
 
-    var maxAcres = 36000;
-    var rows = RICE_TABLE.slice().reverse();
+    var panel = document.createElement('div');
+    panel.className = 'rice-panel';
+    panel.setAttribute('aria-live', 'polite');
+    panel.id = 'ricePanelDetail';
 
-    rows.forEach(function (row) {
-        var acresNum = parseInt(row.acres.replace(/,/g, ''));
-        var pct      = acresNum / maxAcres;
-        var isFlood  = row.flood;
+    var activeYear = null;
 
-        var entry = document.createElement('div');
-        entry.className = 'rice-entry';
-        entry.setAttribute('role', 'region');
-        entry.setAttribute('aria-label', row.year + ': ' + row.acres + ' acres harvested, ' + row.prod + ', value ' + row.value + '. ' + (isFlood ? 'Wet year.' : 'Dry year.'));
+    function acresNum(str) { return parseInt(str.replace(/,/g, ''), 10); }
 
-        var yearBadge = document.createElement('div');
-        yearBadge.className = 'rice-year';
-        yearBadge.textContent = row.year;
-        entry.appendChild(yearBadge);
+    // ── Paddy grid visualization ──
+    // Renders a COLS×ROWS grid of cells, filling proportionally to acreage
+    function makePaddyGrid(pct, isWet) {
+        var COLS = 14, ROWS = 7, TOTAL = COLS * ROWS;
+        var filled = Math.round(pct * TOTAL);
 
-        var waterTag = document.createElement('div');
-        waterTag.className = 'rice-water-tag ' + (isFlood ? 'rice-wet' : 'rice-dry');
-        waterTag.textContent = isFlood ? '~ wet' : '⌀ dry';
-        entry.appendChild(waterTag);
+        var container = document.createElement('div');
+        container.className = 'rice-paddy-grid';
+        container.style.gridTemplateColumns = 'repeat(' + COLS + ', 10px)';
+        container.setAttribute('aria-hidden', 'true');
 
-        var content = document.createElement('div');
-        content.className = 'rice-content';
+        for (var i = 0; i < TOTAL; i++) {
+            var cell = document.createElement('div');
+            cell.className = 'rice-paddy-cell';
+            var isFilled = i < filled;
+            if (isFilled) {
+                cell.classList.add(isWet ? 'filled-wet' : 'filled-dry');
+                // stagger animation
+                cell.style.animationDelay = (i * 8) + 'ms';
+            } else {
+                cell.classList.add('empty');
+            }
+            cell.style.width  = '10px';
+            cell.style.height = '8px';
+            container.appendChild(cell);
+        }
 
-        var barWrap = document.createElement('div');
-        barWrap.className = 'rice-bar-wrap';
+        return container;
+    }
 
-        var bar = document.createElement('div');
-        bar.className = 'rice-bar-fill';
-        bar.style.width = Math.max(4, pct * 100) + '%';
-        bar.style.background = isFlood
-            ? 'linear-gradient(90deg, var(--olivegreen) 0%, rgba(189,165,67,0.4) 100%)'
-            : 'linear-gradient(90deg, rgba(189,165,67,0.3) 0%, rgba(189,165,67,0.08) 100%)';
+    // ── Animated count-up for the acres number ──
+    function animateCounter(el, target) {
+        var start = null;
+        var duration = 900;
+        function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+        function step(ts) {
+            if (!start) start = ts;
+            var progress = Math.min((ts - start) / duration, 1);
+            var val = Math.round(easeOut(progress) * target);
+            el.textContent = val.toLocaleString();
+            if (progress < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString();
+        }
+        requestAnimationFrame(step);
+    }
 
-        var dot = document.createElement('div');
-        dot.className = 'rice-bar-dot';
-        dot.style.background = isFlood ? 'var(--olivegreen)' : 'rgba(189,165,67,0.4)';
-        bar.appendChild(dot);
-        barWrap.appendChild(bar);
+    // ── Build SVG ring ──
+    function makeRing(pct, size, color) {
+        var r = size * 0.38;
+        var cx = size / 2, cy = size / 2;
+        var circ = 2 * Math.PI * r;
+        var svgNS = 'http://www.w3.org/2000/svg';
+        var svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('width', size);
+        svg.setAttribute('height', size);
+        svg.setAttribute('viewBox', '0 0 ' + size + ' ' + size);
+        svg.classList.add('rice-ring-svg');
+        svg.setAttribute('aria-hidden', 'true');
 
-        var nums = document.createElement('div');
-        nums.className = 'rice-nums';
-        nums.innerHTML =
-            '<span class="rice-acres">' + row.acres + ' ac</span>' +
-            '<span class="rice-divider">·</span>' +
-            '<span class="rice-tons">' + row.prod + '</span>' +
-            '<span class="rice-divider">·</span>' +
-            '<span class="rice-value">' + row.value + '</span>';
+        var track = document.createElementNS(svgNS, 'circle');
+        track.setAttribute('cx', cx); track.setAttribute('cy', cy); track.setAttribute('r', r);
+        track.setAttribute('fill', 'none');
+        track.setAttribute('stroke', 'rgba(255,255,255,.06)');
+        track.setAttribute('stroke-width', '6');
+        svg.appendChild(track);
 
-        var ctx = document.createElement('div');
-        ctx.className = 'rice-context';
+        var fill = document.createElementNS(svgNS, 'circle');
+        fill.setAttribute('cx', cx); fill.setAttribute('cy', cy); fill.setAttribute('r', r);
+        fill.setAttribute('fill', 'none');
+        fill.setAttribute('stroke', color);
+        fill.setAttribute('stroke-width', '6');
+        fill.setAttribute('stroke-linecap', 'round');
+        fill.setAttribute('stroke-dasharray', (pct * circ) + ' ' + ((1 - pct) * circ));
+        fill.setAttribute('stroke-dashoffset', circ * 0.25);
+        fill.style.transition = 'stroke-dasharray .8s cubic-bezier(.22,1,.36,1)';
+        svg.appendChild(fill);
+        return svg;
+    }
+
+    function openPanel(row) {
+        var acres = acresNum(row.acres);
+        var pct   = acres / MAX_ACRES;
+        var isWet = row.flood;
+        var ringColor = isWet ? '#bda543' : 'rgba(189,165,67,0.35)';
+
+        // Left column: paddy grid + ring stacked
+        var leftCol = document.createElement('div');
+        leftCol.className = 'rice-panel-ring';
+        leftCol.style.display = 'flex';
+        leftCol.style.flexDirection = 'column';
+        leftCol.style.gap = '1.2rem';
+        leftCol.style.alignItems = 'flex-start';
+
+        // Acres counter block
+        var counterBlock = document.createElement('div');
+        var counterNum = document.createElement('span');
+        counterNum.className = 'rice-acres-counter' + (isWet ? '' : ' dry-counter');
+        counterNum.textContent = '0';
+        counterNum.setAttribute('aria-label', acres.toLocaleString() + ' acres');
+        var counterUnit = document.createElement('span');
+        counterUnit.className = 'rice-acres-unit';
+        counterUnit.textContent = 'acres harvested';
+        counterBlock.appendChild(counterNum);
+        counterBlock.appendChild(document.createElement('br'));
+        counterBlock.appendChild(counterUnit);
+        leftCol.appendChild(counterBlock);
+
+        // Paddy grid
+        leftCol.appendChild(makePaddyGrid(pct, isWet));
+
+        // Pct label
+        var pctNote = document.createElement('div');
+        pctNote.style.cssText = 'font-family:"DM Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#4a4f5e;';
+        pctNote.textContent = Math.round(pct * 100) + '% of peak (2020)';
+        leftCol.appendChild(pctNote);
+
+        // Body
+        var body = document.createElement('div');
+        body.className = 'rice-panel-body';
+
+        var head = document.createElement('div');
+        head.className = 'rice-panel-year-head';
+        var yr = document.createElement('span');
+        yr.className = 'rice-panel-year';
+        yr.textContent = row.year;
+        var badge = document.createElement('span');
+        badge.className = 'rice-panel-flood-tag ' + (isWet ? 'wet' : 'dry');
+        badge.textContent = isWet ? 'wet year' : 'dry year';
+        head.appendChild(yr); head.appendChild(badge);
+
+        var ctx = document.createElement('p');
+        ctx.className = 'rice-panel-context';
         ctx.textContent = row.context;
 
-        content.appendChild(barWrap);
-        content.appendChild(nums);
-        content.appendChild(ctx);
-        entry.appendChild(content);
-        container.appendChild(entry);
+        var stats = document.createElement('div');
+        stats.className = 'rice-panel-stats';
+
+        function makeStat(label, val) {
+            var s = document.createElement('div'); s.className = 'rice-stat';
+            var l = document.createElement('span'); l.className = 'rice-stat-label'; l.textContent = label;
+            var v = document.createElement('span'); v.className = 'rice-stat-value'; v.textContent = val;
+            s.appendChild(l); s.appendChild(v);
+            return s;
+        }
+        stats.appendChild(makeStat('production', row.prod));
+        stats.appendChild(makeStat('gross value', row.value));
+        stats.appendChild(makeStat('flood days', FLOOD[row.year] + ' days'));
+
+        body.appendChild(head);
+        body.appendChild(ctx);
+        body.appendChild(stats);
+
+        // Comparison sidebar
+        var compare = document.createElement('div');
+        compare.className = 'rice-panel-compare';
+
+        var cl = document.createElement('div');
+        cl.className = 'rice-compare-label';
+        cl.textContent = 'vs. all years';
+        compare.appendChild(cl);
+
+        rows.forEach(function (r) {
+            var isHighlight = r.year === row.year;
+            var rowEl = document.createElement('div');
+            rowEl.className = 'rice-compare-row' + (isHighlight ? ' highlight' : '');
+            var yrEl = document.createElement('span');
+            yrEl.className = 'rice-compare-yr';
+            yrEl.textContent = r.year;
+            var barTrack = document.createElement('div');
+            barTrack.className = 'rice-compare-bar-wrap';
+            var barFill = document.createElement('div');
+            barFill.className = 'rice-compare-bar';
+            barFill.style.width = Math.max(3, acresNum(r.acres) / MAX_ACRES * 100) + '%';
+            barFill.style.background = isHighlight
+                ? 'var(--olivegreen)'
+                : (r.flood ? 'rgba(189,165,67,0.35)' : 'rgba(128,135,153,0.3)');
+            barTrack.appendChild(barFill);
+            rowEl.appendChild(yrEl);
+            rowEl.appendChild(barTrack);
+            compare.appendChild(rowEl);
+        });
+
+        panel.innerHTML = '';
+        panel.classList.add('open');
+        panel.appendChild(leftCol);
+        panel.appendChild(body);
+        panel.appendChild(compare);
+
+        // Trigger counter animation after DOM is in place
+        setTimeout(function() { animateCounter(counterNum, acres); }, 60);
+        setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 80);
+    }
+
+    rows.forEach(function (row, i) {
+        var acres = acresNum(row.acres);
+        var pct   = acres / MAX_ACRES;
+        var isWet = row.flood;
+
+        var card = document.createElement('div');
+        card.className = 'rice-card' + (isWet ? ' wet-year' : '');
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-expanded', 'false');
+        card.setAttribute('aria-label', row.year + ': ' + row.acres + ' acres. ' + (isWet ? 'Wet year.' : 'Dry year.') + ' Click to expand.');
+        card.dataset.year = row.year;
+
+        // Field-fill background element
+        var fieldBg = document.createElement('div');
+        fieldBg.className = 'rice-card-field-bg';
+        fieldBg.style.height = Math.max(8, pct * 100) + '%';
+        card.appendChild(fieldBg);
+
+        var yearEl = document.createElement('div');
+        yearEl.className = 'rice-card-year';
+        yearEl.textContent = row.year;
+
+        var badgeEl = document.createElement('div');
+        badgeEl.className = 'rice-card-badge ' + (isWet ? 'wet' : 'dry');
+        badgeEl.textContent = isWet ? '~ wet' : '⌀ dry';
+
+        var acresEl = document.createElement('div');
+        acresEl.className = 'rice-card-acres';
+        acresEl.textContent = row.acres + ' ac';
+
+        var miniTrack = document.createElement('div');
+        miniTrack.className = 'rice-card-minibar-track';
+        var miniFill = document.createElement('div');
+        miniFill.className = 'rice-card-minibar-fill';
+        miniFill.style.width = Math.max(4, pct * 100) + '%';
+        miniFill.style.background = isWet
+            ? 'linear-gradient(90deg, var(--olivegreen), rgba(189,165,67,.4))'
+            : 'rgba(128,135,153,.3)';
+        miniTrack.appendChild(miniFill);
+
+        card.appendChild(yearEl);
+        card.appendChild(badgeEl);
+        card.appendChild(acresEl);
+        card.appendChild(miniTrack);
+
+        function toggle() {
+            if (activeYear === row.year) {
+                activeYear = null;
+                card.classList.remove('active');
+                card.setAttribute('aria-expanded', 'false');
+                panel.classList.remove('open');
+                panel.innerHTML = '';
+            } else {
+                activeYear = row.year;
+                grid.querySelectorAll('.rice-card').forEach(function (c) {
+                    c.classList.remove('active');
+                    c.setAttribute('aria-expanded', 'false');
+                });
+                card.classList.add('active');
+                card.setAttribute('aria-expanded', 'true');
+                openPanel(row);
+            }
+        }
+
+        card.addEventListener('click', toggle);
+        card.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+        });
+
+        grid.appendChild(card);
+
+        if (i === rows.length - 1) {
+            grid.appendChild(panel);
+        }
     });
+
+    wrap.appendChild(grid);
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -783,5 +1233,74 @@ renderLegend();
 renderWheel();
 renderBirdGrid();
 renderRiceTable();
+
+
+
+// ════════════════════════════════════════════════════════════════
+// VISUAL ENHANCEMENTS
+// ════════════════════════════════════════════════════════════════
+
+// 1. Count-up animation for hero stats
+(function() {
+    var stats = document.querySelectorAll('.sys-hero-stat-num');
+    if (!stats.length) { return; }
+
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function countUp(el) {
+        var target = parseInt(el.dataset.target, 10);
+        var suffix = el.dataset.suffix || '';
+        var duration = 1400;
+        var start = null;
+
+        function format(n) {
+            if (target >= 1000) { return n.toLocaleString(); }
+            return String(n);
+        }
+
+        function step(ts) {
+            if (!start) { start = ts; }
+            var progress = Math.min((ts - start) / duration, 1);
+            var val = Math.round(easeOut(progress) * target);
+            el.textContent = format(val) + suffix;
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                el.textContent = format(target) + suffix;
+                el.classList.add('counted');
+            }
+        }
+        el.classList.add('counted');
+        requestAnimationFrame(step);
+    }
+
+    // Trigger on page load after a short delay
+    setTimeout(function() {
+        stats.forEach(function(el) { countUp(el); });
+    }, 600);
+})();
+
+// 2. Section number + title scroll-in animation
+(function() {
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.sys-section-num, .sys-section-title').forEach(function(el) {
+            el.classList.add('in-view');
+        });
+        return;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.sys-section-num, .sys-section-title').forEach(function(el) {
+        observer.observe(el);
+    });
+})();
 
 })();

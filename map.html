@@ -51,11 +51,15 @@
 <body class="map-page">
 
 <header class="ff-header">
-    <a href="index.html" class="ff-header-back">← home</a>
+    <!-- KIOSK MODE: links replaced with onclick. To restore, uncomment <a> tags and remove <span> tags. -->
+    <!-- <a href="index.html" class="ff-header-back">← home</a> -->
+    <span onclick="location.href='index.html'" class="ff-header-back nav-btn">← home</span>
     <span class="ff-header-title">the basin</span>
     <nav class="ff-header-nav">
-        <a href="context.html" class="ff-header-nav-link">← context</a>
-        <a href="systems.html" class="ff-header-nav-link">systems →</a>
+        <!-- <a href="context.html" class="ff-header-nav-link">← context</a> -->
+        <!-- <a href="systems.html" class="ff-header-nav-link">systems →</a> -->
+        <span onclick="location.href='context.html'" class="ff-header-nav-link nav-btn">← context</span>
+        <span onclick="location.href='systems.html'" class="ff-header-nav-link nav-btn">systems →</span>
     </nav>
 </header>
 
@@ -171,4 +175,3 @@
 <script src="scripts.js"></script>
 </body>
 </html>
-

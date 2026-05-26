@@ -500,11 +500,105 @@
                 entries[ef].style.transform = 'none';
             }
         }
+
+        // — OBS AUDIO PLAYER (same pattern as systems bird audio) —
+        var obsAudioCurrent = null;
+        var obsAudioBtn     = null;
+
+        function obsStopAudio() {
+            if (obsAudioCurrent) { obsAudioCurrent.pause(); obsAudioCurrent = null; }
+            if (obsAudioBtn) { obsAudioBtn.classList.remove('playing'); obsAudioBtn = null; }
+        }
+
+        var obsBtn = document.getElementById('obs4-btn');
+        if (obsBtn) {
+            obsBtn.addEventListener('click', function () {
+                if (obsBtn.classList.contains('playing')) { obsStopAudio(); return; }
+                obsStopAudio();
+                var audio = new Audio(obsBtn.dataset.src);
+                obsAudioCurrent = audio;
+                obsAudioBtn     = obsBtn;
+                obsBtn.classList.add('playing');
+                audio.play().catch(function (err) { console.error('obs audio error:', err); obsStopAudio(); });
+                audio.addEventListener('ended', obsStopAudio);
+            });
+        }
     }
 
 
     
-    document.addEventListener('dragstart', function(e) {
+
+    /* ── OBS ENHANCEMENTS ── */
+
+    // 1. Set --entry-accent CSS var per entry from its tag color
+    var allEntries = document.querySelectorAll('.entry');
+    allEntries.forEach(function(entry) {
+        var tag = entry.querySelector('.entry-tag');
+        if (tag) {
+            var color = tag.style.getPropertyValue('--tag-color') || 'rgba(255,255,255,.15)';
+            entry.style.setProperty('--entry-accent', color);
+        }
+    });
+
+    // 2. Reading progress bar in sidebar
+    var obsIndexEl = document.querySelector('.obs-index');
+    if (obsIndexEl) {
+        var progressBar = document.createElement('div');
+        progressBar.className = 'obs-index-progress';
+        obsIndexEl.style.position = 'relative';
+        obsIndexEl.appendChild(progressBar);
+
+        var obsScrollEl = document.getElementById('obsScroll');
+        if (obsScrollEl) {
+            obsScrollEl.addEventListener('scroll', function() {
+                var s = obsScrollEl.scrollTop;
+                var h = obsScrollEl.scrollHeight - obsScrollEl.clientHeight;
+                var pct = h > 0 ? (s / h * 100) : 0;
+                progressBar.style.height = pct + '%';
+            }, { passive: true });
+        }
+    }
+
+    // 3. Tag filtering
+    var activeTag = null;
+    var filterChip = document.createElement('div');
+    filterChip.className = 'obs-filter-active';
+    filterChip.innerHTML = '<span class="fc-label"></span><span class="fc-clear">✕ clear</span>';
+    var obsIndexNav = document.getElementById('indexNav');
+    if (obsIndexNav) { obsIndexNav.parentNode.insertBefore(filterChip, obsIndexNav.nextSibling); }
+
+    filterChip.addEventListener('click', function() { clearFilter(); });
+
+    function clearFilter() {
+        activeTag = null;
+        filterChip.classList.remove('visible');
+        document.querySelectorAll('.etag').forEach(function(t) { t.classList.remove('active-filter'); });
+        document.querySelectorAll('.entry').forEach(function(e) { e.classList.remove('tag-dimmed'); });
+    }
+
+    document.querySelectorAll('.etag').forEach(function(tag) {
+        tag.addEventListener('click', function() {
+            var clicked = tag.textContent.trim().toLowerCase();
+            if (activeTag === clicked) { clearFilter(); return; }
+            activeTag = clicked;
+
+            document.querySelectorAll('.etag').forEach(function(t) {
+                t.classList.toggle('active-filter', t.textContent.trim().toLowerCase() === clicked);
+            });
+
+            document.querySelectorAll('.entry').forEach(function(entry) {
+                var tags = Array.from(entry.querySelectorAll('.etag')).map(function(t) {
+                    return t.textContent.trim().toLowerCase();
+                });
+                entry.classList.toggle('tag-dimmed', tags.indexOf(clicked) === -1);
+            });
+
+            filterChip.querySelector('.fc-label').textContent = clicked;
+            filterChip.classList.add('visible');
+        });
+    });
+
+        document.addEventListener('dragstart', function(e) {
         e.preventDefault();
     });
 

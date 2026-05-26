@@ -12,10 +12,13 @@
 
     <!-- SHARED HEADER -->
     <header class="ff-header">
-        <a href="index.html" class="ff-header-back">← home</a>
+        <!-- KIOSK MODE: links replaced with onclick. To restore, uncomment <a> tags and remove <span> tags. -->
+        <!-- <a href="index.html" class="ff-header-back">← home</a> -->
+        <span onclick="location.href='index.html'" class="ff-header-back nav-btn">← home</span>
         <span class="ff-header-title">observations</span>
         <nav class="ff-header-nav">
-            <a href="systems.html" class="ff-header-nav-link">← systems</a>
+            <!-- <a href="systems.html" class="ff-header-nav-link">← systems</a> -->
+            <span onclick="location.href='systems.html'" class="ff-header-nav-link nav-btn">← systems</span>
         </nav>
     </header>
 
@@ -59,7 +62,6 @@
             <div class="index-meta">
                 <div class="im-row"><span class="im-k">visits</span><span class="im-v">7</span></div>
                 <div class="im-row"><span class="im-k">season</span><span class="im-v">Jan–May</span></div>
-                <div class="im-row"><span class="im-k">location</span><span class="im-v">Yolo County</span></div>
                 <div class="im-row"><span class="im-k">observer</span><span class="im-v">Zahra Baxi</span></div>
             </div>
         </aside>
@@ -81,10 +83,10 @@
                 <h2 class="entry-title">learning to see birds</h2>
 
                 <div class="entry-body">
-                    <div class="observation-photos">
+                    <div class="observation-photos observation-photos--small">
                         <figure>
                             <img src="images/observations/item1/1.JPG">
-                            <figcaption></figcaption>
+                            <figcaption>Yolo Bypass Wildlife Area · January 17, 2026. Shot on iPhone</figcaption>
                         </figure>
                     </div>
                     <p>
@@ -93,7 +95,7 @@
                     <div class="observation-photos">
                         <figure>
                             <img src="images/observations/item1/2.JPG">
-                            <figcaption></figcaption>
+                            <figcaption>Yolo Bypass Wildlife Area · January 17, 2026. Shot on iPhone</figcaption>
                         </figure>
                     </div>
                     <p>
@@ -112,8 +114,10 @@
                         Earlier in the week I had bought some used birding books from Logos Books in downtown Davis. Paired with my handy dandy birding observation book I bought from Newsbeat in Davis, I was ready to begin my first explorations into bird watching. Most of the visit was spent adjusting to the new landscape, learning where to look, how long to stay still, and how 
                         quickly birds move in and out of view. 
                     </p>
+
                 </div>
 
+                <div class="entry-tags-label">tags</div>
                 <div class="entry-tags">
                     <span class="etag">birds</span>
                     <span class="etag">visibility</span>
@@ -173,6 +177,7 @@
                     </p>
                 </div>
 
+                <div class="entry-tags-label">tags</div>
                 <div class="entry-tags">
                     <span class="etag">tule trail</span>
                     <span class="etag">sound</span>
@@ -202,13 +207,21 @@
                         The basin was a lot calmer than earlier visits. I was trying to get a sense of what movement looks like here, not just birds, but the way wind moves through the tules, the way the water surface catches light, the general stillness that gets interrupted.
                     </p>
 
-                    <div class="observation-photos">
+                    <div class="observation-photos observation-photos--with-video">
                         <figure>
-                            <video width="100%" height="auto" controls muted playsinline webkit-playsinline preload="auto">
+                            <img src="images/observations/item3/image1.png" alt="Yolo Basin, March 2026">
+                            <figcaption></figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/observations/item3/image2.png" alt="Yolo Basin, March 2026">
+                            <figcaption></figcaption>
+                        </figure>
+                        <figure>
+                            <video autoplay muted loop playsinline webkit-playsinline preload="auto">
                                 <source src="media/observation_03-01.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <figcaption class="film-caption">Yolo Basin · Mar 7, 2026</figcaption>
+                            <figcaption class="film-caption">Yolo Basin · Mar 7, 2026. Shot on Mirrorless Digital Fuji Film X-T3 </figcaption>
                         </figure>
                     </div>
 
@@ -220,6 +233,7 @@
                     </div>
                 </div>
 
+                <div class="entry-tags-label">tags</div>
                 <div class="entry-tags">
                     <span class="etag">video</span>
                     <span class="etag">movement</span>
@@ -243,24 +257,68 @@
                 <h2 class="entry-title">back on the tule trail, this time with a map in mind</h2>
                 <div class="entry-body">
                     <p>
-                        I came back to the Tule Trail with a more specific goal — starting to gather material for the site mapping part of the project. I was paying attention to landmarks, access points, the relationship between the trail and the surrounding farmland.
+                        I came back to the Tule Trail with a more specific goal, starting to gather material for the site mapping part of the project. I was paying attention to landmarks, access points, the relationship between the trail and the surrounding farmland.
                     </p>
                     <p>
-                        The season had shifted noticeably since earlier visits. Things were drier, the water lower. The bird presence was different too — fewer waterfowl, more movement in the brush. The space felt less dense, more open.
+                        The season had shifted noticeably since earlier visits. Things were drier, the water lower. The bird presence was different too, fewer waterfowl, more movement in the brush. The space felt less dense, more open. This time around also we heard some interesting frog noises! 
                     </p>
+                    <div class="obs-audio-wrap">
+                        <button class="obs-audio-btn" id="obs4-btn" aria-label="Play audio recording">
+                            <span class="bird-audio-icon">
+                                <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2l9 5-9 5V2z"/></svg>
+                                <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="2" width="4" height="10"/><rect x="8" y="2" width="4" height="10"/></svg>
+                            </span>
+                            <span class="bird-audio-bars">
+                                <span class="bar b1"></span>
+                                <span class="bar b2"></span>
+                                <span class="bar b3"></span>
+                                <span class="bar b4"></span>
+                                <span class="bar b5"></span>
+                            </span>
+                        </button>
+                        <div class="bird-audio-meta">
+                            <span class="bird-audio-id">Field recording · American Bullfrog</span>
+                            <span class="bird-audio-credit">Yolo Bypass Wildlife Area · Apr 29, 2026</span>
+                        </div>
+                    </div>
+                    <script>
+                    (function() {
+                        var _btn = document.getElementById('obs4-btn');
+                        var _audio = null;
+                        _btn.onclick = function() {
+                            if (_audio && !_audio.paused) {
+                                _audio.pause();
+                                _audio.currentTime = 0;
+                                _btn.classList.remove('playing');
+                                return;
+                            }
+                            _audio = new Audio('media/audio/observation4.mp3');
+                            _audio.play();
+                            _btn.classList.add('playing');
+                            _audio.onended = function() { _btn.classList.remove('playing'); };
+                        };
+                    })();
+                    </script>
 
-                    <div class="observation-photos">
+                    <div class="observation-photos observation-photos--polaroid">
                         <figure>
-                            <img src="images/observations/item3/1.gif">
-                            <figcaption></figcaption>
+                            <img src="images/observations/item4/image1.png" alt="Tule Trail, April 2026">
+                        </figure>
+                        <figure>
+                            <img src="images/observations/item4/image2.png" alt="Tule Trail, April 2026">
                         </figure>
                     </div>
-
+                    <p class="obs-polaroid-caption">Shot on Polaroid OneStep+ · 600 film · Tule Trail, Apr 29, 2026</p>
                     <p>
                         I spent more time this visit just walking slowly and taking in how the trail relates to the wider basin. The levee road gives you a very different vantage than being down in the wetlands.
                     </p>
+
+                    <div class="entry-pullquote">
+                        "From the levee, you can see the whole thing. Down in the wetland, you only see what's directly in front of you."
+                    </div>
                 </div>
 
+                <div class="entry-tags-label">tags</div>
                 <div class="entry-tags">
                     <span class="etag">tule trail</span>
                     <span class="etag">site mapping</span>
@@ -284,10 +342,10 @@
                 <h2 class="entry-title">meeting the birds up close at the wildlife museum</h2>
                 <div class="entry-body">
                     <p>
-                        This visit wasn't to the basin itself but to the UC Davis Museum of Wildlife and Fish Biology — to see specimens of the birds I'd been observing in the field. There's something strange and useful about seeing a bird you've only watched from a distance suddenly right in front of you, still, under glass.
+                        This visit wasn't to the basin itself but to the UC Davis Museum of Wildlife and Fish Biology: to see specimens of the birds I'd been observing in the field. There's something strange and useful about seeing a bird you've only watched from a distance suddenly right in front of you and you're able to touch it.
                     </p>
                     <p>
-                        Being able to study them this closely helped me understand details I'd been missing — the scale of certain species, the differences in plumage, the physical reasons some birds move the way they do. It filled in gaps that field observation from the levee road couldn't.
+                        Being able to study them this closely helped me understand details I'd been missing,the scale of certain species, the differences in plumage, the physical reasons some birds move the way they do. It filled in gaps that field observation from the levee road couldn't. The photos below are just a few of the specimens I got to see & photograph, all of which are from the Yolo Bypass area.
                     </p>
 
                     <div class="entry-aside">
@@ -300,8 +358,47 @@
                     <p>
                         Thanks to Irene Engilis for access to the collection and Kevin Wu for helping identify and pull the right specimens.
                     </p>
+
+                    <div class="observation-photos">
+                        <figure>
+                            <img src="images/observations/item5/image1.png" alt="Specimen tray, UC Davis Museum of Wildlife and Fish Biology">
+                            <figcaption class="film-caption">UC Davis Museum of Wildlife and Fish Biology · May 13, 2026</figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="observation-photos observation-photos--specimens">
+                        <figure class="specimen-figure">
+                            <img src="images/observations/item5/image2.png" alt="Bird specimen">
+                            <div class="specimen-info">
+                                <span class="spec-common">Great Egret</span>
+                                <span class="spec-latin">Ardea alba</span>
+                                <span class="spec-detail">Pelecaniformes · Ardeidae</span>
+                            </div>
+                        </figure>
+                        <figure class="specimen-figure">
+                            <img src="images/observations/item5/image3.png" alt="Bird specimen">
+                            <div class="specimen-info">
+                                <span class="spec-common">WING OF Green-winged Teal</span>
+                                <span class="spec-latin">Anas carolinensis</span>
+                                <span class="spec-detail">Anseriformes · Anatidae</span>
+                            </div>
+                        </figure>
+                        <figure class="specimen-figure">
+                            <img src="images/observations/item5/image4.png" alt="Bird specimen">
+                            <div class="specimen-info">
+                                <span class="spec-common">White-tailed Kite</span>
+                                <span class="spec-latin">Elanus leucurus</span>
+                                <span class="spec-detail">Accipitriformes · Accipitridae</span>
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="entry-pullquote">
+                        "It's different seeing them up close. From a distance, they can feel more like shapes or movements. Up close, you see the details that make them real like the texture of their feathers, the shape of a beak, the way their legs bend."
+                    </div>
                 </div>
 
+                <div class="entry-tags-label">tags</div>
                 <div class="entry-tags">
                     <span class="etag">birds</span>
                     <span class="etag">museum</span>
@@ -325,11 +422,24 @@
                 <h2 class="entry-title">the yolo bypass auto tour</h2>
                 <div class="entry-body">
                     <p>
-                        The auto tour route through the Yolo Bypass Wildlife Area gives you access to parts of the basin that aren't reachable on foot. You drive slowly through the levee roads and the landscape opens up around you in a way that's completely different from hiking in. It's more passive, but you cover more ground and see more variation in habitat.
+                        The auto tour route through the Yolo Bypass Wildlife Area gives you access to parts of the basin that aren't reachable on foot. You drive slowly through gravel roads and the landscape opens up around you in a way that's completely different from hiking in. It's more passive, but you cover more ground and see more variation in habitat.
                     </p>
                     <p>
-                        This was one of the last visits of the project and it felt like a kind of summary — a way to see the whole thing at once before wrapping up. The water levels were low by May but there were still birds, still activity in the fields. The basin doesn't really stop.
+                        This was one of the last visits of the project and it felt like a kind of summary, a way to see the whole thing at once before wrapping up. The water levels were low by May but there were still many birds. While on the last stretch of the tour I passed by the Hunters Checkpoint. Going further down the road in a different direction would lead off to hunting parking lots and hunting areas, which was a reminder of the different ways people use the space and how those uses overlap with the birds. As someone who is not a hunter, I felt a little out of place wanting to explore and learn more about that part of the basin. 
                     </p>
+
+                    <div class="observation-photos">
+                        <figure>
+                            <img src="images/observations/item6/image1.jpg" alt="Yolo Bypass auto tour route, May 2026">
+                            <figcaption></figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/observations/item6/image2.jpg" alt="Yolo Bypass Wildlife Area, May 2026">
+                            <figcaption>Yolo Bypass Wildlife Area · May 18, 2026. Shot on iPhone</figcaption>
+                        </figure>
+                    </div>
+
+                    <p>Often on my visits before I could hear gunshots in the distance and now I could see how far these hunting spots were from the levee road but still how loud the sounds of hunting were across the basin. I feel a bit conflicted after much thought still about how to think about hunting as a use of the basin, especially since it is a way that people interact with the birds and the land but also a way that they kill the birds. I want to learn more about it and how it fits into the history and ecology of the basin but I also don't want to support it in any way, yet as someone who believes in sustainable sourced products, zero waste living and food I do support hunting in theory. I think it's a complicated topic that I want to learn more about and understand better, especially since it is such a big part of the culture around the basin and the way people interact with it. I'd love to for a future project interview and talk with hunters that use the space and learn about their practice.</p>
 
                     <div class="entry-aside">
                         <span class="ea-label">note to self</span>
@@ -337,8 +447,13 @@
                             The auto tour is worth doing early in a project like this, not at the end. The scale of the bypass is hard to grasp until you've driven it.
                         </p>
                     </div>
+
+                    <div class="entry-pullquote">
+                        "You don't walk through it. You move through it, and the scale comes to you."
+                    </div>
                 </div>
 
+                <div class="entry-tags-label">tags</div>
                 <div class="entry-tags">
                     <span class="etag">auto tour</span>
                     <span class="etag">bypass</span>
@@ -362,13 +477,32 @@
                 <h2 class="entry-title">the davis wetlands</h2>
                 <div class="entry-body">
                     <p>
-                        After the auto tour I went to the Davis Wetlands, which sit just outside the city and feel like a more contained, managed version of what's happening in the wider bypass. The water treatment ponds attract a lot of the same species you'd see in the basin but in a much smaller, more accessible space.
+                        After the auto tour I went to the Davis Wetlands, which sit just outside the city and are on a smaller scale compared to the bypass. The water treatment ponds attract a lot of the same species you'd see. The main difference is the accessibility which was limited and harder. It took a lot of research and asking around to figure out how to get in, and even then the access points were not well marked. The bypass is more open to the public, but the wetlands are more closed off, which creates a different kind of relationship between the birds and the people who want to see them. 
                     </p>
                     <p>
-                        It was interesting to visit both in the same day. The contrast made the scale of the bypass feel even more significant. The Davis Wetlands are easy to walk and well-marked — the kind of access the bypass mostly doesn't offer. Both serve the birds. They just feel very different to be in.
+                        It was interesting to visit both in the same day. Both serve the birds. They just feel very different to be in. It was also interesting to have two roading adventures, trying to find the access points to both places. The bypass was more straightforward with signage directing you throughout the auto tour, the wetlands felt more hidden, which made it feel more special to be there but also less welcoming. I'd come back out here again one day but park outside a gate, even if its open as you risk getting stuck behind another locked gate if you go in and the roads are not paved.
                     </p>
+
+                    <div class="observation-photos">
+                        <figure>
+                            <img src="images/observations/item7/image1.JPG" alt="Egrets at Davis Wetlands, May 2026">
+                            <figcaption></figcaption>
+                        </figure>
+                        <figure>
+                            <img src="images/observations/item7/image2.JPG" alt="Egrets at Davis Wetlands, May 2026">
+                            <figcaption class="film-caption">Davis Wetlands · May 18, 2026. Shot on Mirrorless Digital Fuji Film X-T3</figcaption>
+                        </figure>
+                    </div>
+                    <p>
+                        Despite this adventure, being scary at times, I got some of the best photos of birds I've ever taken. The space is small and intimate without all the visitors that I could take up close photos of the birds without worrying about scaring them. It was a great way to close out this thesis project. While it may be the last visit for this project, I will  keep visiting the basin and the wetlands in the future, especially as the seasons change and the birds come and go.
+                    </p>
+
+                    <!-- <div class="entry-pullquote">
+                        "Both places serve the birds. The wetlands also serve the people. The bypass mostly just serves the birds."
+                    </div> -->
                 </div>
 
+                <div class="entry-tags-label">tags</div>
                 <div class="entry-tags">
                     <span class="etag">davis wetlands</span>
                     <span class="etag">birds</span>
@@ -419,7 +553,7 @@
     </div>
 
     <script src="scripts.js"></script>
-</body>
+
 </html>
 
 

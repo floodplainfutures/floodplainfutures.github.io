@@ -7,30 +7,20 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
-    <style>
-        /* Screen-reader-only utility */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0,0,0,0);
-            white-space: nowrap;
-            border: 0;
-        }
-    </style>
 </head>
 <body class="systems-page">
 
 <!-- SHARED HEADER -->
 <header class="ff-header">
-    <a href="index.html" class="ff-header-back">← home</a>
+    <!-- KIOSK MODE: links replaced with onclick. To restore, uncomment <a> tags and remove <span> tags. -->
+    <!-- <a href="index.html" class="ff-header-back">← home</a> -->
+    <span onclick="location.href='index.html'" class="ff-header-back nav-btn">← home</span>
     <span class="ff-header-title">systems</span>
     <nav class="ff-header-nav">
-        <a href="map.html" class="ff-header-nav-link">← the basin</a>
-        <a href="observations.html" class="ff-header-nav-link">observations →</a>
+        <!-- <a href="map.html" class="ff-header-nav-link">← the basin</a> -->
+        <!-- <a href="observations.html" class="ff-header-nav-link">observations →</a> -->
+        <span onclick="location.href='map.html'" class="ff-header-nav-link nav-btn">← the basin</span>
+        <span onclick="location.href='observations.html'" class="ff-header-nav-link nav-btn">observations →</span>
     </nav>
 </header>
 
@@ -40,12 +30,52 @@
 
     <!-- ══ HERO ══ -->
     <section class="sys-hero">
+        <!-- animated background grid -->
+        <div class="sys-hero-grid-bg" aria-hidden="true">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="heroGrid" width="48" height="48" patternUnits="userSpaceOnUse">
+                        <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="0.5"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#heroGrid)"/>
+                <!-- animated data dots -->
+                <circle cx="12%" cy="30%" r="2" fill="var(--lightblue)" opacity="0.6"><animate attributeName="opacity" values="0.2;0.8;0.2" dur="3.1s" repeatCount="indefinite"/></circle>
+                <circle cx="28%" cy="60%" r="1.5" fill="var(--pink)" opacity="0.5"><animate attributeName="opacity" values="0.1;0.7;0.1" dur="2.4s" begin="0.8s" repeatCount="indefinite"/></circle>
+                <circle cx="44%" cy="20%" r="2.5" fill="var(--olivegreen)" opacity="0.4"><animate attributeName="opacity" values="0.3;0.9;0.3" dur="4s" begin="0.4s" repeatCount="indefinite"/></circle>
+                <circle cx="72%" cy="75%" r="1.5" fill="var(--lightblue)" opacity="0.5"><animate attributeName="opacity" values="0.1;0.6;0.1" dur="2.8s" begin="1.2s" repeatCount="indefinite"/></circle>
+                <circle cx="85%" cy="40%" r="2" fill="var(--pink)" opacity="0.4"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="3.6s" begin="0.2s" repeatCount="indefinite"/></circle>
+                <circle cx="60%" cy="55%" r="1" fill="var(--olivegreen)" opacity="0.5"><animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.2s" begin="1.5s" repeatCount="indefinite"/></circle>
+                <!-- connecting lines -->
+                <line x1="12%" y1="30%" x2="28%" y2="60%" stroke="var(--lightblue)" stroke-width="0.5" opacity="0.15"/>
+                <line x1="28%" y1="60%" x2="44%" y2="20%" stroke="var(--pink)" stroke-width="0.5" opacity="0.12"/>
+                <line x1="44%" y1="20%" x2="72%" y2="75%" stroke="var(--olivegreen)" stroke-width="0.5" opacity="0.1"/>
+            </svg>
+        </div>
         <div class="sys-hero-left">
             <p class="sys-eyebrow">systems</p>
-            <h1 class="sys-hero-title">flood.<br/>flight.<br/>food.</h1>
+            <h1 class="sys-hero-title">
+                <span class="sys-hero-word">flood.</span><br/>
+                <span class="sys-hero-word">flight.</span><br/>
+                <span class="sys-hero-word">food.</span>
+            </h1>
             <p class="sys-hero-body">
-                There are three main things that happen in the Yolo Basin every year: it floods, birds show up, and rice gets grown. These events depend heavily upon each other. This page shows that connection through real data from the basin.
+                Three things happen in the Yolo Basin every year: it floods, birds show up, and rice gets grown. They depend on each other more than you might expect. This page traces that connection through real data from the basin.
             </p>
+            <div class="sys-hero-stats">
+                <div class="sys-hero-stat">
+                    <span class="sys-hero-stat-num" data-target="73" data-suffix=" days">0</span>
+                    <span class="sys-hero-stat-label">peak flood · 2023</span>
+                </div>
+                <div class="sys-hero-stat">
+                    <span class="sys-hero-stat-num" data-target="1240" data-suffix="">0</span>
+                    <span class="sys-hero-stat-label">bird checklists · 2020</span>
+                </div>
+                <div class="sys-hero-stat">
+                    <span class="sys-hero-stat-num" data-target="29974" data-suffix=" ac">0</span>
+                    <span class="sys-hero-stat-label">rice acres · 2023</span>
+                </div>
+            </div>
         </div>
         <div class="sys-hero-right">
             <div class="sys-hero-img-slot">
@@ -53,11 +83,9 @@
                      alt="Illustration of the Yolo Basin showing flooded fields, birds in flight, and rice growing in summer"
                      class="sys-hero-img"
                      onerror="this.parentElement.classList.add('img-missing')">
-                <!-- image: systems-hero.png -->
             </div>
         </div>
     </section>
-    
 
     <!-- ══ CHART + TOGGLES ══ -->
     <section class="sys-section" id="annual">
@@ -65,9 +93,9 @@
             <span class="sys-section-num">01</span>
             <h2 class="sys-section-title">six years of data</h2>
             <p class="sys-section-desc">
-                2018–2023, all Yolo County and Yolo Basin sources.
-                Each bar group shows one year. Use the buttons to show or hide each dataset.
-                Hover a year to see the numbers.
+                2018 to 2023, Yolo County and Yolo Basin sources only.
+                Each bar shows one system, scaled so you can see them move together.
+                Toggle any dataset on or off. Hover a year to see the raw numbers.
             </p>
         </div>
         <div class="sys-controls">
@@ -91,10 +119,7 @@
             </div>
         </div>
         <div class="sys-chart-wrap" id="annualChartWrap" role="region" aria-label="Annual bar chart: flood days, bird checklists, and rice acres 2018–2023">
-            <div class="sys-chart" id="annualChart" role="img" aria-label="Bar chart showing flood, bird, and rice data from 2018 to 2023. Use the data table below for full details."></div>
-            <div class="sys-chart-labels-x">
-                <span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span>
-            </div>
+            <div class="sys-chart" id="annualChart" role="img" aria-label="Bar chart showing flood, bird, and rice data from 2018 to 2023." style="width:100%;min-height:320px;"></div>
         </div>
         <div class="sys-legend">
             <div class="sys-legend-item" data-system="flood">
@@ -117,7 +142,7 @@
                 <div class="sys-legend-dot" style="background:var(--olivegreen)"></div>
                 <div>
                     <span class="sys-legend-name">Rice acres harvested</span>
-                    <span class="sys-legend-src">Source: Yolo County Dept. of Agriculture — Annual Crop & Livestock Report (Yolo County only)</span>
+                    <span class="sys-legend-src">Source: Yolo County Dept. of Agriculture — Annual Crop &amp; Livestock Report (Yolo County only)</span>
                 </div>
                 <span class="sys-legend-unit">acres per year</span>
             </div>
@@ -126,12 +151,7 @@
         <div class="sys-callout">
             <span class="sys-callout-mark">→</span>
             <p>
-                Look at 2022. A bad drought year across California hit Yolo County hard: rice acreage
-                dropped from about 23,000 acres to just <strong>9,507</strong>, the lowest in years,
-                because farmers simply didn't have enough water to plant. The Fremont Weir barely overtopped.
-                Bird activity at the wildlife area also dropped. Then 2023 came with record winter rains
-                and everything jumped back up. Rice hit <strong>29,974 acres</strong>.
-                You can see all three bars move in the same direction at the same time.
+                Look at 2022. A bad drought year hit Yolo County hard: rice acreage dropped from about 17,800 acres to just <strong>9,507</strong>, the lowest in the six-year period, because farmers couldn't get enough water to plant. The Fremont Weir did not overtop at all. Bird activity at the wildlife area dropped too. Then 2023 came with record winter rains and everything reversed. Rice hit <strong>29,974 acres</strong>, the Fremont Weir overtopped for 73 days, and checklists climbed right alongside it. All three bars move in the same direction at the same time.
             </p>
         </div>
     </section>
@@ -143,7 +163,7 @@
             <h2 class="sys-section-title">what happens each month</h2>
             <p class="sys-section-desc">
                 Hover or click any month to read what the flood, the birds, and the rice are doing.
-                The three rings show how active each system is. The more vibrant the ring is the more things are happening.
+                The three rings show how active each system is. The more vibrant the ring, the more things are happening.
             </p>
         </div>
         <div class="sys-wheel-wrap">
@@ -175,59 +195,64 @@
             <button class="sys-bird-filter" data-season="yearround">year-round</button>
         </div>
         <div class="sys-bird-grid" id="birdGrid" aria-live="polite" aria-label="Bird species at the Yolo Bypass Wildlife Area"></div>
+        <!-- <p class="sys-data-note">
+            Bird data: eBird / Cornell Lab of Ornithology, Hotspot L443535 (Vic Fazio Yolo Wildlife Area).
+            Peak counts from Napa Solano Audubon Society and Yolo Bird Alliance field records.
+            Bird call recordings from <a href="https://xeno-canto.org" target="_blank" rel="noopener">xeno-canto.org</a>, Creative Commons licensed. Each recording is credited to its recordist.
+            <a href="https://ebird.org/hotspot/L443535" target="_blank" rel="noopener">See live eBird data for this hotspot →</a>
+        </p> -->
         <p class="sys-data-note">
             Bird data: eBird / Cornell Lab of Ornithology, Hotspot L443535 (Vic Fazio Yolo Wildlife Area).
             Peak counts from Napa Solano Audubon Society and Yolo Bird Alliance field records.
-            Bird call recordings from <a href="https://xeno-canto.org" target="_blank" rel="noopener">xeno-canto.org</a> — Creative Commons licensed. Each recording is credited to its recordist.
-            <a href="https://ebird.org/hotspot/L443535" target="_blank" rel="noopener">See live eBird data for this hotspot →</a>
+            Bird call recordings from xeno-canto.org, Creative Commons licensed. Each recording is credited to its recordist.
         </p>
+        
     </section>
 
-    <!-- ══ RICE TABLE ══ -->
+    <!-- ══ RICE INTERACTIVE ══ -->
     <section class="sys-section" id="food">
         <div class="sys-section-header">
             <span class="sys-section-num">04</span>
             <h2 class="sys-section-title">rice in yolo county</h2>
             <p class="sys-section-desc">
-                Six years of rice data from the Yolo County Agricultural Commissioner's Crop Report,
-                a Yolo County-only source. After harvest each fall,
-                these same fields get flooded on purpose. That's the water the birds rely on all winter.
+                Six years of rice data from the Yolo County Agricultural Commissioner's Crop Report.
+                After each harvest, the same fields get flooded on purpose. That water is what the birds come for all winter.
+                Select a year to see what happened.
             </p>
         </div>
-        <div class="sys-section-img-slot">
-            <img src="images/rice-field.png"
-                 alt="Illustration of a flooded rice field in Yolo County in winter, with birds feeding in shallow water"
-                 class="sys-section-img"
-                 onerror="this.parentElement.classList.add('img-missing')">
-                <!-- image: rice-field.png -->
-        </div>
-        <div class="sys-table-wrap">
+
+        <p class="rice-hint">
+            <span>→</span> tap any year card to explore
+        </p>
+
+        <!-- Cards + expandable panel injected by JS into #riceInteractive -->
+        <div id="riceInteractive"></div>
+
+        <!-- Hidden table kept for JS compatibility -->
+        <div class="sys-table-wrap" style="display:none">
             <table class="sys-table" id="riceTable">
-                <thead>
-                    <tr>
-                        <th>Year</th>
-                        <th>Acres Harvested</th>
-                        <th>Total Tons</th>
-                        <th>Gross Value</th>
-                        <th>Water Year</th>
-                        <th>What happened</th>
-                    </tr>
-                </thead>
+                <thead><tr>
+                    <th>Year</th><th>Acres Harvested</th><th>Total Tons</th>
+                    <th>Gross Value</th><th>Water Year</th><th>What happened</th>
+                </tr></thead>
                 <tbody id="riceTableBody"></tbody>
             </table>
         </div>
+
         <div class="sys-rice-note">
             <div class="sys-rice-note-inner">
-                <p> After harvest, rice fields in the bypass are flooded between October and March.
-                    Farmers get paid to do this through state and federal wetland programs.
-                    The leftover grain feeds waterfowl. The flooded stalks grow the bugs that shorebirds eat.
-                    In a good water year, the managed flooding and the natural Fremont Weir floods overlap and the basin becomes one of the most important bird stopovers on the West Coast.
+                <p>After harvest, rice fields in the bypass are flooded from October through March.
+                    Farmers receive payments through state and federal wetland programs to keep the fields wet.
+                    The leftover grain feeds waterfowl. The flooded stalks decompose into the invertebrates that shorebirds eat.
+                    In a wet year, that managed flooding layers on top of the natural Fremont Weir floods, and the basin becomes one of the most productive bird stopovers on the West Coast.
                 </p>
             </div>
         </div>
         <p class="sys-data-note">
-            Source: Yolo County Department of Agriculture, Weights & Measures — Annual Crop & Livestock Reports 2018–2023. Yolo County data only.
-            <a href="https://www.yolocounty.gov/government/general-government-departments/agriculture/crop-statistics" target="_blank" rel="noopener">yolocounty.gov/ag →</a>
+            Source: Yolo County Department of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2023. Yolo County data only.
+            <span class="source-plain">yolocounty.gov/ag</span>
+
+            <!-- <a href="https://www.yolocounty.gov/government/general-government-departments/agriculture/crop-statistics" target="_blank" rel="noopener">yolocounty.gov/ag →</a> -->
         </p>
     </section>
 
@@ -242,45 +267,37 @@
                  alt="Diagram showing the relationship between Sacramento River flooding, bird migration, and rice agriculture in the Yolo Basin"
                  class="sys-section-img"
                  onerror="this.parentElement.classList.add('img-missing')">
-                <!-- image: connection-diagram.png -->
         </div>
         <div class="sys-connection-grid">
             <div class="sys-conn-card sys-conn-flood">
                 <span class="sys-conn-num">01</span>
                 <h3>The river goes over the weir</h3>
-                <p>When the Sacramento River runs high enough in winter, it spills over the Fremont Weir,
-                a 1.8-mile concrete structure on the north end of the bypass. That's when the basin floods.
-                The target for good wildlife habitat is at least 14 days of strong flow.
-                In 2023, it stayed flooded for 73 days.</p>
+                <p>When the Sacramento River runs high enough, it spills over the Fremont Weir, a 1.8-mile structure on the north end of the bypass. That is when the basin floods.
+                Habitat managers look for at least 14 days of strong flow to support wildlife.
+                In 2023, the basin stayed flooded for 73 days.</p>
                 <span class="sys-conn-tag">flood</span>
             </div>
             <div class="sys-conn-arrow">→</div>
             <div class="sys-conn-card sys-conn-birds">
                 <span class="sys-conn-num">02</span>
                 <h3>Birds find the water</h3>
-                <p>Flooded fields mean food. Shallow water exposes the small insects and seeds that
-                shorebirds and waterfowl live on. Over 200 species show up at the Yolo Bypass Wildlife Area
-                each year. The winter birds, cranes, pintails, dunlin, are here specifically
-                because the fields are wet.</p>
+                <p>Flooded fields mean food. Shallow water exposes the insects and seeds that shorebirds and waterfowl depend on. Over 200 species show up at the Yolo Bypass Wildlife Area each year. The winter visitors (cranes, pintails, dunlin) are here because the fields are wet. That is the whole reason.</p>
                 <span class="sys-conn-tag">flight</span>
             </div>
             <div class="sys-conn-arrow">→</div>
             <div class="sys-conn-card sys-conn-rice">
                 <span class="sys-conn-num">03</span>
                 <h3>The rice fields stay wet after harvest</h3>
-                <p>Farmers flood their harvested rice fields each fall as part of straw management,
-                it's cheaper than burning, and there are programs that pay them to do it for wildlife.
-                The leftover rice feeds ducks and geese. It also sets up the next growing season.
-                In a wet year, this managed flooding and the natural bypass flooding layer on top of each other.</p>
+                <p>Farmers flood their harvested fields each fall partly as straw management and partly because there are programs that pay them to do it for wildlife.
+                It is cheaper than burning the stubble. The leftover rice feeds ducks and geese, and the decomposing stalks feed the bugs that shorebirds need.
+                In a wet year, this managed flooding and the natural bypass flooding stack on top of each other.</p>
                 <span class="sys-conn-tag">food</span>
             </div>
         </div>
         <div class="sys-connection-note">
             <p>
-                When drought hit in 2022, farmers planted 59% less rice because water was short.
-                The Fremont Weir barely overtopped. Fewer flooded fields meant less bird habitat,
-                and the numbers at the wildlife area dropped too.
-                When the rains came back in 2023, so did the rice acreage and the birds.
+                In 2022, farmers planted 59% less rice because the water simply was not there. The Fremont Weir did not overtop at all. Fewer flooded fields meant less habitat, and bird numbers at the wildlife area reflected that.
+                When the rains came back in 2023, the rice came back. And so did the birds.
             </p>
         </div>
     </section>
@@ -292,17 +309,27 @@
             <div class="sys-footer-sources">
                 <p class="sys-footer-label">data sources</p>
                 <ul>
-                    <li><a href="https://viewperformance.deltacouncil.ca.gov/pm/yolo-bypass-inundation" target="_blank">Delta Stewardship Council — Yolo Bypass Inundation, Fremont Weir flow data (DWR)</a></li>
-                    <li><a href="https://ebird.org/hotspot/L443535" target="_blank">Cornell Lab of Ornithology — eBird Hotspot L443535, Vic Fazio Yolo Wildlife Area</a></li>
-                    <li><a href="https://www.yolocounty.gov/government/general-government-departments/agriculture/crop-statistics" target="_blank">Yolo County Dept. of Agriculture, Weights & Measures — Annual Crop & Livestock Reports 2018–2023</a></li>
-                    <li><a href="https://napasolanobirds.org/birding/local-birding-hotspots/yolo-bypass/" target="_blank">Napa Solano Audubon Society — Yolo Bypass species field accounts</a></li>
-                    <li><a href="https://yoloaudubon.org/birding-locations/" target="_blank">Yolo Bird Alliance — Checklist of the Birds of Yolo County, 2018</a></li>
-                    <li><a href="https://xeno-canto.org" target="_blank">Xeno-Canto — Bird call recordings, Creative Commons licensed. Recordists: Paul Marvin, Thomas Magarian, Phoebe Barnes.</a></li>
+                    <!-- KIOSK MODE: external links commented out. To restore, uncomment <a> tags and remove <span> tags. -->
+                    <!-- <li><a href="https://viewperformance.deltacouncil.ca.gov/pm/yolo-bypass-inundation" target="_blank">Delta Stewardship Council — Yolo Bypass Inundation, Fremont Weir flow data (DWR)</a></li> -->
+                    <li><span class="source-plain">Delta Stewardship Council — Yolo Bypass Inundation, Fremont Weir flow data (DWR) · viewperformance.deltacouncil.ca.gov</span></li>
+                    <!-- <li><a href="https://ebird.org/hotspot/L443535" target="_blank">Cornell Lab of Ornithology — eBird Hotspot L443535, Vic Fazio Yolo Wildlife Area</a></li> -->
+                    <li><span class="source-plain">Cornell Lab of Ornithology — eBird Hotspot L443535, Vic Fazio Yolo Wildlife Area · ebird.org</span></li>
+                    <!-- <li><a href="https://www.yolocounty.gov/government/general-government-departments/agriculture/crop-statistics" target="_blank">Yolo County Dept. of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2023</a></li> -->
+                    <li><span class="source-plain">Yolo County Dept. of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2023 · yolocounty.gov</span></li>
+                    <!-- <li><a href="https://napasolanobirds.org/birding/local-birding-hotspots/yolo-bypass/" target="_blank">Napa Solano Audubon Society — Yolo Bypass species field accounts</a></li> -->
+                    <li><span class="source-plain">Napa Solano Audubon Society — Yolo Bypass species field accounts · napasolanobirds.org</span></li>
+                    <!-- <li><a href="https://yoloaudubon.org/birding-locations/" target="_blank">Yolo Bird Alliance — Checklist of the Birds of Yolo County, 2018</a></li> -->
+                    <li><span class="source-plain">Yolo Bird Alliance — Checklist of the Birds of Yolo County, 2018 · yoloaudubon.org</span></li>
+                    <!-- <li><a href="https://xeno-canto.org" target="_blank">Xeno-Canto — Bird call recordings, Creative Commons licensed. Recordists: Paul Marvin, Thomas Magarian, Phoebe Barnes.</a></li> -->
+                    <li><span class="source-plain">Xeno-Canto — Bird call recordings, Creative Commons licensed. Recordists: Paul Marvin, Thomas Magarian, Phoebe Barnes. · xeno-canto.org</span></li>
                 </ul>
             </div>
             <nav class="sys-footer-nav">
-                <a href="index.html">← home</a>
-                <a href="map.html">the basin →</a>
+                <!-- KIOSK MODE: links replaced with onclick. To restore, uncomment <a> tags and remove <span> tags. -->
+                <!-- <a href="index.html">← home</a> -->
+                <!-- <a href="map.html">the basin →</a> -->
+                <span onclick="location.href='index.html'" class="nav-btn">← home</span>
+                <span onclick="location.href='map.html'" class="nav-btn">the basin →</span>
             </nav>
         </div>
     </footer>
