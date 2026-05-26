@@ -846,11 +846,11 @@
 
         const nigiriLayerTwo = L.geoJSON(nigiriTwoGeoJSON, {
             style: {
-                color: '#9b7728',
+                color: '#8a4fa0',
                 weight: 0,
                 opacity: 0,
-                fillColor: '#f1b93f',
-                fillOpacity: 0.7
+                fillColor: '#bd7bcf',
+                fillOpacity: 0.55
             },
             pane: 'paneNigiriTwo'
         });
@@ -1056,7 +1056,7 @@
         }]
     };
     const fremontWeirLayer = L.geoJSON(fremontWeirGeoJSON, {
-        style: { color: '#6d9500', weight: 1.5, opacity: 0, fillColor: '#6d9500', fillOpacity: 0.5 },
+        style: { color: '#2e557c', weight: 1.5, opacity: 0.6, fillColor: '#2e557c', fillOpacity: 0.4 },
         pane: 'paneFremontWeir'
     });
 

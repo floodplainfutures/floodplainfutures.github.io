@@ -4448,3 +4448,533 @@ body.systems-page {
 .rice-paddy-cell.filled-dry {
     animation: paddy-fill .3s ease forwards;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — comprehensive pass
+   Covers: map panel restructure, systems sections, shared header
+   Breakpoints: 900px tablet, 600px mobile, 400px small phone
+═══════════════════════════════════════════════════════════════ */
+
+/* ── SHARED: ff-header touch targets ───────────────────────── */
+.ff-header-back,
+.ff-header-nav-link,
+.nav-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ── MAP PAGE — panel restructure fix ──────────────────────── */
+
+/* The aside has inline padding:0 — reapply the gap inside scroll-inner */
+@media (min-width: 601px) {
+    /* Desktop: restore normal panel layout when scroll-inner wrapper is present */
+    #panelScrollInner {
+        padding: 1.6rem 1.4rem 2rem;
+        gap: 1rem;
+    }
+}
+
+/* Mobile map: panel slides up from bottom as before,
+   but now with scroll-inner wrapper we need to reset the aside padding properly */
+@media (max-width: 600px) {
+    .map-layout { grid-template-columns: 1fr; }
+
+    .map-panel {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        top: auto;
+        border-right: none;
+        border-top: 2px solid var(--blackblue);
+        /* Taller on mobile so layers are reachable */
+        max-height: 72vh;
+        transform: translateY(100%);
+        transition: transform .35s cubic-bezier(.22,1,.36,1);
+        z-index: 50;
+        padding: 0;
+        overflow: hidden;
+    }
+    .map-panel.panel-open { transform: translateY(0); }
+
+    #panelScrollInner {
+        padding: 0 1.2rem 5rem !important;
+        gap: .75rem !important;
+        max-height: 72vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .panel-drag-handle {
+        display: block;
+        margin: .7rem auto .4rem;
+        width: 40px;
+        flex-shrink: 0;
+    }
+
+    /* Panel title smaller on mobile */
+    .panel-title { font-size: 2rem; }
+
+    /* Season strip more compact */
+    .pss-row { padding: .4rem .8rem; }
+    .pss-val  { font-size: .82rem; }
+
+    /* Facts grid: 3 cols on mobile fits better than 2x3 */
+    .panel-facts {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .pf-val { font-size: .82rem; }
+
+    /* Layer rows: bigger touch targets */
+    .layer-row { padding: .75rem .8rem; min-height: 44px; }
+
+    /* Site detail card: taller slide-in on mobile */
+    .site-detail-card {
+        padding: 1rem 1.2rem 1.8rem;
+        max-height: 55vh;
+        overflow-y: auto;
+    }
+    .sdc-name { font-size: .95rem; }
+    .sdc-body { font-size: .82rem; }
+
+    /* Map overlays: hide coord readout and north arrow on very small screens */
+    .coord-readout { display: none; }
+    .map-tag-big   { font-size: 3rem; opacity: .05; }
+
+    /* panel toggle button positioning */
+    .panel-toggle-btn {
+        display: flex;
+        top: auto;
+        bottom: 1.2rem;
+        right: 1rem;
+        left: auto;
+    }
+
+    .map-right { position: absolute; inset: 0; }
+}
+
+/* ── MAP: small phone (≤400px) ──────────────────────────────── */
+@media (max-width: 400px) {
+    .panel-facts { grid-template-columns: 1fr 1fr; }
+    #panelScrollInner { padding: 0 1rem 5rem !important; }
+}
+
+/* ── SYSTEMS: hero ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .sys-hero {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 6vh 5vw 5vh;
+    }
+    .sys-hero-right { display: none; } /* hide image slot — too tall on tablet */
+    .sys-hero-title { font-size: clamp(3rem, 10vw, 5rem); margin-bottom: 1.2rem; }
+    .sys-hero-body  { max-width: 100%; font-size: .95rem; }
+}
+
+/* ── SYSTEMS: chart ─────────────────────────────────────────── */
+@media (max-width: 700px) {
+    /* Chart: reduce gap so 6 columns fit; shrink height */
+    .sys-chart {
+        gap: .5rem;
+        height: 200px;
+    }
+    .sys-chart-labels-x { gap: .5rem; }
+    .sys-chart-labels-x span { font-size: .65rem; letter-spacing: 0; }
+
+    /* Legend: stack source below name, hide unit */
+    .sys-legend-item { flex-wrap: wrap; gap: .5rem; padding: .6rem .8rem; }
+    .sys-legend-unit { display: none; }
+    .sys-legend-src  { font-size: .65rem; }
+
+    /* Callout: tighten padding */
+    .sys-callout { padding: 1rem 1.2rem; gap: .8rem; }
+    .sys-callout p { font-size: .82rem; }
+}
+
+@media (max-width: 480px) {
+    /* Chart: even tighter — 6 bars still visible */
+    .sys-chart { gap: .25rem; height: 160px; }
+    .sys-bar { max-width: 12px; }
+    #annualChart { aspect-ratio: 900 / 260; }
+}
+
+/* ── SYSTEMS: seasonal wheel ────────────────────────────────── */
+@media (max-width: 900px) {
+    .sys-wheel-wrap {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .sys-wheel { max-width: 320px; margin: 0 auto; }
+}
+
+@media (max-width: 600px) {
+    .sys-wheel { max-width: 260px; }
+    .wheel-detail-month { font-size: 1.8rem; }
+    .wdr-desc { font-size: .85rem; }
+}
+
+/* ── SYSTEMS: bird grid ─────────────────────────────────────── */
+@media (max-width: 900px) {
+    /* 2 cards per row on tablet */
+    .sys-bird-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
+}
+
+@media (max-width: 540px) {
+    /* 1 card per row on phone — readable at full width */
+    .sys-bird-grid { grid-template-columns: 1fr; }
+
+    /* Bird filters: scroll horizontally rather than wrap */
+    .sys-bird-filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: .4rem;
+        gap: .3rem;
+    }
+    .sys-bird-filter {
+        flex-shrink: 0;
+        font-size: .75rem;
+        padding: .45rem .8rem;
+        min-height: 44px;
+    }
+
+    /* Bird card image: shorter on phone to show content without scroll */
+    .bird-card-img-slot { aspect-ratio: 16/9; }
+}
+
+/* ── SYSTEMS: rice cards ────────────────────────────────────── */
+@media (max-width: 600px) {
+    /* 3 cards per row — 2 years visible + part of next */
+    .rice-cards-wrap { grid-template-columns: repeat(3, 1fr); }
+    .rice-card { min-height: 130px; padding: 1rem .9rem; gap: .5rem; }
+    .rice-card-year { font-size: 1.3rem; }
+    .rice-card-badge { font-size: .62rem; padding: .14rem .32rem; }
+    .rice-card-acres { font-size: .78rem; }
+
+    /* Expanded rice panel: single column */
+    .rice-panel.open {
+        grid-template-columns: 1fr;
+        padding: 1.4rem 1.2rem;
+        gap: 1.2rem;
+    }
+    .rice-panel-ring svg { width: 110px; height: 110px; }
+    .rice-panel-year { font-size: 1.7rem; }
+    .rice-panel-context { font-size: .88rem; }
+    .rice-panel-stats { gap: 1.2rem; }
+    .rice-stat-value { font-size: 1rem; }
+
+    /* Compare sidebar becomes horizontal row */
+    .rice-panel-compare {
+        padding-left: 0; border-left: none;
+        border-top: 1px solid rgba(255,255,255,.06);
+        padding-top: 1rem;
+        flex-direction: row; flex-wrap: wrap;
+        gap: .5rem; min-width: unset;
+    }
+}
+
+@media (max-width: 400px) {
+    .rice-cards-wrap { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── SYSTEMS: connection section ────────────────────────────── */
+@media (max-width: 600px) {
+    .sys-connection-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .sys-conn-arrow { display: none; }
+    .sys-conn-card { padding: 1.2rem 1.2rem 1.4rem; }
+    .sys-conn-card p { font-size: .88rem; }
+}
+
+/* ── SYSTEMS: section padding ───────────────────────────────── */
+@media (max-width: 600px) {
+    .sys-section { padding: 2.5rem 5vw 2rem; }
+    .sys-section-header { margin-bottom: 1.6rem; }
+    .sys-section-title { font-size: clamp(1.5rem, 7vw, 2rem); }
+    .sys-section-desc  { font-size: .9rem; }
+
+    /* Toggles: full width, bigger tap target */
+    .sys-toggle { width: 100%; justify-content: flex-start; min-height: 44px; padding: .5rem .9rem; }
+    .sys-controls { gap: .6rem; }
+
+    /* Footer */
+    .sys-footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .sys-footer-sources li { font-size: .8rem; }
+}
+
+/* ── CONTEXT PAGE: extra mobile fixes ──────────────────────── */
+@media (max-width: 600px) {
+    .ctx-hero-title { font-size: clamp(2.8rem, 16vw, 4.5rem); }
+    .cfs-trail-item { font-size: .85rem; }
+    .cfs-stat-val   { font-size: 1.4rem; }
+    /* Prevent horizontal overflow from wide items */
+    .cfs { overflow-x: hidden; }
+}
+
+/* ── OBSERVATIONS: extra mobile fixes ──────────────────────── */
+@media (max-width: 600px) {
+    .entry-pullquote { font-size: .95rem; padding: 1rem 1.2rem; }
+    .entry-img-caption { font-size: .78rem; }
+}
+
+/* ── GLOBAL: min touch target for all interactive elements ──── */
+@media (max-width: 900px) {
+    button, .layer-row, .sys-bird-filter,
+    .sys-toggle, .index-link, .nav-btn {
+        min-height: 44px;
+    }
+}
+
+/* ── MAP: drag handle fixed above scroll ───────────────────── */
+/* Handle lives outside panelScrollInner so it never scrolls away */
+.panel-drag-handle {
+    flex-shrink: 0;  /* never squeezed in flex column */
+}
+
+/* Desktop: restore padding that was removed from inline style */
+@media (min-width: 601px) {
+    #panelScrollInner {
+        padding: 1.6rem 1.4rem 2rem !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FINAL MOBILE PASS — patch remaining map & systems issues
+═══════════════════════════════════════════════════════════════ */
+
+/* ── MAP: ensure leaflet fills its container on all screen sizes ── */
+.map-right { position: relative; overflow: hidden; }
+#leafletMap { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* ── MAP PANEL: safe-area inset for notched phones ─────────── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    @media (max-width: 600px) {
+        #panelScrollInner {
+            padding-bottom: calc(5rem + env(safe-area-inset-bottom)) !important;
+        }
+        .panel-toggle-btn {
+            bottom: calc(1.2rem + env(safe-area-inset-bottom));
+        }
+    }
+}
+
+/* ── MAP: panel height accounts for header (56px) ──────────── */
+@media (max-width: 600px) {
+    .map-layout {
+        /* full height minus the 56px header */
+        height: calc(100vh - 56px);
+        height: calc(100dvh - 56px); /* dynamic viewport on mobile browsers */
+        position: relative;
+    }
+    .map-right {
+        width: 100%;
+        height: 100%;
+    }
+    /* Ensure panel toggle button is always above the panel */
+    .panel-toggle-btn {
+        z-index: 60;
+    }
+    /* When panel is open, dim the map slightly to hint it's behind */
+    .map-panel.panel-open ~ .map-right::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,.25);
+        pointer-events: none;
+        z-index: 5;
+    }
+}
+
+/* ── MAP: layer group headers on mobile ─────────────────────── */
+@media (max-width: 600px) {
+    .layers-title {
+        padding: .5rem 0 .25rem;
+        font-size: .72rem;
+    }
+    /* Annotation cards: prevent overflow */
+    .annotation-card {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    /* Season strip: horizontal scroll if labels too wide */
+    .panel-season-strip { overflow-x: hidden; }
+    .pss-head { flex-wrap: wrap; gap: .3rem; }
+}
+
+/* ── SYSTEMS: prevent overflow on small screens ─────────────── */
+@media (max-width: 600px) {
+    /* Prevent any horizontal scroll on systems page */
+    .sys-section, .sys-hero, .sys-footer { overflow-x: hidden; }
+
+    /* Rice cards horizontal scroll container */
+    .rice-cards-outer {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Callout text never overflows */
+    .sys-callout-text { min-width: 0; }
+
+    /* Bird card name: allow wrapping */
+    .bird-card-name { white-space: normal; }
+    .bird-card-meta { flex-wrap: wrap; gap: .3rem; }
+}
+
+/* ── SYSTEMS: wheel on very small screens ───────────────────── */
+@media (max-width: 380px) {
+    .sys-wheel { max-width: 220px; }
+    .wheel-detail-month { font-size: 1.5rem; }
+}
+
+/* ── CONTEXT: viewport-fit for notched phones ───────────────── */
+@media (max-width: 600px) {
+    .ctx-hero { padding-top: max(14vh, 80px); }
+    /* Flow section: prevent items from breaking layout */
+    .cfs-item { min-width: 0; }
+    /* Gallery: single column */
+    .ctx-gallery { grid-template-columns: 1fr !important; }
+}
+
+/* ── OBSERVATIONS: scroll panel on mobile ───────────────────── */
+@media (max-width: 600px) {
+    /* Prevent entry images from overflowing on narrow screens */
+    .entry-img-slot img,
+    .entry-img-wrap img { max-width: 100%; height: auto; }
+
+    /* Tag pills: scroll horizontally */
+    .entry-tags {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: .25rem;
+    }
+    .entry-tag { flex-shrink: 0; }
+}
+
+/* ── HOME: safe-area padding ─────────────────────────────────── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    @media (max-width: 600px) {
+        #landing {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    }
+}
+
+/* ── ALL PAGES: prevent horizontal overflow globally ─────────── */
+@media (max-width: 600px) {
+    body { overflow-x: hidden; }
+    /* Images never overflow their containers */
+    img { max-width: 100%; height: auto; }
+}
+
+
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE NAV — responsive ff-header & map layout fixes
+   Fixes: header too wide on small screens, map layout offset
+═══════════════════════════════════════════════════════════════ */
+
+/* ── SHARED HEADER: allow height to grow on small screens ──── */
+.ff-header {
+    height: auto;
+    min-height: 56px;
+    flex-wrap: wrap;
+    row-gap: 0;
+}
+
+/* On screens where all three pieces still fit in one row, keep it single-line */
+@media (min-width: 601px) {
+    .ff-header {
+        height: 56px;
+        flex-wrap: nowrap;
+    }
+}
+
+/* ── MOBILE (≤600px): two-row header layout ─────────────────── */
+@media (max-width: 600px) {
+
+    /* Switch from 3-col grid to flex-wrap so items can reflow */
+    .ff-header {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0 4vw;
+        gap: 0;
+        /* row 1 = ~44px, row 2 (nav) = ~44px → 88px total */
+    }
+
+    /* Row 1: back button + title, side by side */
+    .ff-header-back {
+        flex: 0 0 auto;
+        order: 1;
+        height: 44px;
+        font-size: .875rem;
+        padding: 0 .85rem;
+        white-space: nowrap;
+    }
+
+    .ff-header-title {
+        flex: 1 1 auto;
+        order: 2;
+        text-align: center;
+        font-size: .75rem;
+        letter-spacing: .2em;
+        /* push the title to center between back btn and edge */
+        padding-right: 0;
+    }
+
+    /* Row 2: nav links span full width */
+    .ff-header-nav {
+        flex: 0 0 100%;
+        order: 3;
+        justify-content: flex-end;
+        display: flex;
+        gap: .4rem;
+        padding: 2px 0 6px;
+        flex-wrap: wrap;
+    }
+
+    .ff-header-nav-link {
+        height: 36px;
+        font-size: .8rem;
+        padding: 0 .75rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* Meta text: hide on mobile (already hidden in existing rule, reinforce) */
+    .ff-header-meta { display: none; }
+
+    /* ── MAP PAGE: offset the layout below the taller header ── */
+    /* The header is now ~88px on mobile; map-layout must start below it */
+    body.map-page .map-layout {
+        /* Use CSS variable so it's easy to tune */
+        top: 88px;
+        height: calc(100vh - 88px);
+        height: calc(100dvh - 88px);
+    }
+
+    /* Observations fixed layout also starts below header */
+    body.observations-page .obs-main {
+        top: 88px;
+        bottom: 0;
+    }
+}
+
+/* ── EXTRA SMALL (≤400px): shrink nav text further ─────────── */
+@media (max-width: 400px) {
+    .ff-header-back     { font-size: .78rem; padding: 0 .6rem; }
+    .ff-header-nav-link { font-size: .75rem; padding: 0 .55rem; }
+    .ff-header-title    { font-size: .68rem; letter-spacing: .16em; }
+}
+
+/* ── MAP: map-layout top on tablet (≤900px, ≥601px) ─────────── */
+/* Header stays single-row at 56px on tablet — keep existing inset */
+@media (max-width: 900px) and (min-width: 601px) {
+    body.map-page .map-layout {
+        top: 56px;
+        height: calc(100vh - 56px);
+        height: calc(100dvh - 56px);
+    }
+}

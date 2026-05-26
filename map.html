@@ -17,6 +17,13 @@
         /* ── Disable Leaflet popup close button external link ── */
         .leaflet-popup-close-button { pointer-events: auto !important; }
 
+        /* ── Line swatch for line-geometry layers ── */
+        .l-swatch-line {
+            display: block;
+            flex-shrink: 0;
+            overflow: visible;
+        }
+
         /* ════════════════════════════════════════
            PANEL TYPOGRAPHY — Inter body, DM Mono accents
         ════════════════════════════════════════ */
@@ -249,8 +256,8 @@
     <!-- LEFT PANEL -->
     <aside class="map-panel" id="mapPanel" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
         <!-- Scrollable content wrapper — card overlays this, never inside it -->
-        <div class="panel-scroll-inner" id="panelScrollInner" style="flex:1;overflow-y:auto;padding:1.6rem 1.4rem 2rem;display:flex;flex-direction:column;gap:1rem;transition:opacity .25s;">
         <div class="panel-drag-handle" id="dragHandle"></div>
+        <div class="panel-scroll-inner" id="panelScrollInner" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:1rem;transition:opacity .25s;">
 
         <h1 class="panel-title">the<br/>basin.</h1>
 
@@ -281,80 +288,101 @@
         <div class="layers-wrap">
             <span class="layers-title">toggle layers</span>
 
+            <!-- Sacramento River: LineString → line swatch -->
             <div class="layer-row active" data-layer="sacriver">
-                <div class="l-swatch" style="background:rgba(114,146,203,.6);border-color:#7292cb"></div>
+                <svg class="l-swatch-line" width="24" height="10" viewBox="0 0 24 10" style="flex-shrink:0;">
+                    <line x1="0" y1="5" x2="24" y2="5" stroke="#7292cb" stroke-width="2.5" stroke-opacity="0.8"/>
+                </svg>
                 <div class="layer-info">
                     <span class="layer-name">Sacramento River Channel</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- Yolo Bypass: Polygon fill — lighter blue -->
             <div class="layer-row active" data-layer="basin">
-                <div class="l-swatch" style="background:#7292cb80;border-color:#7292cbcc"></div>
+                <div class="l-swatch" style="background:rgba(114,146,203,0.45);border-color:#7292cb;border-width:1.5px;"></div>
                 <div class="layer-info">
                     <span class="layer-name">Yolo Bypass</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- Fremont Weir: Polygon fill — darkblue (on-theme, was off-theme green) -->
             <div class="layer-row active" data-layer="fremontweir">
-                <div class="l-swatch" style="background:rgba(242, 218, 31, 0.35);border-color:#f7cc0c"></div>
+                <div class="l-swatch" style="background:rgba(46,85,124,0.45);border-color:#2e557c;border-width:1.5px;"></div>
                 <div class="layer-info">
                     <span class="layer-name">Fremont Weir Wildlife Area</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- Wildlife Area: Polygon fill — blackblue dark -->
             <div class="layer-row active" data-layer="wildlife">
-                <div class="l-swatch" style="background:#0f1b3d80;border-color:#0f1b3dcc"></div>
+                <div class="l-swatch" style="background:rgba(15,27,61,0.55);border-color:rgba(15,27,61,0.8);border-width:1.5px;"></div>
                 <div class="layer-info">
                     <span class="layer-name">Wildlife Area</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- Hunting Zone: Polygon fill — red -->
             <div class="layer-row active" data-layer="hunting">
-                <div class="l-swatch" style="background:#ef624480;border-color:#ef6244cc"></div>
+                <div class="l-swatch" style="background:rgba(239,98,68,0.5);border-color:#ef6244;border-width:1.5px;"></div>
                 <div class="layer-info">
                     <span class="layer-name">Hunting Zone</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- Auto Tour Route: LineString, DASHED → dashed line swatch to match map -->
             <div class="layer-row active" data-layer="autotour">
-                <div class="l-swatch" style="background:rgba(241,185,63,.4);border-color:#f1b93f"></div>
+                <svg class="l-swatch-line" width="24" height="10" viewBox="0 0 24 10" style="flex-shrink:0;">
+                    <line x1="0" y1="5" x2="24" y2="5" stroke="#f1b93f" stroke-width="2.5" stroke-dasharray="5 3" stroke-linecap="round"/>
+                </svg>
                 <div class="layer-info">
                     <span class="layer-name">Auto Tour Route</span>
+                    <span class="layer-hint">self-guided driving loop</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- Conway Ranch: Polygon fill — olivegreen -->
             <div class="layer-row active" data-layer="nigirione">
-                <div class="l-swatch" style="background:#bda543ff;border-color:rgb(77,67,25)"></div>
+                <div class="l-swatch" style="background:rgba(189,165,67,0.7);border-color:#bda543;border-width:1.5px;"></div>
                 <div class="layer-info">
                     <span class="layer-name">Conway Ranch</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- Knaggs Ranch: Polygon fill — purple (was yellow, same as autotour — now differentiated) -->
             <div class="layer-row active" data-layer="nigiritwo">
-                <div class="l-swatch" style="background:#f1b93f;border-color:#9b7728"></div>
+                <div class="l-swatch" style="background:rgba(189,123,207,0.55);border-color:#bd7bcf;border-width:1.5px;"></div>
                 <div class="layer-info">
                     <span class="layer-name">Knaggs Ranch</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- I-80 / Causeway: LineString → line swatch -->
             <div class="layer-row active" data-layer="roads">
-                <div class="l-swatch" style="background:#f0689680;border-color:#f06896cc"></div>
+                <svg class="l-swatch-line" width="24" height="10" viewBox="0 0 24 10" style="flex-shrink:0;">
+                    <line x1="0" y1="5" x2="24" y2="5" stroke="#f06896" stroke-width="3" stroke-opacity="0.8"/>
+                </svg>
                 <div class="layer-info">
                     <span class="layer-name">I-80 / Causeway</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
+            <!-- Key Sites: point markers → pin dot swatch -->
             <div class="layer-row active" data-layer="sites">
-                <div class="l-swatch" style="background:rgba(240,104,150,.5);border-color:#f06896"></div>
+                <svg class="l-swatch-line" width="24" height="10" viewBox="0 0 24 10" style="flex-shrink:0;">
+                    <circle cx="6" cy="5" r="3" fill="#f06896" fill-opacity="0.8"/>
+                    <circle cx="14" cy="5" r="3" fill="#f06896" fill-opacity="0.5"/>
+                    <circle cx="22" cy="5" r="3" fill="#f06896" fill-opacity="0.3"/>
+                </svg>
                 <div class="layer-info">
                     <span class="layer-name">Key Sites</span>
                 </div>
