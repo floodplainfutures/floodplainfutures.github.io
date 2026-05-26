@@ -9,43 +9,224 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
     <link href="styles.css" rel="stylesheet">
     <style>
-        /* ── Panel intro text ── */
+
+        /* ── Disable all Leaflet attribution links for kiosk ── */
+        .leaflet-control-attribution { pointer-events: none !important; }
+        .leaflet-control-attribution a { pointer-events: none !important; cursor: default !important; text-decoration: none !important; color: inherit !important; }
+
+        /* ── Disable Leaflet popup close button external link ── */
+        .leaflet-popup-close-button { pointer-events: auto !important; }
+
+        /* ════════════════════════════════════════
+           PANEL TYPOGRAPHY — Inter body, DM Mono accents
+        ════════════════════════════════════════ */
         .panel-intro {
-            font-family: "DM Mono", monospace;
-            font-size: .9rem;
-            line-height: 1.75;
+            font-family: "Inter", sans-serif;
+            font-size: .92rem;
+            font-weight: 300;
+            line-height: 1.7;
             color: var(--blackblue);
-            opacity: .55;
-            text-transform: lowercase;
-            margin-top: -.2rem;
+            opacity: .6;
         }
 
+        /* ── Season strip ── */
+        .panel-season-strip {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 1px solid var(--grid-strong);
+        }
+        .pss-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .55rem .8rem .4rem;
+            border-bottom: 1px solid var(--grid-strong);
+        }
+        .pss-label {
+            font-family: "DM Mono", monospace;
+            font-size: .68rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--blackblue);
+            opacity: .3;
+        }
+        .pss-season {
+            font-family: "Inter", sans-serif;
+            font-size: .8rem;
+            font-weight: 400;
+            letter-spacing: -.01em;
+            color: var(--blackblue);
+            opacity: .75;
+        }
+        .pss-row {
+            display: flex;
+            flex-direction: column;
+            gap: .12rem;
+            padding: .5rem .8rem;
+            border-bottom: 1px solid var(--grid);
+        }
+        .pss-row:last-child { border-bottom: none; }
+        .pss-key {
+            font-family: "DM Mono", monospace;
+            font-size: .65rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--blackblue);
+            opacity: .3;
+        }
+        .pss-val {
+            font-family: "Inter", sans-serif;
+            font-size: .85rem;
+            font-weight: 300;
+            color: var(--blackblue);
+            opacity: .8;
+            line-height: 1.35;
+        }
+        .pss-val.flood-active { color: var(--lightblue); opacity: 1; }
+        .pss-val.flood-dry    { color: var(--blackblue); opacity: .45; }
+
+        /* ── Layer rows — richer ── */
         .layer-info {
             display: flex;
             flex-direction: column;
-            /* gap: .04rem; */
+            gap: .12rem;
             flex: 1;
             min-width: 0;
         }
-        .layer-hint {
-            font-family: "DM Mono", monospace;
-            font-size: .72rem;
-            letter-spacing: .03em;
-            color: var(--blackblue);
-            opacity: .38;
-            line-height: 1.3;
-            /* white-space: nowrap; */
-            /* overflow: hidden; */
-            /* text-overflow: ellipsis; */
-        }
-        .layer-row {
-            padding: .55rem .8rem;
-            align-items: center;
-        }
         .layer-name {
-            font-size: .82rem;
+            font-family: "Inter", sans-serif;
+            font-size: .88rem;
+            font-weight: 400;
+            color: var(--blackblue);
             opacity: .8;
         }
+        .layer-hint {
+            font-family: "Inter", sans-serif;
+            font-size: .75rem;
+            font-weight: 300;
+            color: var(--blackblue);
+            opacity: .4;
+            line-height: 1.3;
+        }
+        .layer-row {
+            padding: .6rem .8rem;
+            align-items: center;
+        }
+
+        /* ── Site detail card — absolute overlay at panel bottom, no layout jump ── */
+        .site-detail-card {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background: var(--whitebeige);
+            border-top: 2px solid var(--blackblue);
+            padding: 1.2rem 1.4rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: .6rem;
+            transform: translateY(100%);
+            transition: transform .28s cubic-bezier(.22,1,.36,1);
+            pointer-events: none;
+        }
+        .site-detail-card.open {
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .sdc-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: .5rem;
+        }
+        .sdc-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+        }
+        .sdc-close {
+            background: none;
+            border: none;
+            font-family: "DM Mono", monospace;
+            font-size: .65rem;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--blackblue);
+            opacity: .3;
+            cursor: pointer;
+            padding: .1rem 0 0;
+            flex-shrink: 0;
+            transition: opacity .15s;
+        }
+        .sdc-close:hover { opacity: .8; }
+        .sdc-tag {
+            font-family: "DM Mono", monospace;
+            font-size: .65rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--blackblue);
+            opacity: .35;
+        }
+        .sdc-name {
+            font-family: "Inter", sans-serif;
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--blackblue);
+            line-height: 1.2;
+            letter-spacing: -.01em;
+        }
+        .sdc-rule {
+            height: 1px;
+            background: var(--grid-strong);
+            margin: .1rem 0;
+        }
+        .sdc-body {
+            font-family: "Inter", sans-serif;
+            font-size: .84rem;
+            font-weight: 300;
+            line-height: 1.68;
+            color: var(--blackblue);
+            opacity: .6;
+            margin: 0;
+        }
+
+        /* ── Facts strip at bottom of panel ── */
+        .panel-facts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--grid-strong);
+            border: 1px solid var(--grid-strong);
+            margin-top: auto;
+        }
+        .pf-cell {
+            background: var(--whitebeige);
+            padding: .65rem .7rem;
+            display: flex;
+            flex-direction: column;
+            gap: .18rem;
+        }
+        .pf-label {
+            font-family: "DM Mono", monospace;
+            font-size: .62rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--blackblue);
+            opacity: .3;
+        }
+        .pf-val {
+            font-family: "Inter", sans-serif;
+            font-size: .95rem;
+            font-weight: 300;
+            letter-spacing: -.02em;
+            color: var(--blackblue);
+            line-height: 1.1;
+        }
+        .pf-val.accent-blue  { color: var(--lightblue); }
+        .pf-val.accent-olive { color: var(--olivegreen); }
+        .pf-val.accent-pink  { color: var(--pink); }
     </style>
 </head>
 <body class="map-page">
@@ -66,23 +247,60 @@
 <div class="map-layout">
 
     <!-- LEFT PANEL -->
-    <aside class="map-panel" id="mapPanel">
+    <aside class="map-panel" id="mapPanel" style="padding:0;overflow:hidden;display:flex;flex-direction:column;">
+        <!-- Scrollable content wrapper — card overlays this, never inside it -->
+        <div class="panel-scroll-inner" id="panelScrollInner" style="flex:1;overflow-y:auto;padding:1.6rem 1.4rem 2rem;display:flex;flex-direction:column;gap:1rem;transition:opacity .25s;">
         <div class="panel-drag-handle" id="dragHandle"></div>
 
         <h1 class="panel-title">the<br/>basin.</h1>
 
-        <p class="panel-intro">explore the Yolo Bypass — a 59,000-acre seasonal floodplain 3 miles from Davis. toggle layers below to reveal land use, habitat zones, and salmon restoration sites.</p>
+        <p class="panel-intro">59,000 acres of seasonal floodplain three miles from Davis. It floods in winter, grows rice in summer, and hosts hundreds of thousands of migratory birds year-round. Toggle the layers to see how it all overlaps.</p>
+
+        <!-- Live conditions -->
+        <div class="panel-season-strip">
+            <div class="pss-head">
+                <span class="pss-label">right now</span>
+                <span class="pss-season" id="cSeason">—</span>
+            </div>
+            <div class="pss-row">
+                <span class="pss-key">flood status</span>
+                <span class="pss-val" id="cFlood">—</span>
+            </div>
+            <div class="pss-row">
+                <span class="pss-key">likely species</span>
+                <span class="pss-val" id="cSpecies">—</span>
+            </div>
+            <div class="pss-row">
+                <span class="pss-key">rice cycle</span>
+                <span class="pss-val" id="cRice">—</span>
+            </div>
+        </div>
 
         <div class="panel-rule"></div>
 
         <div class="layers-wrap">
             <span class="layers-title">toggle layers</span>
 
+            <div class="layer-row active" data-layer="sacriver">
+                <div class="l-swatch" style="background:rgba(114,146,203,.6);border-color:#7292cb"></div>
+                <div class="layer-info">
+                    <span class="layer-name">Sacramento River Channel</span>
+                </div>
+                <div class="l-toggle"></div>
+            </div>
+
             <div class="layer-row active" data-layer="basin">
                 <div class="l-swatch" style="background:#7292cb80;border-color:#7292cbcc"></div>
                 <div class="layer-info">
-                    <span class="layer-name">Yolo Basin</span>
-                    <span class="layer-hint">full floodway boundary</span>
+                    <span class="layer-name">Yolo Bypass</span>
+                </div>
+                <div class="l-toggle"></div>
+            </div>
+
+            <div class="layer-row active" data-layer="fremontweir">
+                <div class="l-swatch" style="background:rgba(242, 218, 31, 0.35);border-color:#f7cc0c"></div>
+                <div class="layer-info">
+                    <span class="layer-name">Fremont Weir Wildlife Area</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
@@ -91,7 +309,6 @@
                 <div class="l-swatch" style="background:#0f1b3d80;border-color:#0f1b3dcc"></div>
                 <div class="layer-info">
                     <span class="layer-name">Wildlife Area</span>
-                    <span class="layer-hint">managed waterfowl habitat, 16,000 ac</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
@@ -99,17 +316,23 @@
             <div class="layer-row active" data-layer="hunting">
                 <div class="l-swatch" style="background:#ef624480;border-color:#ef6244cc"></div>
                 <div class="layer-info">
-                    <span class="layer-name">Hunting Area</span>
-                    <span class="layer-hint">seasonal public hunting zone</span>
+                    <span class="layer-name">Hunting Zone</span>
+                </div>
+                <div class="l-toggle"></div>
+            </div>
+
+            <div class="layer-row active" data-layer="autotour">
+                <div class="l-swatch" style="background:rgba(241,185,63,.4);border-color:#f1b93f"></div>
+                <div class="layer-info">
+                    <span class="layer-name">Auto Tour Route</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
 
             <div class="layer-row active" data-layer="nigirione">
-                <div class="l-swatch" style="background:#bda543ff;border-color:rgb(77, 67, 25)"></div>
+                <div class="l-swatch" style="background:#bda543ff;border-color:rgb(77,67,25)"></div>
                 <div class="layer-info">
                     <span class="layer-name">Conway Ranch</span>
-                    <span class="layer-hint">Nigiri Project — salmon on rice fields</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
@@ -118,7 +341,6 @@
                 <div class="l-swatch" style="background:#f1b93f;border-color:#9b7728"></div>
                 <div class="layer-info">
                     <span class="layer-name">Knaggs Ranch</span>
-                    <span class="layer-hint">Nigiri Project — larger restoration site</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
@@ -127,10 +349,60 @@
                 <div class="l-swatch" style="background:#f0689680;border-color:#f06896cc"></div>
                 <div class="layer-info">
                     <span class="layer-name">I-80 / Causeway</span>
-                    <span class="layer-hint">41-mile overwater highway crossing</span>
                 </div>
                 <div class="l-toggle"></div>
             </div>
+
+            <div class="layer-row active" data-layer="sites">
+                <div class="l-swatch" style="background:rgba(240,104,150,.5);border-color:#f06896"></div>
+                <div class="layer-info">
+                    <span class="layer-name">Key Sites</span>
+                </div>
+                <div class="l-toggle"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom facts strip -->
+        <div class="panel-facts">
+            <div class="pf-cell">
+                <span class="pf-label">area</span>
+                <span class="pf-val">59,000 ac</span>
+            </div>
+            <div class="pf-cell">
+                <span class="pf-label">from Davis</span>
+                <span class="pf-val">3 miles</span>
+            </div>
+            <div class="pf-cell">
+                <span class="pf-label">bird species</span>
+                <span class="pf-val accent-pink">200+</span>
+            </div>
+            <div class="pf-cell">
+                <span class="pf-label">flyway</span>
+                <span class="pf-val accent-blue">Pacific</span>
+            </div>
+            <div class="pf-cell">
+                <span class="pf-label">Nigiri sites</span>
+                <span class="pf-val accent-olive">2 ranches</span>
+            </div>
+            <div class="pf-cell">
+                <span class="pf-label">weir length</span>
+                <span class="pf-val">1.8 miles</span>
+            </div>
+        </div>
+        </div><!-- end .panel-scroll-inner -->
+
+        <!-- Site detail card — overlays panel from bottom, no layout jump -->
+        <div class="site-detail-card" id="siteDetailCard">
+            <div class="sdc-header">
+                <div class="sdc-header-left">
+                    <span class="sdc-tag" id="sdcTag"></span>
+                    <span class="sdc-name" id="sdcName"></span>
+                </div>
+                <button class="sdc-close" id="sdcClose">close ×</button>
+            </div>
+            <div class="sdc-rule"></div>
+            <p class="sdc-body" id="sdcBody"></p>
         </div>
 
     </aside>
@@ -143,11 +415,9 @@
             <span class="ptb-dot"></span>info
         </button>
 
-        <div class="map-tag">
+        <!-- <div class="map-tag">
             <span class="map-tag-big">YOLO</span>
-            <span class="map-tag-line">bypass · floodway</span>
-            <span class="map-tag-line">Yolo County CA</span>
-        </div>
+        </div> -->
 
         <svg class="map-north" width="28" height="46" viewBox="0 0 28 46" xmlns="http://www.w3.org/2000/svg">
             <line x1="14" y1="37" x2="14" y2="5" stroke="rgba(15,27,61,.4)" stroke-width="1"/>
@@ -158,9 +428,6 @@
 
         <div class="map-sheet">
             <span>Made by Zahra Baxi</span>
-            <span>UC Davis Design MFA</span>
-            <span>Yolo County · California</span>
-            <span>SOURCES: CDFW / YBF</span>
         </div>
 
         <div class="coord-readout" id="coordReadout">38°50′N · 121°60′W</div>
@@ -169,9 +436,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<!-- Leaflet map logic (GeoJSON, layers, coordinate readout) -->
 <script src="map.js"></script>
-<!-- Shared site scripts (panel toggle, seasonal conditions) -->
 <script src="scripts.js"></script>
 </body>
 </html>
