@@ -2869,12 +2869,23 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     .sys-legend-unit { display: none; }
 
     /* Observations */
-    .obs-main { grid-template-columns: 1fr; }
+    .obs-main { grid-template-columns: 1fr; grid-template-rows: 1fr; }
     .obs-index { display: none; }
     .oh-index-btn { display: block; }
     .mob-index-overlay, .mob-index-drawer { display: block; }
     .obs-entries-fab { display: flex; align-items: center; justify-content: center; }
-    .obs-scroll { padding: 1.5rem 5vw 5rem; /* extra bottom padding for FAB */ }
+    /* On mobile the grid collapses to 1 column; without an explicit height the
+       scroll pane has no constrained size, so overflow-y never kicks in and
+       IntersectionObserver (root: obsScroll) sees a 0-height root.
+       height: 100% + min-height: 0 forces it to fill the fixed grid cell. */
+    .obs-scroll {
+        padding: 1.5rem 5vw 5rem; /* extra bottom padding for FAB */
+        height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        box-sizing: border-box;
+    }
     .entry-num { font-size: 2rem; }
     .entry-title { font-size: 1.5rem; }
     .entry-body p { font-size: 1rem !important; }   /* never shrink below 16px on mobile */

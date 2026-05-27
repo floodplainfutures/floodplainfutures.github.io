@@ -391,7 +391,11 @@
                 var target = document.getElementById(targetId);
                 if (!target) { return; }
                 closeMobileDrawer();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // scrollIntoView scrolls the document on mobile (where the page
+                // isn't body-scrolling). Scroll within the obsScroll container
+                // directly so it works regardless of layout mode.
+                var offset = target.offsetTop - obsScroll.offsetTop;
+                obsScroll.scrollTo({ top: offset, behavior: 'smooth' });
             });
         }
 
