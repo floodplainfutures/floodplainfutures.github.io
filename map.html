@@ -121,26 +121,44 @@
             align-items: center;
         }
 
-        /* ── Site detail card — absolute overlay at panel bottom, no layout jump ── */
+        /* ── Site detail card — centered bottom overlay on the map ── */
         .site-detail-card {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 40;
+            position: fixed;
+            bottom: 2rem;
+            left: calc(50% + 140px); /* 280px panel / 2 = 140px offset */
+            transform: translateX(-50%) translateY(calc(100% + 3rem));
+            width: min(580px, calc(100vw - 280px - 3rem));
+            z-index: 1000;
             background: var(--whitebeige);
-            border-top: 2px solid var(--blackblue);
-            padding: 1.2rem 1.4rem 1.4rem;
+            border: 1.5px solid var(--blackblue);
+            box-shadow: 0 8px 32px rgba(15,27,61,.22), 0 2px 8px rgba(15,27,61,.12);
+            padding: 1.4rem 1.6rem 1.6rem;
             display: flex;
             flex-direction: column;
             gap: .6rem;
-            transform: translateY(100%);
-            transition: transform .28s cubic-bezier(.22,1,.36,1);
+            transition: transform .3s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+            opacity: 0;
             pointer-events: none;
         }
         .site-detail-card.open {
-            transform: translateY(0);
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
             pointer-events: auto;
+        }
+        @media (min-width: 1024px) {
+            /* Panel widens to 340px at larger screens */
+            .site-detail-card { left: calc(50% + 170px); width: min(580px, calc(100vw - 340px - 3rem)); }
+        }
+        @media (max-width: 600px) {
+            /* Panel is hidden on mobile — card centers on full viewport */
+            .site-detail-card {
+                position: fixed !important;
+                left: 50% !important;
+                bottom: 1rem;
+                width: calc(100vw - 2rem);
+                max-height: 50vh;
+                overflow-y: auto;
+            }
         }
         .sdc-header {
             display: flex;
@@ -310,7 +328,7 @@
 
             <!-- Fremont Weir: Polygon fill — darkblue (on-theme, was off-theme green) -->
             <div class="layer-row active" data-layer="fremontweir">
-                <div class="l-swatch" style="background:rgba(46,85,124,0.45);border-color:#2e557c;border-width:1.5px;"></div>
+                <div class="l-swatch" style="background:rgba(59,168,168,0.45);border-color:#3ba8a8;border-width:1.5px;"></div>
                 <div class="layer-info">
                     <span class="layer-name">Fremont Weir Wildlife Area</span>
                 </div>
@@ -420,19 +438,6 @@
         </div>
         </div><!-- end .panel-scroll-inner -->
 
-        <!-- Site detail card — overlays panel from bottom, no layout jump -->
-        <div class="site-detail-card" id="siteDetailCard">
-            <div class="sdc-header">
-                <div class="sdc-header-left">
-                    <span class="sdc-tag" id="sdcTag"></span>
-                    <span class="sdc-name" id="sdcName"></span>
-                </div>
-                <button class="sdc-close" id="sdcClose">close ×</button>
-            </div>
-            <div class="sdc-rule"></div>
-            <p class="sdc-body" id="sdcBody"></p>
-        </div>
-
     </aside>
 
     <!-- MAP -->
@@ -442,6 +447,12 @@
         <button class="panel-toggle-btn" id="panelToggle" aria-label="Toggle info panel">
             <span class="ptb-dot"></span>info
         </button>
+
+        <!-- "read the panel" toast — appears when a layer or pin is tapped -->
+        <div class="map-read-toast" id="mapReadToast">
+            <span class="map-read-toast-arrow">←</span>
+            <span id="mapReadToastText">tap a layer for details</span>
+        </div>
 
         <!-- <div class="map-tag">
             <span class="map-tag-big">YOLO</span>
@@ -459,6 +470,19 @@
         </div>
 
         <div class="coord-readout" id="coordReadout">38°50′N · 121°60′W</div>
+
+        <!-- Site detail card — centered bottom overlay on the map -->
+        <div class="site-detail-card" id="siteDetailCard">
+            <div class="sdc-header">
+                <div class="sdc-header-left">
+                    <span class="sdc-tag" id="sdcTag"></span>
+                    <span class="sdc-name" id="sdcName"></span>
+                </div>
+                <button class="sdc-close" id="sdcClose">close ×</button>
+            </div>
+            <div class="sdc-rule"></div>
+            <p class="sdc-body" id="sdcBody"></p>
+        </div>
     </div>
 
 </div>

@@ -31,14 +31,6 @@
         var countdownTimer = null;
         var countRemaining = COUNTDOWN_S;
 
-        // --- Ensure Material Symbols font is loaded on every page ---
-        if (!document.querySelector('link[href*="Material+Symbols"]')) {
-            var fontLink  = document.createElement('link');
-            fontLink.rel  = 'stylesheet';
-            fontLink.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined';
-            document.head.appendChild(fontLink);
-        }
-
         // --- Build modal DOM using createElement (no innerHTML with HTML tags) ---
         var overlay = document.createElement('div');
         overlay.id  = 'idle-overlay';
@@ -46,12 +38,17 @@
         var modal = document.createElement('div');
         modal.id  = 'idle-modal';
 
-        var iconDiv  = document.createElement('div');
+        var iconDiv = document.createElement('div');
         iconDiv.className = 'idle-icon';
-        var iconSpan = document.createElement('span');
-        iconSpan.className   = 'material-symbols-outlined';
-        iconSpan.textContent = 'waving_hand';
-        iconDiv.appendChild(iconSpan);
+        var iconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        iconSvg.setAttribute('height', '48px');
+        iconSvg.setAttribute('width', '48px');
+        iconSvg.setAttribute('viewBox', '0 -960 960 960');
+        iconSvg.setAttribute('fill', 'currentColor');
+        var iconPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        iconPath.setAttribute('d', 'M880-759q0-51-35-86t-86-35v-60q75 0 128 53t53 128h-60ZM240-40q-83 0-141.5-58.5T40-240h60q0 58 41 99t99 41v60Zm162 0q-30 0-56-13.5T303-92L48-465l24-23q19-19 45-22t47 12l116 81v-383q0-17 11.5-28.5T320-840q17 0 28.5 11.5T360-800v537L212-367l157 229q5 8 14 13t19 5h278q33 0 56.5-23.5T760-200v-560q0-17 11.5-28.5T800-800q17 0 28.5 11.5T840-760v560q0 66-47 113T680-40H402Zm38-440v-400q0-17 11.5-28.5T480-920q17 0 28.5 11.5T520-880v400h-80Zm160 0v-360q0-17 11.5-28.5T640-880q17 0 28.5 11.5T680-840v360h-80ZM486-300Z');
+        iconSvg.appendChild(iconPath);
+        iconDiv.appendChild(iconSvg);
 
         var heading = document.createElement('p');
         heading.className   = 'idle-heading';
@@ -304,6 +301,7 @@
             toggleBtn.addEventListener('click', function () {
                 var open = panel.classList.toggle('panel-open');
                 toggleBtn.classList.toggle('active', open);
+                toggleBtn.classList.toggle('panel-is-open', open);
                 if (open) {
                     toggleBtn.innerHTML = '';
                     var dot = document.createElement('span');
@@ -349,21 +347,8 @@
             }, { passive: true });
         }
 
-        var layerRows = document.querySelectorAll('.layer-row');
-        var lr;
-        for (lr = 0; lr < layerRows.length; lr++) {
-            layerRows[lr].addEventListener('click', function () {
-                if (window.innerWidth <= 600) {
-                    setTimeout(function () {
-                        if (panel) { panel.classList.remove('panel-open'); }
-                        if (toggleBtn) {
-                            toggleBtn.classList.remove('active');
-                            toggleBtn.innerHTML = '<span class="ptb-dot"></span>info';
-                        }
-                    }, 280);
-                }
-            });
-        }
+        // Layer row clicks on mobile no longer auto-close the panel
+        // (openSiteCard in map.js now ensures panel is open when content loads)
     }
 
 
