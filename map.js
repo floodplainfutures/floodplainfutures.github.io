@@ -37,16 +37,11 @@
 
     // ── Fixed-order panes ──────────────────────────────────────
     // Each layer gets its own pane so toggling never changes z-order.
-    // RULE: smaller/more-specific polygons get HIGHER z-index so their
-    // click events fire before the large background polygons beneath them.
-    // Geographic nesting (outermost → innermost):
-    //   SacRiver (line) → Basin (whole bypass, biggest polygon)
-    //     → Wildlife Area → Hunting Zone (inside Wildlife)
-    //     → Fremont Weir (north end sub-region)
-    //     → Nigiri ranches (small parcels inside Basin)
-    //   AutoTour (line), Roads (line), Sites (points) — always on top
+    // Higher zIndex = drawn on top. Order (bottom → top):
+    //   sacRiver → basin → fremontWeir → wildlife → hunting → autoTour → nigiri → roads → sites
     map.createPane('paneSacRiver');   map.getPane('paneSacRiver').style.zIndex    = 401;
     map.createPane('paneBasin');      map.getPane('paneBasin').style.zIndex       = 402;
+    map.createPane('paneIBA');        map.getPane('paneIBA').style.zIndex         = 403;
     map.createPane('paneWildlife');   map.getPane('paneWildlife').style.zIndex    = 410;
     map.createPane('paneHunting');    map.getPane('paneHunting').style.zIndex     = 415;
     map.createPane('paneFremontWeir');map.getPane('paneFremontWeir').style.zIndex = 420;
@@ -54,10 +49,8 @@
     map.createPane('paneNigiriTwo');  map.getPane('paneNigiriTwo').style.zIndex   = 426;
     map.createPane('paneAutoTour');   map.getPane('paneAutoTour').style.zIndex    = 435;
     map.createPane('paneRoads');      map.getPane('paneRoads').style.zIndex       = 440;
+    map.createPane('paneGauge');      map.getPane('paneGauge').style.zIndex       = 448;
     map.createPane('paneSites');      map.getPane('paneSites').style.zIndex       = 450;
-    // All panes clickable. Sub-regions have higher z-index than Basin so their
-    // clicks fire first. wireLayerClicks() uses stopPropagation to prevent
-    // Basin firing underneath.
     // All panes are clickable — pointer events left at default
 
     // YOLO BYPASS WILDLIFE AREA BOUNDARY (Official GeoJSON)
@@ -923,8 +916,75 @@
     function openSiteCard(data) {
         if (sdcName) sdcName.textContent = data.name;
         if (sdcTag)  sdcTag.textContent  = data.tag;
-        if (sdcBody) sdcBody.textContent  = data.body;
+        if (sdcBody) {
+            if (data.chart) {
+                sdcBody.innerHTML = buildSalmonChart() + '<span style="display:block;margin-top:.5rem;">' + data.body + '</span>';
+            } else {
+                sdcBody.textContent = data.body;
+            }
+        }
         if (sdcCard) sdcCard.classList.add('open');
+    }
+
+    // ── Salmon chart — CDFW GrandTab 2025.06.09, Central Valley fall-run Chinook ──
+    // Source: California Dept. of Fish and Wildlife, Fisheries Branch
+    // https://www.wildlife.ca.gov/Conservation/Fishes/Chinook-Salmon/Anadromous-Assessment
+    function buildSalmonChart() {
+        var data = [
+            { y: 2005, n: 437693 }, { y: 2006, n: 292954 }, { y: 2007, n: 97168  },
+            { y: 2008, n: 71291  }, { y: 2009, n: 53043  }, { y: 2010, n: 163190 },
+            { y: 2011, n: 227234 }, { y: 2012, n: 340819 }, { y: 2013, n: 448021 },
+            { y: 2014, n: 255637 }, { y: 2015, n: 154988 }, { y: 2016, n: 133315 },
+            { y: 2017, n: 101975 }, { y: 2018, n: 173024 }, { y: 2019, n: 212916 },
+            { y: 2020, n: 157414 }, { y: 2021, n: 133785 }, { y: 2022, n: 79976  },
+            { y: 2023, n: 181488 }, { y: 2024, n: 168664 }
+        ];
+        var W = 480, H = 90, PAD_L = 46, PAD_R = 8, PAD_T = 6, PAD_B = 22;
+        var plotW = W - PAD_L - PAD_R;
+        var plotH = H - PAD_T - PAD_B;
+        var maxN = 448021;
+        var n = data.length;
+        var barW = Math.floor(plotW / n) - 2;
+
+        function x(i)  { return PAD_L + i * (plotW / n) + (plotW / n - barW) / 2; }
+        function barH(v) { return Math.max(2, Math.round(v / maxN * plotH)); }
+        function yTop(v) { return PAD_T + plotH - barH(v); }
+
+        // Y-axis ticks at 0, 200k, 400k
+        var ticks = [0, 200000, 400000];
+        var tickLines = ticks.map(function(t) {
+            var ty = PAD_T + plotH - Math.round(t / maxN * plotH);
+            var label = t === 0 ? '0' : (t / 1000) + 'k';
+            return '<line x1="' + PAD_L + '" x2="' + (W - PAD_R) + '" y1="' + ty + '" y2="' + ty + '" stroke="rgba(15,27,61,.08)" stroke-width="1"/>'
+                 + '<text x="' + (PAD_L - 4) + '" y="' + (ty + 3.5) + '" text-anchor="end" font-family="DM Mono,monospace" font-size="7" fill="rgba(15,27,61,.3)">' + label + '</text>';
+        }).join('');
+
+        // Bars
+        var bars = data.map(function(d, i) {
+            var bh = barH(d.n);
+            var by = yTop(d.n);
+            // Highlight the most recent year subtly
+            var fill = i === data.length - 1 ? 'rgba(59,168,168,0.75)' : 'rgba(114,146,203,0.6)';
+            return '<rect x="' + x(i) + '" y="' + by + '" width="' + barW + '" height="' + bh + '" fill="' + fill + '" rx="1"/>';
+        }).join('');
+
+        // X-axis year labels — every 5 years
+        var xLabels = data.filter(function(d) { return d.y % 5 === 0; }).map(function(d) {
+            var i = data.findIndex(function(r) { return r.y === d.y; });
+            var cx = x(i) + barW / 2;
+            return '<text x="' + cx + '" y="' + (H - 5) + '" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="rgba(15,27,61,.3)">' + d.y + '</text>';
+        }).join('');
+
+        // Peak annotation
+        var peakIdx = 8; // 2013
+        var peakX = x(peakIdx) + barW / 2;
+        var peakY = yTop(data[peakIdx].n) - 3;
+        var annotation = '<text x="' + peakX + '" y="' + peakY + '" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(15,27,61,.4)">448k</text>';
+
+        return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;display:block;margin:.5rem 0 .2rem;">'
+            + tickLines + bars + xLabels + annotation
+            + '<text x="' + (W / 2) + '" y="' + (H) + '" text-anchor="middle" font-family="DM Mono,monospace" font-size="6.5" fill="rgba(15,27,61,.25)">Central Valley fall-run Chinook escapement · CDFW GrandTab 2025</text>'
+            + '</svg>';
     }
 
     function closeSiteCard() {
@@ -1186,6 +1246,57 @@
 
     // All new panes are clickable — pointer events left at default
 
+    // ── IBA POLYGON (Audubon — Yolo Bypass Important Bird Area #239) ───────
+    var ibaLayer = L.geoJSON(null, {
+        style: { color: '#7c3bbf', weight: 2, opacity: 0.6, fillColor: '#7c3bbf', fillOpacity: 0.07, dashArray: '7 5' },
+        pane: 'paneIBA',
+        interactive: true,
+        onEachFeature: function(feature, layer) {
+            layer.on('click', function(e) {
+                L.DomEvent.stopPropagation(e);
+                openSiteCard(layerInfo['iba']);
+            });
+        }
+    });
+    fetch('data/iba.geojson')
+        .then(function(r){ return r.json(); })
+        .then(function(data){ ibaLayer.addData(data); })
+        .catch(function(){ console.warn('data/iba.geojson not found'); });
+
+    // ── NOAA GAUGE — Sacramento River at Fremont Weir (FMWC1) ─────────────
+    // Coordinates from USGS site 11391020: 38.7599°N, -121.6677°W
+    var gaugeMarker = L.circleMarker([38.7599, -121.6677], {
+        pane: 'paneGauge',
+        radius: 8,
+        color: '#0f1b3d',
+        weight: 2,
+        fillColor: '#3ba8a8',
+        fillOpacity: 1
+    });
+    var gaugeLive = { stage: null, flow: null, time: null, loaded: false };
+    // Fetch live data once on load
+    fetch('https://api.water.noaa.gov/nwps/v1/gauges/FMWC1/stageflow')
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+            var obs = data.observed && data.observed.data && data.observed.data[0];
+            if (obs) {
+                gaugeLive.stage = obs.primary != null ? obs.primary.toFixed(2) + ' ft' : '—';
+                gaugeLive.flow  = obs.secondary != null ? Math.round(obs.secondary).toLocaleString() + ' cfs' : '—';
+                gaugeLive.time  = obs.validTime ? obs.validTime.replace('T',' ').slice(0,16) + ' UTC' : '';
+                gaugeLive.loaded = true;
+            }
+        })
+        .catch(function(){});
+    gaugeMarker.on('click', function(e) {
+        L.DomEvent.stopPropagation(e);
+        var info = Object.assign({}, layerInfo['gauge']);
+        if (gaugeLive.loaded) {
+            info.tag = 'Stage: ' + gaugeLive.stage + '  ·  Flow: ' + gaugeLive.flow;
+            info.body = (gaugeLive.time ? 'Observed ' + gaugeLive.time + '. ' : '') + layerInfo['gauge'].body;
+        }
+        openSiteCard(info);
+    });
+
     // Map each layer key → { layer, paneName }
     const layerMap = {
         basin:       { layer: basinLayer,          pane: 'paneBasin'       },
@@ -1195,10 +1306,13 @@
         nigiritwo:   { layer: nigiriLayerTwo,       pane: 'paneNigiriTwo'   },
         roads:       { layer: roadsLayer,           pane: 'paneRoads'       },
         sites:       { layer: sitesLayer,           pane: 'paneSites'       },
+        iba:         { layer: ibaLayer,             pane: 'paneIBA'         },
+        gauge:       { layer: gaugeMarker,          pane: 'paneGauge'       },
         // Placeholder layers — activate by removing data-placeholder attr from map.html
         fremontweir: { layer: fremontWeirLayer,     pane: 'paneFremontWeir' },
         autotour:    { layer: autoTourLayer,        pane: 'paneAutoTour'    },
-        sacriver:    { layer: sacRiverLayer,        pane: 'paneSacRiver'    }    };
+        sacriver:    { layer: sacRiverLayer,        pane: 'paneSacRiver'    }
+    };
 
     // Add all active (non-placeholder) layers
     document.querySelectorAll('.layer-row:not([data-placeholder])').forEach(row => {
@@ -1245,8 +1359,9 @@
         },
         fremontweir: {
             name: 'Fremont Weir Wildlife Area',
-            tag:  'CDFW wildlife area · northern bypass',
-            body: 'Fremont Weir Wildlife Area sits at the upstream end of the Yolo Bypass, where the Sacramento River first overtops into the floodway. The concrete weir controls when and how much water enters the bypass. The surrounding wildlife area provides habitat for waterfowl, shorebirds, and salmon during high-water years.'
+            tag:  'CDFW wildlife area · salmon passage · northern bypass',
+            chart: true,
+            body: 'The Sacramento River overtops this 1.8-mile concrete weir and enters the bypass. During floods, adult Chinook salmon use the bypass as a migration corridor — and juvenile salmon reared on the Nigiri rice fields downstream return through here. Fall-run totals have collapsed since the 2000s peak; 2022 was the lowest count in 20 years.'
         },
         autotour: {
             name: 'Auto Tour Route',
@@ -1257,6 +1372,16 @@
             name: 'Sacramento River Channel',
             tag:  '2012 channel polygon · Keswick Dam to Colusa County',
             body: 'The Sacramento River channel as digitized from 2012 NAIP aerial photography by the Sacramento River Preservation Trust. This polygon covers river miles 140–302, from Colusa County north to Keswick Dam in Shasta County. The river feeds the Yolo Bypass when flows exceed the Fremont Weir crest.'
+        },
+        iba: {
+            name: 'Important Bird Area #239',
+            tag:  'Audubon Society · Yolo Bypass IBA',
+            body: 'The Yolo Bypass is a designated Important Bird Area covering 31,987 hectares (79,000 acres). It supports over 200 bird species and is a critical stopover on the Pacific Flyway, regularly hosting hundreds of thousands of shorebirds, waterfowl, and wading birds during peak migration. Designation by the National Audubon Society as U.S. partner for BirdLife International.'
+        },
+        gauge: {
+            name: 'Sacramento R. at Fremont Weir',
+            tag:  'NOAA gauge FMWC1 · live stage & flow',
+            body: 'NOAA stream gauge on the Sacramento River immediately upstream of Fremont Weir. Monitors when river stage is high enough to overtop the weir and send water into the Yolo Bypass — typically around 32 ft. Data from the National Water Prediction Service (NWPS).'
         }
     };
 
