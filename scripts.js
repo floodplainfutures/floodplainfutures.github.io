@@ -381,12 +381,14 @@
 
         if (!obsScroll) { return; }
 
+        // Include BOTH sidebar links AND mob-drawer links
         var indexLinks = document.querySelectorAll('.index-link');
         var il;
         for (il = 0; il < indexLinks.length; il++) {
             indexLinks[il].addEventListener('click', function (e) {
                 e.preventDefault();
-                var target = document.getElementById(this.dataset.target);
+                var targetId = this.dataset.target || (this.getAttribute('href') || '').replace('#', '');
+                var target = document.getElementById(targetId);
                 if (!target) { return; }
                 closeMobileDrawer();
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -409,7 +411,9 @@
             var activeId = active.id;
             var ui;
             for (ui = 0; ui < indexLinks.length; ui++) {
-                indexLinks[ui].classList.toggle('active', indexLinks[ui].dataset.target === activeId);
+                var link = indexLinks[ui];
+                var linkTarget = link.dataset.target || (link.getAttribute('href') || '').replace('#', '');
+                link.classList.toggle('active', linkTarget === activeId);
             }
         }
 
@@ -427,15 +431,9 @@
             document.body.style.overflow = '';
         }
 
-        var obsHeader = document.querySelector('.obs-header');
-        var backLink  = obsHeader ? obsHeader.querySelector('.oh-back') : null;
-        if (obsHeader && backLink) {
-            var indexBtn     = document.createElement('button');
-            indexBtn.className   = 'oh-index-btn';
-            indexBtn.textContent = '≡ entries';
-            obsHeader.insertBefore(indexBtn, backLink);
-            indexBtn.addEventListener('click', openMobileDrawer);
-        }
+        // Wire the FAB button (mobile floating "≡ entries" button)
+        var entriesFab = document.getElementById('obsEntriesFab');
+        if (entriesFab) { entriesFab.addEventListener('click', openMobileDrawer); }
 
         if (mobOverlay) { mobOverlay.addEventListener('click', closeMobileDrawer); }
 
@@ -594,4 +592,44 @@
         document.body.classList.add('kiosk-mode');
     }
 
+})();
+
+/* ─────────────────────────────────────────────────────────────
+   WAFFLE NAV — mobile sub-page navigation
+───────────────────────────────────────────────────────────── */
+(function() {
+    var btn = document.getElementById('waffleBtn');
+    var menu = document.getElementById('waffleMenu');
+    if (!btn || !menu) return;
+
+    function openMenu() {
+        btn.classList.add('open');
+        menu.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+    }
+    function toggleMenu() {
+        if (menu.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+    }
+
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close on outside tap
+    document.addEventListener('click', function(e) {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            closeMenu();
+        }
+    });
+
+    // Close on menu item tap (navigation handles itself via onclick)
+    menu.querySelectorAll('.ff-waffle-menu-item').forEach(function(item) {
+        item.addEventListener('click', function() { closeMenu(); });
+    });
 })();

@@ -20,7 +20,22 @@
             <!-- <a href="systems.html" class="ff-header-nav-link">← systems</a> -->
             <span onclick="location.href='systems.html'" class="ff-header-nav-link nav-btn">← systems</span>
         </nav>
+
+    <!-- MOBILE WAFFLE NAV -->
+    <button class="ff-waffle-btn" id="waffleBtn" aria-label="navigation menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true">
+  <circle cx="3" cy="3" r="1.5"/><circle cx="9" cy="3" r="1.5"/><circle cx="15" cy="3" r="1.5"/>
+  <circle cx="3" cy="9" r="1.5"/><circle cx="9" cy="9" r="1.5"/><circle cx="15" cy="9" r="1.5"/>
+  <circle cx="3" cy="15" r="1.5"/><circle cx="9" cy="15" r="1.5"/><circle cx="15" cy="15" r="1.5"/>
+</svg>
+    </button>
     </header>
+    <div class="ff-waffle-menu" id="waffleMenu" role="menu">
+        <span onclick="location.href='index.html'" class="ff-waffle-menu-item"><span class="wm-label">← home</span></span>
+        <span onclick="location.href='context.html'" class="ff-waffle-menu-item"><span class="wm-label">← context</span></span>
+        <span onclick="location.href='map.html'" class="ff-waffle-menu-item"><span class="wm-label">← the basin</span></span>
+        <span onclick="location.href='systems.html'" class="ff-waffle-menu-item"><span class="wm-label">← systems</span></span>
+    </div>
 
     <!-- PAGE BODY -->
     <main class="obs-main">
@@ -515,37 +530,42 @@
 
     </main>
 
+    <!-- MOBILE: floating entries button (visible only on mobile) -->
+    <button class="obs-entries-fab" id="obsEntriesFab" aria-label="show entries">
+        ≡ entries
+    </button>
+
     <!-- MOBILE NAV -->
     <div class="mob-index-overlay" id="mobOverlay"></div>
     <div class="mob-index-drawer" id="mobDrawer">
         <div class="mob-drawer-handle"></div>
         <div class="index-label">entries</div>
         <nav class="index-nav" id="mobIndexNav">
-            <a href="#entry-1" class="index-link active">
+            <a href="#entry-1" class="index-link active" data-target="entry-1">
                 <span class="il-num">01</span>
                 <span class="il-title">first visit · learning birds</span>
             </a>
-            <a href="#entry-2" class="index-link">
+            <a href="#entry-2" class="index-link" data-target="entry-2">
                 <span class="il-num">02</span>
                 <span class="il-title">tule trail · distance + sound</span>
             </a>
-            <a href="#entry-3" class="index-link">
+            <a href="#entry-3" class="index-link" data-target="entry-3">
                 <span class="il-num">03</span>
                 <span class="il-title">video recording · with glenda</span>
             </a>
-            <a href="#entry-4" class="index-link">
+            <a href="#entry-4" class="index-link" data-target="entry-4">
                 <span class="il-num">04</span>
                 <span class="il-title">tule trail again · site mapping</span>
             </a>
-            <a href="#entry-5" class="index-link">
+            <a href="#entry-5" class="index-link" data-target="entry-5">
                 <span class="il-num">05</span>
                 <span class="il-title">wildlife museum · basin birds</span>
             </a>
-            <a href="#entry-6" class="index-link">
+            <a href="#entry-6" class="index-link" data-target="entry-6">
                 <span class="il-num">06</span>
                 <span class="il-title">yolo auto tour</span>
             </a>
-            <a href="#entry-7" class="index-link">
+            <a href="#entry-7" class="index-link" data-target="entry-7">
                 <span class="il-num">07</span>
                 <span class="il-title">davis wetlands</span>
             </a>

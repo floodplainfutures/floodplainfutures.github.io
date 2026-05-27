@@ -397,6 +397,85 @@ a:hover {
 }
 .ff-header-nav-link:active { background: rgba(240,104,150,.2); color: var(--pink); }
 
+/* ── WAFFLE NAV BUTTON (mobile only) ── */
+.ff-waffle-btn {
+    display: none;
+    justify-self: end;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background .15s, border-color .15s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+.ff-waffle-btn:active,
+.ff-waffle-btn.open {
+    background: rgba(240,104,150,.15);
+    border-color: var(--pink);
+}
+.ff-waffle-btn svg {
+    width: 18px; height: 18px;
+    display: block;
+    color: var(--whitebeige);
+}
+.ff-waffle-menu {
+    position: fixed;
+    top: 56px; right: 0;
+    min-width: 180px;
+    background: rgba(15,27,61,.98);
+    border: 1px solid rgba(255,255,255,.12);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 8999;
+    overflow: hidden;
+    transform-origin: top right;
+    transform: scaleY(0.85);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: transform .22s cubic-bezier(.22,1,.36,1), opacity .18s ease, visibility 0s linear .22s;
+}
+.ff-waffle-menu.open {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transition: transform .22s cubic-bezier(.22,1,.36,1), opacity .18s ease, visibility 0s linear 0s;
+}
+.ff-waffle-menu-item {
+    display: flex;
+    align-items: center;
+    padding: .85rem 1.2rem;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    color: var(--whitebeige);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    cursor: pointer;
+    transition: background .15s, color .15s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 48px;
+}
+.ff-waffle-menu-item:last-child { border-bottom: none; }
+.ff-waffle-menu-item:active { background: rgba(240,104,150,.15); color: var(--pink); }
+.ff-waffle-menu-item .wm-arrow { margin-right: .5rem; opacity: .5; }
+.ff-waffle-menu-item .wm-label { flex: 1; }
+.ff-waffle-menu-item .wm-active-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--olivegreen);
+    margin-left: .5rem;
+    flex-shrink: 0;
+}
+
 /* Shared page footer */
 .ff-footer {
     padding: 4rem 6vw 5rem;
@@ -510,6 +589,7 @@ body.context-page {
 
 /* floating meta labels */
 .ctx-hero-float {
+
     position: absolute;
     z-index: 10;
     display: flex;
@@ -2427,6 +2507,8 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     inset: 56px 0 0 0;
     display: grid;
     grid-template-columns: 220px 1fr;
+    grid-template-rows: 1fr;   /* ensures the single row fills all available height */
+    overflow: hidden;
 }
 
 /* INDEX SIDEBAR */
@@ -2650,6 +2732,36 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 .mob-index-drawer .index-label { padding: 0 1.4rem .8rem; }
 .mob-index-drawer .index-link { padding: .85rem 1.4rem; min-height: 48px; }
 
+/* MOBILE ENTRIES FAB — floating "≡ entries" button on mobile */
+.obs-entries-fab {
+    display: none;  /* shown via media query */
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 300;
+    background: var(--blackblue);
+    color: var(--whitebeige);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 999px;
+    font-family: "DM Mono", monospace;
+    font-size: .82rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    padding: .65rem 1.5rem;
+    min-height: 44px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,.35);
+    transition: background .15s, border-color .15s, color .15s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+.obs-entries-fab:active {
+    background: rgba(240,104,150,.15);
+    border-color: var(--pink);
+    color: var(--pink);
+}
+
 /* FADE IN */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(12px); }
@@ -2726,8 +2838,18 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 /* ── MOBILE (≤600px) ─────────────────────────────────────── */
 @media (max-width: 600px) {
     /* Shared header */
-    .ff-header { padding: 0 5vw; gap: 1.5rem; }
+    .ff-header {
+        padding: 0 5vw;
+        gap: 1.5rem;
+        /* With back + nav hidden, keep title centered: [spacer] [title] [waffle] */
+        grid-template-columns: 36px 1fr 36px;
+    }
     .ff-header-meta { display: none; }
+    /* Hide text nav links and back button; show waffle button instead */
+    .ff-header-back { display: none; }
+    .ff-header-nav { display: none; }
+    .ff-waffle-btn { display: flex; }
+    /* waffle-menu shown/hidden via .open class — no display toggle needed here */
 
     /* Context */
     .ctx-hero { padding-top: 14vh; }
@@ -2751,7 +2873,8 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     .obs-index { display: none; }
     .oh-index-btn { display: block; }
     .mob-index-overlay, .mob-index-drawer { display: block; }
-    .obs-scroll { padding: 1.5rem 5vw 3rem; }
+    .obs-entries-fab { display: flex; align-items: center; justify-content: center; }
+    .obs-scroll { padding: 1.5rem 5vw 5rem; /* extra bottom padding for FAB */ }
     .entry-num { font-size: 2rem; }
     .entry-title { font-size: 1.5rem; }
     .entry-body p { font-size: 1rem !important; }   /* never shrink below 16px on mobile */
@@ -2782,13 +2905,34 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     #landing.state-open {
         flex-direction: column;
         justify-content: center;
-        gap: 3rem;
+        align-items: center;
+        gap: 2rem;
         padding: 0 8vw;
     }
-    #landing.state-open .title-block { transform: none; }
+    #landing.state-open .title-block {
+        transform: none;
+        text-align: center;
+        max-width: 100%;
+    }
     .title-block h1 { font-size: 1.4rem; }
-    .menu a { font-size: 1.3rem; }
     .begin-link { font-size: 1.5rem; }
+    /* Mobile nav: 2×2 waffle grid */
+    #landing.state-open .menu {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .75rem;
+        width: 100%;
+        max-width: 360px;
+    }
+    .menu .nav-btn,
+    .menu a {
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        font-size: 1.1rem;
+        padding: 0.6rem 0.75rem;
+        min-height: 52px;
+    }
 }
 
 /* ── LANDSCAPE PHONE ─────────────────────────────────────── */
@@ -4880,6 +5024,9 @@ body.systems-page {
         #landing {
             padding-bottom: env(safe-area-inset-bottom);
         }
+        .obs-entries-fab {
+            bottom: calc(1.5rem + env(safe-area-inset-bottom));
+        }
     }
 }
 
@@ -4918,78 +5065,48 @@ body.systems-page {
 /* ── MOBILE (≤600px): two-row header layout ─────────────────── */
 @media (max-width: 600px) {
 
-    /* Switch from 3-col grid to flex-wrap so items can reflow */
+    /* Single-row header: [spacer] [title centered] [waffle] */
     .ff-header {
-        display: flex;
+        display: grid;
+        grid-template-columns: 36px 1fr 36px;
         align-items: center;
-        flex-wrap: wrap;
+        height: 56px;
+        min-height: 56px;
         padding: 0 4vw;
         gap: 0;
-        /* row 1 = ~44px, row 2 (nav) = ~44px → 88px total */
     }
 
-    /* Row 1: back button + title, side by side */
-    .ff-header-back {
-        flex: 0 0 auto;
-        order: 1;
-        height: 44px;
-        font-size: .875rem;
-        padding: 0 .85rem;
-        white-space: nowrap;
-    }
+    /* Hide back button and next/prev nav — waffle handles all navigation */
+    .ff-header-back     { display: none !important; }
+    .ff-header-nav      { display: none !important; }
+    .ff-waffle-btn      { display: flex; justify-self: end; }
 
+    /* Title stays centered */
     .ff-header-title {
-        flex: 1 1 auto;
-        order: 2;
         text-align: center;
         font-size: .75rem;
         letter-spacing: .2em;
-        /* push the title to center between back btn and edge */
-        padding-right: 0;
     }
 
-    /* Row 2: nav links span full width */
-    .ff-header-nav {
-        flex: 0 0 100%;
-        order: 3;
-        justify-content: flex-end;
-        display: flex;
-        gap: .4rem;
-        padding: 2px 0 6px;
-        flex-wrap: wrap;
-    }
-
-    .ff-header-nav-link {
-        height: 36px;
-        font-size: .8rem;
-        padding: 0 .75rem;
-        white-space: nowrap;
-        flex-shrink: 0;
-    }
-
-    /* Meta text: hide on mobile (already hidden in existing rule, reinforce) */
+    /* Meta text hidden */
     .ff-header-meta { display: none; }
 
-    /* ── MAP PAGE: offset the layout below the taller header ── */
-    /* The header is now ~88px on mobile; map-layout must start below it */
+    /* MAP PAGE: header is back to 56px — restore normal offsets */
     body.map-page .map-layout {
-        /* Use CSS variable so it's easy to tune */
-        top: 88px;
-        height: calc(100vh - 88px);
-        height: calc(100dvh - 88px);
+        top: 56px;
+        height: calc(100vh - 56px);
+        height: calc(100dvh - 56px);
     }
 
-    /* Observations fixed layout also starts below header */
+    /* Observations fixed layout */
     body.observations-page .obs-main {
-        top: 88px;
+        top: 56px;
         bottom: 0;
     }
 }
 
-/* ── EXTRA SMALL (≤400px): shrink nav text further ─────────── */
+/* ── EXTRA SMALL (≤400px): shrink title text further ─────────── */
 @media (max-width: 400px) {
-    .ff-header-back     { font-size: .78rem; padding: 0 .6rem; }
-    .ff-header-nav-link { font-size: .75rem; padding: 0 .55rem; }
     .ff-header-title    { font-size: .68rem; letter-spacing: .16em; }
 }
 
@@ -5806,4 +5923,166 @@ body.systems-page {
 /* Month slices: fast on hover, slow only during idle cycling */
 .sys-wheel--idle .month-slice {
     transition: opacity .5s ease !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE TEXT OVERFLOW FIXES
+   Prevents text/layout from bleeding or overlapping on small screens
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Context hero: prevent word overlap on narrow screens ─── */
+@media (max-width: 480px) {
+    .ctx-hero-word-big--1 {
+        font-size: clamp(2.8rem, 12vw, 5rem);
+        top: 22%;
+        left: 5vw;
+    }
+    .ctx-hero-word-big--2 {
+        font-size: clamp(2.2rem, 10vw, 4rem);
+        top: 46%;
+        left: 5vw; /* align left instead of offset right to avoid clipping */
+    }
+    .ctx-hero-sub-float {
+        font-size: .8rem;
+        right: 4vw;
+        left: 4vw;
+        text-align: left;
+        bottom: 7vh;
+    }
+}
+
+/* ── Context page: floating aside must not overflow on mobile ── */
+@media (max-width: 700px) {
+    .cfs-aside-right {
+        float: none;
+        width: 100%;
+        margin: 0 0 1.5rem 0;
+        transform: none;
+    }
+    /* Prevent negative-bleed tiles from causing horizontal scroll */
+    .cfs-tiles {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        overflow: hidden;
+    }
+    /* Big question callout: use full width, remove rotation that clips */
+    .cfs-big-q {
+        max-width: 100%;
+        transform: none;
+        padding: 1.4rem 1.2rem;
+        gap: 1rem;
+    }
+    .cfs-big-q:hover { transform: none; }
+    /* Thesis card: no negative left margin on mobile */
+    .cfs-thesis-card {
+        max-width: 100%;
+        margin-left: 0 !important;
+        padding: 1.8rem 1.4rem;
+        transform: none;
+    }
+    .cfs-thesis-card:hover { transform: none; }
+    /* Stat pills: wrap cleanly */
+    .cfs-stats-scatter {
+        gap: .8rem;
+    }
+    .cfs-stat-pill {
+        transform: none !important;
+        flex: 1 1 calc(50% - .8rem);
+        min-width: 120px;
+    }
+    /* Trail text: no large left margin */
+    .cfs-trail {
+        margin-left: 0 !important;
+    }
+    /* Gallery: force single column even if inline style set 2 */
+    .ctx-gallery {
+        grid-template-columns: 1fr !important;
+    }
+    /* Section padding tighter */
+    .cfs {
+        padding: 3.5rem 5vw 2.5rem;
+        overflow-x: hidden;
+    }
+    /* Section numbers don't overflow */
+    .cfs-num-bg {
+        right: 0;
+        overflow: hidden;
+        max-width: 100vw;
+    }
+}
+
+/* ── Extra-small phones (≤400px) ─────────────────────────── */
+@media (max-width: 400px) {
+    .cfs-stat-pill {
+        flex: 1 1 100%;
+    }
+    .cfs-tile {
+        padding: 1.4rem 1rem;
+    }
+}
+
+/* ── Systems page: prevent overflow on mobile ──────────────── */
+@media (max-width: 600px) {
+    /* Section content never bleeds past viewport */
+    .sys-section {
+        overflow-x: hidden;
+        min-width: 0;
+    }
+    /* Callout stats: stack on very narrow screens */
+    .sys-callout {
+        flex-wrap: wrap;
+    }
+    /* Connection grid text: prevent long words breaking layout */
+    .sys-conn-card p,
+    .sys-conn-card h3 {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+    /* Prevent any fixed-width child from overflowing */
+    .sys-section * {
+        max-width: 100%;
+        min-width: 0;
+    }
+}
+
+/* ── Observations: entry body text never overflows ──────────── */
+@media (max-width: 600px) {
+    .entry-body p,
+    .entry-title,
+    .entry-aside p,
+    .entry-pullquote {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+    /* Entry header: allow wrapping so date/tag don't collide */
+    .entry-header {
+        flex-wrap: wrap;
+        gap: .5rem;
+        align-items: flex-start;
+    }
+    /* Observation photo containers: no overflow */
+    .observation-photos,
+    .observation-photos--small {
+        width: 100%;
+        overflow: hidden;
+    }
+    .observation-photos figure,
+    .observation-photos--small figure {
+        width: 100%;
+    }
+    .observation-photos img,
+    .observation-photos--small img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+}
+
+/* ── Global: ensure no child can create horizontal scroll ──── */
+@media (max-width: 700px) {
+    .context-page,
+    .systems-page,
+    .observations-page {
+        overflow-x: hidden;
+    }
 }

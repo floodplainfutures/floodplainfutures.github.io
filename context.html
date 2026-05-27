@@ -19,6 +19,21 @@
             <!-- <a href="map.html" class="ff-header-nav-link">the basin →</a> -->
             <span onclick="location.href='map.html'" class="ff-header-nav-link nav-btn">the basin →</span>
         </nav>
+
+    <!-- MOBILE WAFFLE NAV -->
+    <button class="ff-waffle-btn" id="waffleBtn" aria-label="navigation menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true">
+  <circle cx="3" cy="3" r="1.5"/><circle cx="9" cy="3" r="1.5"/><circle cx="15" cy="3" r="1.5"/>
+  <circle cx="3" cy="9" r="1.5"/><circle cx="9" cy="9" r="1.5"/><circle cx="15" cy="9" r="1.5"/>
+  <circle cx="3" cy="15" r="1.5"/><circle cx="9" cy="15" r="1.5"/><circle cx="15" cy="15" r="1.5"/>
+</svg>
+    </button>
+    <div class="ff-waffle-menu" id="waffleMenu" role="menu">
+        <span onclick="location.href='index.html'" class="ff-waffle-menu-item"><span class="wm-label">← home</span></span>
+        <span onclick="location.href='map.html'" class="ff-waffle-menu-item"><span class="wm-label">the basin →</span></span>
+        <span onclick="location.href='systems.html'" class="ff-waffle-menu-item"><span class="wm-label">systems →</span></span>
+        <span onclick="location.href='observations.html'" class="ff-waffle-menu-item"><span class="wm-label">observations →</span></span>
+    </div>
     </header>
 
     <div class="ctx-progress" id="ctxProgress"></div>
