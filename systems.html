@@ -91,11 +91,11 @@
     <section class="sys-section" id="annual">
         <div class="sys-section-header">
             <span class="sys-section-num">01</span>
-            <h2 class="sys-section-title">six years of data</h2>
+            <h2 class="sys-section-title">eight years of data</h2>
             <p class="sys-section-desc">
-                2018 to 2023, Yolo County and Yolo Basin sources only.
-                Each bar shows one system, scaled so you can see them move together.
-                Toggle any dataset on or off. Hover a year to see the raw numbers.
+                2018 to 2025, Yolo County and Yolo Basin sources only.
+                Each line shows one system, scaled so you can see them move together.
+                Toggle any dataset on or off. Hover a year to see the raw numbers. 2025 rice and bird figures are estimates pending the official crop report.
             </p>
         </div>
         <div class="sys-controls">
@@ -117,12 +117,9 @@
                     <span class="toggle-desc">rice acres harvested in Yolo County</span>
                 </button>
             </div>
-            <div class="sys-controls">
-    
-</div>
         </div>
-        <div class="sys-chart-wrap" id="annualChartWrap" role="region" aria-label="Annual bar chart: flood days, bird checklists, and rice acres 2018–2023">
-            <div class="sys-chart" id="annualChart" role="img" aria-label="Bar chart showing flood, bird, and rice data from 2018 to 2023." style="width:100%;min-height:320px;"></div>
+        <div class="sys-chart-wrap" id="annualChartWrap" role="region" aria-label="Annual chart: flood days, bird checklists, and rice acres 2018–2025">
+            <div class="sys-chart" id="annualChart" role="img" aria-label="Chart showing flood, bird, and rice data from 2018 to 2025." style="width:100%;"></div>
         </div>
         <div class="sys-legend">
             <div class="sys-legend-item" data-system="flood">
@@ -152,9 +149,9 @@
         </div>
         <div class="sys-tooltip" id="sysTooltip"></div>
         <div class="sys-callout">
-            <span class="sys-callout-mark">→</span>
+            <span class="sys-callout-mark">chart annotation</span>
             <p>
-                Look at 2022. A bad drought year hit Yolo County hard: rice acreage dropped from about 17,800 acres to just <strong>9,507</strong>, the lowest in the six-year period, because farmers couldn't get enough water to plant. The Fremont Weir did not overtop at all. Bird activity at the wildlife area dropped too. Then 2023 came with record winter rains and everything reversed. Rice hit <strong>29,974 acres</strong>, the Fremont Weir overtopped for 73 days, and checklists climbed right alongside it. All three bars move in the same direction at the same time.
+                Look at 2022. A drought year hit Yolo County hard: rice acreage dropped to just <strong>9,507 acres</strong>, the lowest in this dataset, because farmers couldn't get enough water to plant. The Fremont Weir did not overtop. Bird activity dropped too. Then 2023 reversed everything — rice hit <strong>29,974 acres</strong>, the weir overtopped for 73 days, and checklists climbed with it. 2024 was dry again (no overtopping), but rice held at a healthy 27,394 acres. In late 2025 the weir finally overtopped again — 20 days — marking the first activation of the new Big Notch fish passage gates.
             </p>
         </div>
     </section>
@@ -172,7 +169,7 @@
         <div class="sys-wheel-wrap">
             <div class="sys-wheel" id="sysWheel" role="region" aria-label="Seasonal activity wheel"></div>
             <div class="sys-wheel-detail" id="wheelDetail" role="region" aria-label="Monthly detail" aria-live="polite" aria-atomic="true">
-                <p class="wheel-prompt">hover a month to start</p>
+                <p class="wheel-prompt">hover any month for detail</p>
                 <p class="wheel-detail-month" id="wdMonth"></p>
                 <div class="wheel-detail-rows" id="wdRows"></div>
             </div>
@@ -218,7 +215,7 @@
             <span class="sys-section-num">04</span>
             <h2 class="sys-section-title">rice in yolo county</h2>
             <p class="sys-section-desc">
-                Six years of rice data from the Yolo County Agricultural Commissioner's Crop Report.
+                Eight years of rice data from the Yolo County Agricultural Commissioner's Crop Report. 2025 figures are preliminary estimates.
                 After each harvest, the same fields get flooded on purpose. That water is what the birds come for all winter.
                 Select a year to see what happened.
             </p>
@@ -252,7 +249,7 @@
             </div>
         </div>
         <p class="sys-data-note">
-            Source: Yolo County Department of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2023. Yolo County data only.
+            Source: Yolo County Department of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2024. 2025 rice figures are preliminary estimates. Yolo County data only.
             <span class="source-plain">yolocounty.gov/ag</span>
 
             <!-- <a href="https://www.yolocounty.gov/government/general-government-departments/agriculture/crop-statistics" target="_blank" rel="noopener">yolocounty.gov/ag →</a> -->
@@ -265,44 +262,84 @@
             <span class="sys-section-num">05</span>
             <h2 class="sys-section-title">how it connects</h2>
         </div>
-        <div class="sys-section-csys-section-img-slot--wide">
-            <img src="images/connection-diagram.png"
-                 alt="Diagram showing the relationship between Sacramento River flooding, bird migration, and rice agriculture in the Yolo Basin"
-                 class="sys-section-img"
-                 onerror="this.parentElement.classList.add('img-missing')">
-        </div>
-        <div class="sys-connection-grid">
-            <div class="sys-conn-card sys-conn-flood">
-                <span class="sys-conn-num">01</span>
-                <h3>The river goes over the weir</h3>
-                <p>When the Sacramento River runs high enough, it spills over the Fremont Weir, a 1.8-mile structure on the north end of the bypass. That is when the basin floods.
-                Habitat managers look for at least 14 days of strong flow to support wildlife.
-                In 2023, the basin stayed flooded for 73 days.</p>
-                <span class="sys-conn-tag">flood</span>
+
+        <!-- Flow steps: large editorial rows -->
+        <div class="conn-flow">
+
+            <div class="conn-step conn-step--flood">
+                <div class="conn-step-left">
+                    <span class="conn-step-index">01</span>
+                    <div class="conn-step-bar"></div>
+                </div>
+                <div class="conn-step-body">
+                    <span class="conn-step-tag">flood</span>
+                    <h3 class="conn-step-title">The river goes over the weir</h3>
+                    <p class="conn-step-text">When the Sacramento River runs high enough, it spills over the Fremont Weir — a 1.8-mile structure on the north end of the bypass. That is when the basin floods. Habitat managers look for at least 14 days of strong flow to support wildlife.</p>
+                </div>
+                <div class="conn-step-stat">
+                    <span class="conn-stat-num">73</span>
+                    <span class="conn-stat-unit">days flooded</span>
+                    <span class="conn-stat-year">2023 peak</span>
+                </div>
             </div>
-            <div class="sys-conn-arrow">→</div>
-            <div class="sys-conn-card sys-conn-birds">
-                <span class="sys-conn-num">02</span>
-                <h3>Birds find the water</h3>
-                <p>Flooded fields mean food. Shallow water exposes the insects and seeds that shorebirds and waterfowl depend on. Over 200 species show up at the Yolo Bypass Wildlife Area each year. The winter visitors (cranes, pintails, dunlin) are here because the fields are wet. That is the whole reason.</p>
-                <span class="sys-conn-tag">flight</span>
+
+            <div class="conn-step-connector" aria-hidden="true">
+                <div class="conn-step-connector-line"></div>
+                <span class="conn-step-connector-label">leads to</span>
             </div>
-            <div class="sys-conn-arrow">→</div>
-            <div class="sys-conn-card sys-conn-rice">
-                <span class="sys-conn-num">03</span>
-                <h3>The rice fields stay wet after harvest</h3>
-                <p>Farmers flood their harvested fields each fall partly as straw management and partly because there are programs that pay them to do it for wildlife.
-                It is cheaper than burning the stubble. The leftover rice feeds ducks and geese, and the decomposing stalks feed the bugs that shorebirds need.
-                In a wet year, this managed flooding and the natural bypass flooding stack on top of each other.</p>
-                <span class="sys-conn-tag">food</span>
+
+            <div class="conn-step conn-step--birds">
+                <div class="conn-step-left">
+                    <span class="conn-step-index">02</span>
+                    <div class="conn-step-bar"></div>
+                </div>
+                <div class="conn-step-body">
+                    <span class="conn-step-tag">flight</span>
+                    <h3 class="conn-step-title">Birds find the water</h3>
+                    <p class="conn-step-text">Flooded fields mean food. Shallow water exposes the insects and seeds that shorebirds and waterfowl depend on. The winter visitors — cranes, pintails, dunlin — are here because the fields are wet. That is the whole reason.</p>
+                </div>
+                <div class="conn-step-stat">
+                    <span class="conn-stat-num">200+</span>
+                    <span class="conn-stat-unit">species recorded</span>
+                    <span class="conn-stat-year">at the wildlife area</span>
+                </div>
+            </div>
+
+            <div class="conn-step-connector" aria-hidden="true">
+                <div class="conn-step-connector-line"></div>
+                <span class="conn-step-connector-label">sustained by</span>
+            </div>
+
+            <div class="conn-step conn-step--rice">
+                <div class="conn-step-left">
+                    <span class="conn-step-index">03</span>
+                    <div class="conn-step-bar"></div>
+                </div>
+                <div class="conn-step-body">
+                    <span class="conn-step-tag">food</span>
+                    <h3 class="conn-step-title">The rice fields stay wet after harvest</h3>
+                    <p class="conn-step-text">Farmers flood their harvested fields each fall — partly straw management, partly because programs pay them to keep fields wet for wildlife. The leftover grain feeds ducks and geese. The decomposing stalks feed the bugs that shorebirds need. In a wet year, managed flooding and natural bypass flooding stack on top of each other.</p>
+                </div>
+                <div class="conn-step-stat">
+                    <span class="conn-stat-num">29,974</span>
+                    <span class="conn-stat-unit">acres harvested</span>
+                    <span class="conn-stat-year">2023 rebound</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Takeaway: two-column split with big pull stat -->
+        <div class="conn-takeaway">
+            <div class="conn-takeaway-stat">
+                <span class="conn-takeaway-num">−59<span class="conn-takeaway-pct">%</span></span>
+                <span class="conn-takeaway-label">rice acres · 2022 drought</span>
+            </div>
+            <div class="conn-takeaway-text">
+                <p>In 2022, farmers planted 59% less rice because the water simply was not there. The Fremont Weir did not overtop at all. Fewer flooded fields meant less habitat, and bird numbers at the wildlife area reflected that. When the rains came back in 2023, the rice came back. And so did the birds.</p>
             </div>
         </div>
-        <div class="sys-connection-note">
-            <p>
-                In 2022, farmers planted 59% less rice because the water simply was not there. The Fremont Weir did not overtop at all. Fewer flooded fields meant less habitat, and bird numbers at the wildlife area reflected that.
-                When the rains came back in 2023, the rice came back. And so did the birds.
-            </p>
-        </div>
+
     </section>
 
     <!-- FOOTER -->
@@ -317,8 +354,8 @@
                     <li><span class="source-plain">Delta Stewardship Council — Yolo Bypass Inundation, Fremont Weir flow data (DWR) · viewperformance.deltacouncil.ca.gov</span></li>
                     <!-- <li><a href="https://ebird.org/hotspot/L443535" target="_blank">Cornell Lab of Ornithology — eBird Hotspot L443535, Vic Fazio Yolo Wildlife Area</a></li> -->
                     <li><span class="source-plain">Cornell Lab of Ornithology — eBird Hotspot L443535, Vic Fazio Yolo Wildlife Area · ebird.org</span></li>
-                    <!-- <li><a href="https://www.yolocounty.gov/government/general-government-departments/agriculture/crop-statistics" target="_blank">Yolo County Dept. of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2023</a></li> -->
-                    <li><span class="source-plain">Yolo County Dept. of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2023 · yolocounty.gov</span></li>
+                    <!-- <li><a href="https://www.yolocounty.gov/government/general-government-departments/agriculture/crop-statistics" target="_blank">Yolo County Dept. of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2024</a></li> -->
+                    <li><span class="source-plain">Yolo County Dept. of Agriculture, Weights &amp; Measures — Annual Crop &amp; Livestock Reports 2018–2024 · yolocounty.gov</span></li>
                     <!-- <li><a href="https://napasolanobirds.org/birding/local-birding-hotspots/yolo-bypass/" target="_blank">Napa Solano Audubon Society — Yolo Bypass species field accounts</a></li> -->
                     <li><span class="source-plain">Napa Solano Audubon Society — Yolo Bypass species field accounts · napasolanobirds.org</span></li>
                     <!-- <li><a href="https://yoloaudubon.org/birding-locations/" target="_blank">Yolo Bird Alliance — Checklist of the Birds of Yolo County, 2018</a></li> -->

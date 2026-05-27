@@ -17,7 +17,9 @@ var FLOOD = {
     2020: 18,
     2021: 0,
     2022: 0,
-    2023: 73
+    2023: 73,
+    2024: 0,
+    2025: 20
 };
 
 /*
@@ -31,7 +33,9 @@ var BIRDS = {
     2020: 1240,
     2021: 1098,
     2022: 876,
-    2023: 1187
+    2023: 1187,
+    2024: 1043,
+    2025: 1198
 };
 
 /*
@@ -46,16 +50,22 @@ var RICE = {
     2020: { acres: 36000,  tons: 60100,  value: 13.9 },
     2021: { acres: 17800,  tons: 60100,  value: 20.1 },
     2022: { acres:  9507,  tons: 30200,  value: 23.2 },
-    2023: { acres: 29974,  tons: 128000, value: 54.3 }
+    2023: { acres: 29974,  tons: 128000, value: 54.3 },
+    2024: { acres: 27394,  tons: 128000, value: 44.7 },
+    2025: { acres: 26000,  tons: 120000, value: 40.0 }
 };
 
-var YEARS = [2018, 2019, 2020, 2021, 2022, 2023];
+var YEARS = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 
 var RICE_TABLE = [
+    { year: 2025, acres: '~26,000', prod: '~120,000 tons', value: '~$40M', flood: true,
+      context: 'Late December storms pushed the Sacramento River over the Fremont Weir for 20 days — also the first overtopping with the new Big Notch fish passage gates in operation. Rice acreage held steady from 2024. Full crop figures publish in the 2025 Yolo County Crop Report (expected Oct 2026).' },
+    { year: 2024, acres: '27,394', prod: '128,000 tons', value: '$44.7M', flood: false,
+      context: 'A dry year. The Fremont Weir did not overtop. Rice acreage settled back from the 2023 rebound to about 27,400 acres — a solid mid-range year. Almonds overtook rice as the top-value crop in Yolo County for the first time.' },
     { year: 2023, acres: '29,974', prod: '128,000 tons', value: '$54.3M', flood: true,
       context: 'The rains came back and so did the rice. After the 2022 drought stripped planting down to almost nothing, farmers came back strong. Acreage jumped more than 200% in a single year.' },
     { year: 2022, acres: '9,507',  prod: '30,200 tons',  value: '$23.2M', flood: false,
-      context: 'The worst drought in the six-year stretch. Farmers could not get enough water to plant, so most of the fields sat dry. Acreage fell 59% from the year before and bird numbers at the wildlife area fell with it.' },
+      context: 'The worst drought year in the dataset. Farmers could not get enough water to plant, so most of the fields sat dry. Acreage fell 59% from the year before and bird numbers at the wildlife area fell with it.' },
     { year: 2021, acres: '17,800', prod: '60,100 tons',  value: '$20.1M', flood: false,
       context: 'A second dry year in a row. The Fremont Weir did not overtop at all. Planting was down from 2020 but the real crash was still coming.' },
     { year: 2020, acres: '36,000', prod: '60,100 tons',  value: '$13.9M', flood: true,
@@ -235,7 +245,7 @@ function renderChart() {
     var srTable = document.createElement('table');
     srTable.id = 'annualChartTable';
     srTable.className = 'sr-only';
-    srTable.setAttribute('aria-label', 'Annual data table: flood days, bird checklists, and rice acres 2018–2023');
+    srTable.setAttribute('aria-label', 'Annual data table: flood days, bird checklists, and rice acres 2018–2025');
     srTable.innerHTML = '<thead><tr><th>Year</th>' +
         (activeFilters.flood ? '<th>Flood days</th>' : '') +
         (activeFilters.birds ? '<th>Bird checklists</th>' : '') +
@@ -284,7 +294,7 @@ function renderChart() {
     svg.style.minHeight = '260px';
     svg.classList.add('sys-line-chart-svg');
     svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', 'Line chart: flood days, bird checklists, and rice acres 2018–2023. The accessible table below contains the same data.');
+    svg.setAttribute('aria-label', 'Line chart: flood days, bird checklists, and rice acres 2018–2025. The accessible table below contains the same data.');
 
     // Defs for gradient fills
     var defs = document.createElementNS(ns, 'defs');
@@ -408,51 +418,7 @@ function renderChart() {
         });
     });
 
-    // 2022→2023 annotation — small label anchored top-right, no arrow
-    (function() {
-        var g = document.createElementNS(ns, 'g');
-        g.classList.add('chart-annotation');
-
-        var lbl = document.createElementNS(ns, 'text');
-        lbl.setAttribute('x', W - padR - 4);
-        lbl.setAttribute('y', padT - 10);
-        lbl.setAttribute('text-anchor', 'end');
-        lbl.setAttribute('class', 'chart-annot-label');
-        lbl.textContent = '+215% rice · 73 flood days → 2023';
-
-        g.appendChild(lbl);
-        svg.appendChild(g);
-    })();
-
-    // ── Y-AXES: three columns, right-aligned flush to padL, only top+mid+zero labels ──
-    (function() {
-        var axes = [
-    { key: 'flood', max: maxFlood, color: '#7292cb', x: padL - 100, fmt: function(v){ return v; } },
-    { key: 'birds', max: maxBirds, color: '#f06896', x: padL - 50, fmt: function(v){ return Math.round(v/100)*100; } },
-    { key: 'rice', max: maxRice, color: '#bda543', x: padL - 12, fmt: function(v){ return Math.round(v/1000) + 'k'; } }
-];
-        // Only label top and zero — keeps it minimal and uncluttered
-        var tickVals = [0, 0.5, 1];
-        axes.forEach(function(ax) {
-            if (!activeFilters[ax.key]) return;
-            var g = document.createElementNS(ns, 'g');
-            g.classList.add('yaxis-group', 'yaxis-' + ax.key);
-            tickVals.forEach(function(frac) {
-                var val = ax.max * frac;
-                var y = yNorm(val, ax.max);
-                var label = document.createElementNS(ns, 'text');
-                label.setAttribute('x', ax.x);
-                label.setAttribute('y', y);
-                label.setAttribute('class', 'chart-yaxis-label');
-                label.setAttribute('fill', ax.color);
-                label.textContent = ax.fmt(val);
-                g.appendChild(label);
-            });
-            svg.appendChild(g);
-        });
-    })();
-
-    // Crosshair line
+// Crosshair line
     var crosshair = document.createElementNS(ns, 'line');
     crosshair.setAttribute('y1', padT);
     crosshair.setAttribute('y2', padT + chartH);
@@ -669,7 +635,8 @@ function renderWheel() {
         });
         hit.addEventListener('mouseleave', function () {
             document.querySelectorAll('.month-slice').forEach(function (s) { s.style.opacity = ''; });
-            if (selectedMonth === null) clearWheelDetail();
+            if (selectedMonth !== null) updateWheelDetail(selectedMonth);
+            else startWheelIdle();
         });
         hit.addEventListener('click', function () { selectedMonth = parseInt(this.dataset.month); });
         hit.addEventListener('focus', function () {
@@ -712,13 +679,53 @@ function renderWheel() {
     svg.appendChild(ct);
 
     container.appendChild(svg);
+
+    // Show the month-grid overview by default
+    clearWheelDetail();
 }
 
-function updateWheelDetail(idx) {
+// ── Wheel detail auto-cycle (idle animation) ──
+var wheelIdleTimer  = null;
+var wheelIdleMonth  = 0;
+var wheelIsIdle     = true;
+
+function wheelIdleTick() {
+    if (!wheelIsIdle) return;
+    var wheelEl = document.querySelector('#sysWheel');
+    if (!wheelEl) return;
+    document.querySelectorAll('.month-slice').forEach(function (s) {
+        s.style.opacity = (parseInt(s.dataset.month) === wheelIdleMonth) ? '1' : '0.35';
+    });
+    showWheelContent(wheelIdleMonth, true);
+    wheelIdleMonth = (wheelIdleMonth + 1) % 12;
+    wheelIdleTimer = setTimeout(wheelIdleTick, 1800);
+}
+
+function startWheelIdle() {
+    wheelIsIdle = true;
+    wheelIdleMonth = new Date().getMonth();
+    clearTimeout(wheelIdleTimer);
+    var wheelEl = document.querySelector('#sysWheel');
+    if (wheelEl) wheelEl.classList.add('sys-wheel--idle');
+    wheelIdleTick();
+}
+
+function stopWheelIdle() {
+    clearTimeout(wheelIdleTimer);
+    wheelIsIdle = false;
+    var wheelEl = document.querySelector('#sysWheel');
+    if (wheelEl) wheelEl.classList.remove('sys-wheel--idle');
+}
+
+function showWheelContent(idx, isIdle) {
     var data = MONTHLY[idx];
+    var detail = document.querySelector('#wheelDetail');
     var prompt = document.querySelector('.wheel-prompt');
     if (prompt) prompt.style.display = 'none';
-    document.querySelector('#wdMonth').textContent = MONTH_FULL[idx].toLowerCase();
+
+    var monthEl = document.querySelector('#wdMonth');
+    monthEl.textContent = MONTH_FULL[idx].toLowerCase();
+    monthEl.className = 'wheel-detail-month' + (isIdle ? ' wheel-detail-month--idle' : '');
 
     var rows = [
         { sys: 'flood', color: '#7292cb', desc: data.flood },
@@ -726,19 +733,26 @@ function updateWheelDetail(idx) {
         { sys: 'food',  color: '#bda543', desc: data.rice }
     ];
 
-    document.querySelector('#wdRows').innerHTML = rows.map(function (r) {
-        return '<div class="wheel-detail-row">' +
-            '<div class="wdr-dot" style="background:' + r.color + '"></div>' +
-            '<div><span class="wdr-system">' + r.sys + '</span><span class="wdr-desc">' + r.desc + '</span></div>' +
-            '</div>';
-    }).join('');
+    var rowsEl = document.querySelector('#wdRows');
+    rowsEl.innerHTML = (isIdle ? '<div class="wheel-idle-cue">hover any month to explore</div>' : '') +
+        rows.map(function (r) {
+            return '<div class="wheel-detail-row' + (isIdle ? ' wheel-detail-row--idle' : '') + '">' +
+                '<div class="wdr-dot" style="background:' + r.color + '"></div>' +
+                '<div><span class="wdr-system">' + r.sys + '</span>' +
+                '<span class="wdr-desc">' + r.desc + '</span></div>' +
+                '</div>';
+        }).join('');
+}
+
+function updateWheelDetail(idx) {
+    stopWheelIdle();
+    var prompt = document.querySelector('.wheel-prompt');
+    if (prompt) prompt.style.display = 'none';
+    showWheelContent(idx, false);
 }
 
 function clearWheelDetail() {
-    document.querySelector('#wdMonth').textContent = '';
-    document.querySelector('#wdRows').innerHTML = '';
-    var prompt = document.querySelector('.wheel-prompt');
-    if (prompt) prompt.style.display = '';
+    startWheelIdle();
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -753,7 +767,7 @@ function makeRadialArc(freq, color) {
     svg.setAttribute('width', size);
     svg.setAttribute('height', size);
     svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', 'Appears on ' + freq + '% of e-bird checklists');
+    svg.setAttribute('aria-label', 'Spotted on roughly ' + Math.round(freq / 10) + ' out of every 10 visits');
 
     var bg = document.createElementNS(ns, 'circle');
     bg.setAttribute('cx', cx); bg.setAttribute('cy', cy); bg.setAttribute('r', r);
@@ -853,7 +867,7 @@ function renderBirdGrid() {
             '<div class="bird-card-radial-svg" data-color="' + resolvedColor + '" data-freq="' + b.freq + '"></div>' +
             '<div class="bird-card-stat-block">' +
             '<div class="bird-card-stat-freq" style="color:' + resolvedColor + '">' + b.freq + '%</div>' +
-            '<div class="bird-card-stat-label">of e-bird checklists</div>' +
+            '<div class="bird-card-stat-label">chance of spotting it on a visit</div>' +
             '<div class="bird-card-stat-peak">' + b.peak + '</div>' +
             '</div>' +
             '</div>' +
@@ -949,7 +963,7 @@ function renderRiceTable() {
 
     var activeYear = null;
 
-    function acresNum(str) { return parseInt(str.replace(/,/g, ''), 10); }
+    function acresNum(str) { return parseInt(str.replace(/[^0-9]/g, ''), 10); }
 
     // ── Paddy grid visualization ──
     // Renders a COLS×ROWS grid of cells, filling proportionally to acreage

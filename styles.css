@@ -3900,13 +3900,9 @@ body.systems-page {
     animation: callout-pulse 3s ease-in-out infinite;
 }
 
-/* Hero right side — subtle float animation */
-@keyframes hero-float {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-8px); }
-}
+/* Hero right side — no animation */
 .sys-hero-img-slot {
-    animation: hero-float 6s ease-in-out infinite;
+    animation: none;
 }
 
 
@@ -4004,7 +4000,7 @@ body.systems-page {
 }
 .sys-line-chart-svg {
     width: 100%;
-    min-height: 260px;
+    min-height: 200px;
     overflow: visible;
     display: block;
 }
@@ -4619,7 +4615,11 @@ body.systems-page {
     /* Chart: even tighter — 6 bars still visible */
     .sys-chart { gap: .25rem; height: 160px; }
     .sys-bar { max-width: 12px; }
-    #annualChart { aspect-ratio: 900 / 260; }
+    #annualChart { aspect-ratio: 960 / 260; }
+    /* SVG line chart: let it be shorter on small phones */
+    .sys-line-chart-svg { min-height: 140px; }
+    /* Y-axis labels: smaller on narrow screens */
+    .chart-yaxis-label { font-size: 0.42em; }
 }
 
 /* ── SYSTEMS: seasonal wheel ────────────────────────────────── */
@@ -5145,4 +5145,665 @@ body.systems-page {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION 01 — SIX YEARS OF DATA — LAYOUT & MOBILE FIXES
+   Fixes: y-axis overflow, toggle layout, chart sizing, mobile
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Chart wrap: clip SVG safely, never overflow horizontally ── */
+.sys-line-chart-wrap {
+    overflow: hidden;
+}
+
+/* ── Controls: always column on all screens (label above toggles) ── */
+.sys-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .55rem;
+}
+
+/* ── Toggles row: wrap naturally on small screens ── */
+.sys-toggles {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .4rem;
+}
+
+/* ── Toggle desc: show on wide screens, hide on narrow ── */
+@media (min-width: 701px) {
+    .toggle-desc {
+        display: inline;
+        font-size: .78rem !important;
+        color: rgba(255,255,255,.45) !important;
+    }
+}
+
+/* ── Mobile: toggles stack, full tap width ── */
+@media (max-width: 700px) {
+    .sys-toggles {
+        flex-direction: column;
+        width: 100%;
+    }
+    .sys-toggle {
+        width: 100%;
+        justify-content: flex-start;
+        min-height: 44px;
+        padding: .5rem .9rem;
+    }
+    .toggle-desc { display: none; }
+
+    /* Chart SVG: constrain height so it doesn't loom */
+    .sys-line-chart-svg {
+        min-height: 160px;
+    }
+
+    /* Y-axis labels scale down a touch */
+    .chart-yaxis-label { font-size: 0.45em; }
+
+    /* Callout: readable on small screens */
+    .sys-callout { padding: 1rem 1.2rem; gap: .8rem; }
+    .sys-callout p { font-size: .9rem !important; }
+
+    /* Legend: hide unit, wrap source text */
+    .sys-legend-unit { display: none; }
+    .sys-legend-item { flex-wrap: wrap; }
+    .sys-legend-src  { font-size: .7rem; }
+}
+
+/* ── Extra small (≤400px): even tighter chart ── */
+@media (max-width: 400px) {
+    .sys-line-chart-svg { min-height: 120px; }
+    .chart-yaxis-label  { font-size: 0.38em; }
+    .chart-year-label   { font-size: 0.78em; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CALLOUT REDESIGN — constrained ~60% width, visually distinct
+   Targets: .sys-callout, .sys-rice-note, .sys-connection-note
+═══════════════════════════════════════════════════════════════ */
+
+/* ── SHARED: constrain all callouts to ~60%, flush left ── */
+.sys-callout,
+.sys-rice-note,
+.sys-connection-note {
+    max-width: 60%;
+    margin-right: auto;
+}
+
+/* ═══ 1. sys-callout (section 01 chart annotation) ═══ */
+
+/* Nuke old border/bg — replaced with accent bar layout */
+.sys-callout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    animation: none;
+    margin-top: 2.6rem;
+    position: relative;
+}
+
+/* Eyebrow: repurpose .sys-callout-mark as a label above the box */
+.sys-callout-mark {
+    display: block;
+    font-family: "DM Mono", monospace;
+    font-size: .62rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--olivegreen);
+    opacity: .75;
+    margin-bottom: .5rem;
+    /* Override old styles */
+    font-size: .62rem !important;
+    opacity: .75 !important;
+}
+
+/* The text block: left accent bar via border-left + inner padding */
+.sys-callout > p {
+    padding: 1.3rem 1.6rem;
+    border-left: 3px solid;
+    border-image: linear-gradient(180deg, var(--olivegreen), var(--lightblue)) 1;
+    background: rgba(255,255,255,.025);
+    border-top: 1px solid rgba(255,255,255,.06);
+    border-right: 1px solid rgba(255,255,255,.06);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    /* override old DM Mono */
+    font-family: "Inter", sans-serif !important;
+    font-size: .95rem !important;
+    line-height: 1.78 !important;
+    color: #c8ccd6 !important;
+    margin: 0;
+}
+
+/* ═══ 2. sys-rice-note (section 04 post-harvest explainer) ═══ */
+
+.sys-rice-note {
+    margin-bottom: 2rem;
+    margin-top: 2.4rem;
+}
+
+.sys-rice-note-inner {
+    position: relative;
+    padding: 1.6rem 1.8rem 1.6rem 4.4rem;
+    border: 1px solid rgba(189,165,67,.22);
+    background: rgba(189,165,67,.04);
+    overflow: hidden;
+}
+
+/* Decorative grain/rice glyph anchored to left */
+.sys-rice-note-inner::before {
+    content: '⬡';
+    position: absolute;
+    left: 1.3rem;
+    top: 1.5rem;
+    font-size: 1.4rem;
+    opacity: .2;
+    color: var(--olivegreen);
+    line-height: 1;
+}
+
+/* Diagonal stripe texture in background */
+.sys-rice-note-inner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        -50deg,
+        transparent,
+        transparent 20px,
+        rgba(189,165,67,.03) 20px,
+        rgba(189,165,67,.03) 21px
+    );
+    pointer-events: none;
+}
+
+/* Label above note */
+.sys-rice-note::before {
+    content: 'how it works';
+    display: block;
+    font-family: "DM Mono", monospace;
+    font-size: .62rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--olivegreen);
+    opacity: .7;
+    margin-bottom: .5rem;
+}
+
+.sys-rice-note-inner p {
+    position: relative; /* above ::after texture */
+    z-index: 1;
+}
+
+/* ═══ 3. sys-connection-note (section 05 key takeaway) ═══ */
+
+.sys-connection-note {
+    padding: 1.8rem 2rem;
+    border: none;
+    background: none;
+    margin-top: 2.4rem;
+    position: relative;
+}
+
+/* Top rule: pink gradient */
+.sys-connection-note::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--pink), rgba(114,146,203,.3) 65%, transparent);
+}
+
+/* Eyebrow label */
+.sys-connection-note::after {
+    content: 'key takeaway';
+    position: absolute;
+    top: -.55rem;
+    left: 0;
+    font-family: "DM Mono", monospace;
+    font-size: .6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    background: var(--blackblue); /* match page bg to "interrupt" the rule */
+    padding: 0 .6rem 0 0;
+    opacity: .85;
+    line-height: 1;
+}
+
+/* ── Responsive relaxation ── */
+@media (max-width: 1100px) {
+    .sys-callout,
+    .sys-rice-note,
+    .sys-connection-note { max-width: 75%; }
+}
+
+@media (max-width: 700px) {
+    .sys-callout,
+    .sys-rice-note,
+    .sys-connection-note { max-width: 100%; }
+    .sys-callout > p { padding: 1rem 1.2rem; }
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION 05 — HOW IT CONNECTS — EDITORIAL FLOW LAYOUT
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Flow container ── */
+.conn-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 3.5rem;
+}
+
+/* ── Each step: full-width horizontal band ── */
+.conn-step {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 0 2.4rem;
+    align-items: stretch;
+    padding: 2.2rem 0;
+    border-top: 1px solid rgba(255,255,255,.06);
+    position: relative;
+}
+.conn-step:last-child {
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* ── Left column: big index number + vertical accent bar ── */
+.conn-step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .7rem;
+    padding-top: .2rem;
+}
+.conn-step-index {
+    font-family: "DM Mono", monospace;
+    font-size: 2.4rem;
+    line-height: 1;
+    letter-spacing: -.04em;
+    opacity: .18;
+    color: white;
+    flex-shrink: 0;
+}
+.conn-step-bar {
+    flex: 1;
+    width: 2px;
+    min-height: 20px;
+    border-radius: 2px;
+}
+.conn-step--flood .conn-step-index { opacity: .9; color: var(--lightblue); }
+.conn-step--flood .conn-step-bar   { background: linear-gradient(180deg, var(--lightblue), transparent); }
+.conn-step--birds .conn-step-index { opacity: .9; color: var(--pink); }
+.conn-step--birds .conn-step-bar   { background: linear-gradient(180deg, var(--pink), transparent); }
+.conn-step--rice  .conn-step-index { opacity: .9; color: var(--olivegreen); }
+.conn-step--rice  .conn-step-bar   { background: linear-gradient(180deg, var(--olivegreen), transparent); }
+
+/* ── Body: tag + title + text ── */
+.conn-step-body {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: .1rem 0;
+}
+.conn-step-tag {
+    font-family: "DM Mono", monospace;
+    font-size: .62rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    opacity: .7;
+}
+.conn-step--flood .conn-step-tag { color: var(--lightblue); }
+.conn-step--birds .conn-step-tag { color: var(--pink); }
+.conn-step--rice  .conn-step-tag { color: var(--olivegreen); }
+
+.conn-step-title {
+    font-family: "Inter", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: -.02em;
+    color: white;
+    line-height: 1.25;
+    text-transform: lowercase;
+}
+.conn-step-text {
+    font-family: "Inter", sans-serif;
+    font-size: .9rem;
+    font-weight: 300;
+    line-height: 1.72;
+    color: #9fa4b2;
+    max-width: 520px;
+}
+
+/* ── Right column: stat callout ── */
+.conn-step-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: .2rem;
+    min-width: 130px;
+    padding-left: 1.6rem;
+    border-left: 1px solid rgba(255,255,255,.06);
+    text-align: right;
+}
+.conn-stat-num {
+    font-family: "DM Mono", monospace;
+    font-size: 2rem;
+    letter-spacing: -.03em;
+    line-height: 1;
+    color: white;
+}
+.conn-step--flood .conn-stat-num { color: var(--lightblue); }
+.conn-step--birds .conn-stat-num { color: var(--pink); }
+.conn-step--rice  .conn-stat-num { color: var(--olivegreen); }
+
+.conn-stat-unit {
+    font-family: "DM Mono", monospace;
+    font-size: .7rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #808799;
+}
+.conn-stat-year {
+    font-family: "DM Mono", monospace;
+    font-size: .62rem;
+    letter-spacing: .1em;
+    color: rgba(255,255,255,.22);
+    text-transform: uppercase;
+}
+
+/* ── Connector between steps ── */
+.conn-step-connector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .6rem 0 .6rem 80px;
+}
+.conn-step-connector-line {
+    width: 24px;
+    height: 1px;
+    background: rgba(255,255,255,.15);
+    flex-shrink: 0;
+}
+.conn-step-connector-label {
+    font-family: "DM Mono", monospace;
+    font-size: .6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.2);
+}
+
+/* ── Takeaway: two-column split ── */
+.conn-takeaway {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 3rem;
+    align-items: center;
+    padding: 2.4rem 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+    margin-top: .5rem;
+}
+.conn-takeaway-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .3rem;
+    padding-right: 3rem;
+    border-right: 1px solid rgba(255,255,255,.08);
+    flex-shrink: 0;
+}
+.conn-takeaway-num {
+    font-family: "Inter", sans-serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: -.05em;
+    line-height: 1;
+    color: var(--pink);
+}
+.conn-takeaway-pct {
+    font-size: 60%;
+    vertical-align: super;
+    letter-spacing: 0;
+}
+.conn-takeaway-label {
+    font-family: "DM Mono", monospace;
+    font-size: .65rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.35);
+    max-width: 120px;
+    line-height: 1.5;
+}
+.conn-takeaway-text p {
+    font-family: "Inter", sans-serif;
+    font-size: .95rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #9fa4b2;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .conn-step {
+        grid-template-columns: 56px 1fr;
+        grid-template-rows: auto auto;
+    }
+    .conn-step-stat {
+        grid-column: 2;
+        grid-row: 2;
+        flex-direction: row;
+        align-items: baseline;
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,.06);
+        padding: .8rem 0 0;
+        margin-top: .8rem;
+        text-align: left;
+        gap: .6rem;
+    }
+    .conn-stat-num { font-size: 1.3rem; }
+    .conn-step-index { font-size: 1.8rem; }
+    .conn-step-connector { padding-left: 56px; }
+    .conn-takeaway { grid-template-columns: 1fr; gap: 1.5rem; }
+    .conn-takeaway-stat { border-right: none; padding-right: 0; flex-direction: row; align-items: baseline; gap: 1rem; }
+    .conn-takeaway-label { max-width: none; }
+}
+
+@media (max-width: 600px) {
+    .conn-step {
+        grid-template-columns: 40px 1fr;
+        padding: 1.6rem 0;
+    }
+    .conn-step-index { font-size: 1.4rem; }
+    .conn-step-title { font-size: 1rem; }
+    .conn-step-connector { padding-left: 40px; }
+}
+
+
+
+
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   BIRD CARDS — plain-language stat label
+═══════════════════════════════════════════════════════════════ */
+.bird-card-stat-label {
+    font-size: .72rem !important;
+    letter-spacing: .04em !important;
+    text-transform: none !important;
+    color: #808799 !important;
+    line-height: 1.4 !important;
+}
+.bird-stat-explain {
+    color: #606472;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION 02 WHEEL — month-grid default state
+═══════════════════════════════════════════════════════════════ */
+
+/* Hide the text prompt once grid is visible */
+.wheel-month-grid ~ .wheel-prompt,
+.wheel-month-grid + .wheel-prompt { display: none; }
+
+/* Grid of 12 month chips */
+.wheel-month-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin-bottom: .5rem;
+}
+
+/* Each chip */
+.wheel-month-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 4px 7px;
+    border: 1px solid rgba(255,255,255,.06);
+    background: rgba(255,255,255,.02);
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+    border-radius: 2px;
+}
+.wheel-month-chip:hover {
+    background: rgba(255,255,255,.06);
+    border-color: rgba(255,255,255,.14);
+}
+
+/* Three bars inside each chip (flood / birds / rice) */
+.wheel-chip-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 24px;
+}
+.wheel-chip-bar {
+    display: block;
+    width: 5px;
+    border-radius: 1px 1px 0 0;
+    opacity: .75;
+    flex-shrink: 0;
+}
+
+/* Month label under bars */
+.wheel-chip-label {
+    font-family: "DM Mono", monospace;
+    font-size: .52rem;
+    letter-spacing: .12em;
+    color: rgba(255,255,255,.3);
+    line-height: 1;
+}
+
+/* Legend strip below the grid */
+.wheel-month-grid::after {
+    content: '■ flood  ■ birds  ■ rice';
+    display: block;
+    grid-column: 1 / -1;
+    font-family: "DM Mono", monospace;
+    font-size: .55rem;
+    letter-spacing: .14em;
+    color: rgba(255,255,255,.18);
+    text-align: center;
+    padding-top: 2px;
+}
+
+/* Keep the prompt text small and above the grid */
+.wheel-prompt {
+    font-size: .72rem !important;
+    letter-spacing: .1em !important;
+    margin-bottom: .6rem !important;
+    opacity: .5;
+}
+
+@media (max-width: 700px) {
+    .wheel-month-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 4px;
+    }
+    .wheel-chip-label { font-size: .48rem; }
+}
+
+
+/* ── Bird stat label: plain-language override ── */
+.bird-card-stat-label {
+    font-family: "Inter", sans-serif !important;
+    font-size: .72rem !important;
+    letter-spacing: .01em !important;
+    text-transform: none !important;
+    color: #808799 !important;
+    line-height: 1.35 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WHEEL — idle auto-cycle animation state
+═══════════════════════════════════════════════════════════════ */
+
+/* Month name fades in each cycle */
+.wheel-detail-month--idle {
+    animation: wheel-month-fadein .35s ease forwards;
+    opacity: .7;
+}
+@keyframes wheel-month-fadein {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: .7; transform: translateY(0); }
+}
+
+/* Rows dimmer in idle so they read as "preview not selected" */
+.wheel-detail-row--idle {
+    opacity: .6;
+    animation: wheel-row-fadein .4s ease forwards;
+}
+.wheel-detail-row--idle:nth-child(2) { animation-delay: .05s; }
+.wheel-detail-row--idle:nth-child(3) { animation-delay: .1s; }
+@keyframes wheel-row-fadein {
+    from { opacity: 0; transform: translateX(-6px); }
+    to   { opacity: .6; transform: translateX(0); }
+}
+
+/* "hover any month to explore" cue — floats gently above the rows */
+.wheel-idle-cue {
+    font-family: "DM Mono", monospace;
+    font-size: .62rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.28);
+    margin-bottom: 1.2rem;
+    animation: wheel-cue-pulse 2.4s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+.wheel-idle-cue::before {
+    content: '↖';
+    font-size: .8rem;
+    opacity: .5;
+    animation: wheel-cue-nudge 2.4s ease-in-out infinite;
+    display: inline-block;
+}
+@keyframes wheel-cue-pulse {
+    0%, 100% { opacity: .28; }
+    50%       { opacity: .55; }
+}
+@keyframes wheel-cue-nudge {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(-3px, -3px); }
+}
+
+/* Month slices: fast on hover, slow only during idle cycling */
+.sys-wheel--idle .month-slice {
+    transition: opacity .5s ease !important;
 }
