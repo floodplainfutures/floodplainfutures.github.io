@@ -2441,10 +2441,14 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 body.observations-page {
     overflow: hidden;
     height: 100%;
+    /* On iOS Safari, height: 100% alone can leave a scroll hole.
+       Using 100dvh ensures the body truly fills the dynamic viewport
+       (accounts for browser chrome showing/hiding). */
+    height: 100dvh;
     background: var(--blackblue);
     color: var(--ink);
 }
-html:has(body.observations-page) { overflow: hidden; height: 100%; }
+html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dvh; }
 
 .obs-header {
     position: fixed;
@@ -2509,6 +2513,9 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
     grid-template-columns: 220px 1fr;
     grid-template-rows: 1fr;   /* ensures the single row fills all available height */
     overflow: hidden;
+    /* Explicit height so iOS Safari knows the container is bounded */
+    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
 }
 
 /* INDEX SIDEBAR */
@@ -2573,7 +2580,7 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; }
 .im-v { font-size: 0.875rem; color: var(--ink-dim); text-align: right; font-family: "DM Mono", monospace; }
 
 /* SCROLL AREA */
-.obs-scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 2.5rem 3vw 4rem; scroll-behavior: smooth; }
+.obs-scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 2.5rem 3vw 4rem; scroll-behavior: smooth; height: 100%; min-height: 0; box-sizing: border-box; }
 
 /* ENTRY */
 .entry { max-width: 680px; margin: 0 auto; }
