@@ -459,12 +459,15 @@
             }, { passive: true });
         }
 
+        // On iOS Safari, IntersectionObserver with a custom root (a scrolling div)
+        // is unreliable — the composited native scroll layer can prevent observations
+        // from firing, leaving all entries permanently at opacity:0 and making the
+        // page appear empty/unscrollable. Use root:null (viewport) instead, and
+        // keep entries visible by default so content is never gated on the observer.
         var fe;
         for (fe = 0; fe < entries.length; fe++) {
-            entries[fe].style.opacity         = '0';
-            entries[fe].style.transform       = 'translateY(16px)';
-            entries[fe].style.transition      = 'opacity .5s ease, transform .5s ease';
-            entries[fe].style.transitionDelay = (fe * 0.08) + 's';
+            entries[fe].style.opacity    = '1';
+            entries[fe].style.transform  = 'none';
         }
 
         if ('IntersectionObserver' in window) {
@@ -472,20 +475,13 @@
                 var oi;
                 for (oi = 0; oi < obs.length; oi++) {
                     if (obs[oi].isIntersecting) {
-                        obs[oi].target.style.opacity   = '1';
-                        obs[oi].target.style.transform = 'translateY(0)';
+                        obs[oi].target.classList.add('entry--visible');
                         entryObserver.unobserve(obs[oi].target);
                     }
                 }
-            }, { root: obsScroll, threshold: 0.08 });
+            }, { root: null, threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
             var eo;
             for (eo = 0; eo < entries.length; eo++) { entryObserver.observe(entries[eo]); }
-        } else {
-            var ef;
-            for (ef = 0; ef < entries.length; ef++) {
-                entries[ef].style.opacity   = '1';
-                entries[ef].style.transform = 'none';
-            }
         }
 
         // — OBS AUDIO PLAYER (same pattern as systems bird audio) —
