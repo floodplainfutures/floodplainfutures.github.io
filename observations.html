@@ -10,7 +10,18 @@
     <style>
         /* MOBILE SCROLL FIX — loads after styles.css, wins all specificity battles */
         @media (max-width: 600px) {
-            html, body { overflow: hidden !important; height: 100% !important; }
+            html, body {
+                overflow: hidden !important;
+                height: 100% !important;
+            }
+            /* Neutralize obs-main so it doesn't clip the scroll container */
+            body.observations-page .obs-main {
+                display: block !important;
+                position: static !important;
+                overflow: visible !important;
+                height: auto !important;
+            }
+            /* Make obsScroll itself the fixed full-screen scroll container */
             body.observations-page #obsScroll {
                 position: fixed !important;
                 top: 56px !important;
@@ -18,7 +29,8 @@
                 right: 0 !important;
                 bottom: 0 !important;
                 width: 100% !important;
-                height: auto !important;
+                height: calc(100vh - 56px) !important;
+                height: calc(100dvh - 56px) !important;
                 overflow-y: scroll !important;
                 -webkit-overflow-scrolling: touch !important;
                 padding: 1.5rem 5vw 5rem !important;
