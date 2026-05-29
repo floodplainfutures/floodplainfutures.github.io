@@ -432,7 +432,7 @@
         function closeMobileDrawer() {
             if (mobOverlay) { mobOverlay.classList.remove('visible'); }
             if (mobDrawer)  { mobDrawer.classList.remove('open'); }
-            document.body.style.overflow = '';
+            document.body.style.overflow = 'auto';
         }
 
         // Wire the FAB button (mobile floating "≡ entries" button)

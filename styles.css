@@ -2441,9 +2441,6 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 body.observations-page {
     overflow: auto;
     height: 100%;
-    /* On iOS Safari, height: 100% alone can leave a scroll hole.
-       Using 100dvh ensures the body truly fills the dynamic viewport
-       (accounts for browser chrome showing/hiding). */
     height: 100dvh;
     background: var(--blackblue);
     color: var(--ink);
@@ -2895,15 +2892,11 @@ html:has(body.observations-page) { overflow: auto; height: 100%; height: 100dvh;
         padding: 1.5rem 5vw 5rem; /* extra bottom padding for FAB */
         height: 100%;
         min-height: 0;
-        overflow-y: scroll !important;
+        overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
         box-sizing: border-box;
         touch-action: pan-y;
-        overscroll-behavior-y: contain;
-        /* iOS Safari: position relative gives the scroll container a real
-           stacking context so touch events are correctly routed to it */
-        position: relative;
-        z-index: 1;
+        overscroll-behavior: contain;
     }
     .entry-num { font-size: 2rem; }
     .entry-title { font-size: 1.5rem; }
