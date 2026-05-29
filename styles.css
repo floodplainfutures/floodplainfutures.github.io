@@ -2439,7 +2439,7 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 ───────────────────────────────────────────────────────────── */
 
 body.observations-page {
-    overflow: hidden;
+    overflow: auto;
     height: 100%;
     /* On iOS Safari, height: 100% alone can leave a scroll hole.
        Using 100dvh ensures the body truly fills the dynamic viewport
@@ -2448,7 +2448,7 @@ body.observations-page {
     background: var(--blackblue);
     color: var(--ink);
 }
-html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dvh; }
+html:has(body.observations-page) { overflow: auto; height: 100%; height: 100dvh; }
 
 .obs-header {
     position: fixed;
@@ -2895,21 +2895,15 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dv
         padding: 1.5rem 5vw 5rem; /* extra bottom padding for FAB */
         height: 100%;
         min-height: 0;
-        overflow-y: scroll;
+        overflow-y: scroll !important;
         -webkit-overflow-scrolling: touch;
         box-sizing: border-box;
         touch-action: pan-y;
-        overscroll-behavior: contain;
-        /* iOS Safari: without position relative, scroll container can be
-           ignored when html/body are overflow:hidden */
+        overscroll-behavior-y: contain;
+        /* iOS Safari: position relative gives the scroll container a real
+           stacking context so touch events are correctly routed to it */
         position: relative;
         z-index: 1;
-    }
-    /* iOS Safari blocks scroll on inner elements when both html and body
-       are overflow:hidden. Override html here so touch scroll events reach
-       .obs-scroll. body stays hidden (it has no scroll content of its own). */
-    html:has(body.observations-page) {
-        overflow: visible;
     }
     .entry-num { font-size: 2rem; }
     .entry-title { font-size: 1.5rem; }
