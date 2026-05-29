@@ -2872,38 +2872,36 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dv
     .toggle-desc { display: none; }
     .sys-legend-unit { display: none; }
 
-    /* Observations */
-    .obs-main { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+    /* Observations — mobile scroll fix */
+    .obs-main { display: block; }
     .obs-index { display: none; }
     .oh-index-btn { display: block; }
     .mob-index-overlay, .mob-index-drawer { display: block; }
     .obs-entries-fab { display: flex; align-items: center; justify-content: center; }
-    /* On mobile: make obs-main a position:fixed container with explicit pixel
-       bounds, then make obs-scroll fill it with position:absolute + inset:0.
-       This is the only layout iOS Safari reliably allows overflow-y:scroll on —
-       height:100% inheritance inside fixed containers is broken on iOS. */
+    /* position:fixed + absolute child is the ONLY layout iOS Safari
+       reliably scrolls. height:100% on a grid child inside fixed = 0 on iOS. */
     .obs-main {
-        position: fixed;
-        top: 56px;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: auto;
-        overflow: hidden;
-        display: block;
+        position: fixed !important;
+        top: 56px !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: hidden !important;
     }
     .obs-scroll {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: auto;
-        min-height: 0;
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
-        padding: 1.5rem 5vw 5rem;
-        box-sizing: border-box;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow-y: scroll !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding: 1.5rem 5vw 5rem !important;
+        box-sizing: border-box !important;
     }
     .entry-num { font-size: 2rem; }
     .entry-title { font-size: 1.5rem; }

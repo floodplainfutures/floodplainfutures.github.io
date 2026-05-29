@@ -427,12 +427,12 @@
         function openMobileDrawer() {
             if (mobOverlay) { mobOverlay.classList.add('visible'); }
             if (mobDrawer)  { mobDrawer.classList.add('open'); }
-            /* Do NOT set body overflow here — it breaks iOS scroll on obs-scroll */
+            /* Never set body overflow — it breaks iOS scroll on obs-scroll */
         }
         function closeMobileDrawer() {
             if (mobOverlay) { mobOverlay.classList.remove('visible'); }
             if (mobDrawer)  { mobDrawer.classList.remove('open'); }
-            /* Do NOT touch body overflow — obs-scroll handles its own scrolling */
+            /* Never set body overflow — it breaks iOS scroll on obs-scroll */
         }
 
         // Wire the FAB button (mobile floating "≡ entries" button)
