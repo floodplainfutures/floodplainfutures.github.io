@@ -2439,13 +2439,13 @@ html:has(body.systems-page) { overflow-y: auto; height: auto; }
 ───────────────────────────────────────────────────────────── */
 
 body.observations-page {
-    overflow: auto;
+    overflow: hidden;
     height: 100%;
     height: 100dvh;
     background: var(--blackblue);
     color: var(--ink);
 }
-html:has(body.observations-page) { overflow: auto; height: 100%; height: 100dvh; }
+html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dvh; }
 
 .obs-header {
     position: fixed;
@@ -2878,25 +2878,32 @@ html:has(body.observations-page) { overflow: auto; height: 100%; height: 100dvh;
     .oh-index-btn { display: block; }
     .mob-index-overlay, .mob-index-drawer { display: block; }
     .obs-entries-fab { display: flex; align-items: center; justify-content: center; }
-    /* On mobile the grid collapses to 1 column; without an explicit height the
-       scroll pane has no constrained size, so overflow-y never kicks in and
-       IntersectionObserver (root: obsScroll) sees a 0-height root.
-       height: 100% + min-height: 0 forces it to fill the fixed grid cell.
-       touch-action: pan-y prevents iOS Safari from swallowing vertical scroll
-       events due to overflow:hidden on html/body. */
+    /* On mobile: make obs-main a position:fixed container with explicit pixel
+       bounds, then make obs-scroll fill it with position:absolute + inset:0.
+       This is the only layout iOS Safari reliably allows overflow-y:scroll on —
+       height:100% inheritance inside fixed containers is broken on iOS. */
     .obs-main {
-        height: calc(100vh - 56px);
-        height: calc(100dvh - 56px);
+        position: fixed;
+        top: 56px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: auto;
+        overflow: hidden;
+        display: block;
     }
     .obs-scroll {
-        padding: 1.5rem 5vw 5rem; /* extra bottom padding for FAB */
-        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: auto;
         min-height: 0;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
+        padding: 1.5rem 5vw 5rem;
         box-sizing: border-box;
-        touch-action: pan-y;
-        overscroll-behavior: contain;
     }
     .entry-num { font-size: 2rem; }
     .entry-title { font-size: 1.5rem; }
