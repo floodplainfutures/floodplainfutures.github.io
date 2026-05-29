@@ -8,35 +8,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <style>
-        /* MOBILE SCROLL FIX — loads after styles.css, wins all specificity battles */
+        /* MOBILE SCROLL FIX */
         @media (max-width: 600px) {
             html, body {
                 overflow: hidden !important;
                 height: 100% !important;
             }
-            /* Neutralize obs-main so it doesn't clip the scroll container */
+            /* Flatten obs-main so it cannot clip or constrain anything */
             body.observations-page .obs-main {
+                all: unset !important;
                 display: block !important;
-                position: static !important;
-                overflow: visible !important;
-                height: auto !important;
             }
-            /* Make obsScroll itself the fixed full-screen scroll container */
+            /* obsScroll IS the viewport on mobile */
             body.observations-page #obsScroll {
                 position: fixed !important;
                 top: 56px !important;
                 left: 0 !important;
                 right: 0 !important;
                 bottom: 0 !important;
-                width: 100% !important;
+                /* explicit pixel height — iOS Safari ignores top+bottom on fixed elements */
                 height: calc(100vh - 56px) !important;
                 height: calc(100dvh - 56px) !important;
+                width: 100% !important;
+                overflow: hidden !important;
                 overflow-y: scroll !important;
                 -webkit-overflow-scrolling: touch !important;
+                touch-action: pan-y !important;
                 padding: 1.5rem 5vw 5rem !important;
                 box-sizing: border-box !important;
-                touch-action: pan-y !important;
-                z-index: 1 !important;
+                z-index: 2 !important;
             }
         }
     </style>
