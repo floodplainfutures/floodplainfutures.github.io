@@ -272,13 +272,13 @@ function renderChart() {
     chart.removeAttribute('role');
     chart.removeAttribute('aria-label');
 
-    // Chart dimensions — tighter on mobile to prevent label overlap
+    // Chart dimensions — adjusted for mobile
     var isMobileChart = window.innerWidth <= 600;
-    var W = 900, H = isMobileChart ? 300 : 340;
-    var padL = isMobileChart ? 12 : 60;
-    var padR = isMobileChart ? 12 : 28;
+    var W = 900, H = 340;
+    var padL = isMobileChart ? 8  : 60;
+    var padR = isMobileChart ? 8  : 28;
     var padT = 36;
-    var padB = isMobileChart ? 52 : 48;
+    var padB = isMobileChart ? 40 : 48;
     var chartW = W - padL - padR;
     var chartH = H - padT - padB;
 
@@ -295,7 +295,7 @@ function renderChart() {
     svg.setAttribute('height', '100%');
     svg.style.display = 'block';
     svg.style.width   = '100%';
-    svg.style.minHeight = '260px';
+    svg.style.minHeight = isMobileChart ? '200px' : '260px';
     svg.classList.add('sys-line-chart-svg');
     svg.setAttribute('role', 'img');
     svg.setAttribute('aria-label', 'Line chart: flood days, bird checklists, and rice acres 2018–2025. The accessible table below contains the same data.');
@@ -429,23 +429,17 @@ function renderChart() {
     crosshair.classList.add('chart-crosshair');
     svg.appendChild(crosshair);
 
-    // Year labels — on mobile rotate and show all, on desktop normal
+    // Year labels — every other year on mobile to prevent overlap
     var labelsG = document.createElementNS(ns, 'g');
     YEARS.forEach(function(y, i) {
+        // On mobile only show even-indexed years (2018, 2020, 2022, 2024)
+        if (isMobileChart && i % 2 !== 0) { return; }
         var t = document.createElementNS(ns, 'text');
-        var lx = xPos(i);
-        var ly = padT + chartH + (isMobileChart ? 14 : 20);
-        t.setAttribute('x', lx);
-        t.setAttribute('y', ly);
+        t.setAttribute('x', xPos(i));
+        t.setAttribute('y', padT + chartH + 22);
         t.classList.add('chart-year-label');
         t.dataset.year = y;
         t.textContent = y;
-        if (isMobileChart) {
-            // Rotate labels 45° to prevent overlap
-            t.setAttribute('transform', 'rotate(-45,' + lx + ',' + ly + ')');
-            t.setAttribute('text-anchor', 'end');
-            t.style.fontSize = '0.72em';
-        }
         labelsG.appendChild(t);
     });
     svg.appendChild(labelsG);
@@ -1260,13 +1254,6 @@ renderWheel();
 renderBirdGrid();
 renderRiceTable();
 
-// Redraw chart on resize so mobile/desktop label layout stays correct
-var _chartResizeTimer;
-window.addEventListener('resize', function() {
-    clearTimeout(_chartResizeTimer);
-    _chartResizeTimer = setTimeout(renderChart, 150);
-});
-
 
 
 // ════════════════════════════════════════════════════════════════
@@ -1337,3 +1324,10 @@ window.addEventListener('resize', function() {
 })();
 
 })();
+
+// Redraw chart on resize/orientation change
+var _chartResizeTimer;
+window.addEventListener('resize', function() {
+    clearTimeout(_chartResizeTimer);
+    _chartResizeTimer = setTimeout(renderChart, 150);
+});
