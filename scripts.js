@@ -379,16 +379,17 @@
         var mobOverlay = document.getElementById('mobOverlay');
         var mobDrawer  = document.getElementById('mobDrawer');
 
-        function openMobileDrawer() {
+        // Define drawer functions FIRST — used by index links below
+        var openMobileDrawer = function () {
             if (mobOverlay) { mobOverlay.classList.add('visible'); }
             if (mobDrawer)  { mobDrawer.classList.add('open'); }
-        }
-        function closeMobileDrawer() {
+        };
+        var closeMobileDrawer = function () {
             if (mobOverlay) { mobOverlay.classList.remove('visible'); }
             if (mobDrawer)  { mobDrawer.classList.remove('open'); }
-        }
+        };
 
-        // Wire FAB and overlay BEFORE any early-return guards
+        // Wire FAB and drawer BEFORE any early-return guards
         var entriesFab = document.getElementById('obsEntriesFab');
         if (entriesFab) { entriesFab.addEventListener('click', openMobileDrawer); }
         if (mobOverlay) { mobOverlay.addEventListener('click', closeMobileDrawer); }
@@ -423,12 +424,11 @@
                 var target = document.getElementById(targetId);
                 if (!target) { return; }
                 closeMobileDrawer();
-                // On mobile, body scrolls naturally. On desktop, obsScroll is the container.
+                // On mobile, body scrolls. On desktop, obsScroll is the container.
                 if (window.innerWidth <= 600) {
-                    var headerH = 56;
                     var rect = target.getBoundingClientRect();
                     var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                    window.scrollTo({ top: rect.top + scrollTop - headerH - 8, behavior: 'smooth' });
+                    window.scrollTo({ top: rect.top + scrollTop - 64, behavior: 'smooth' });
                 } else {
                     var offset = target.offsetTop - obsScroll.offsetTop;
                     obsScroll.scrollTo({ top: offset, behavior: 'smooth' });
@@ -436,7 +436,7 @@
             });
         }
 
-        function getActiveEntry() {
+        var getActiveEntry = function () {
             var active    = entries[0];
             var scrollTop = obsScroll.getBoundingClientRect().top;
             var oe;
@@ -444,9 +444,9 @@
                 if (entries[oe].getBoundingClientRect().top - scrollTop < 120) { active = entries[oe]; }
             }
             return active;
-        }
+        };
 
-        function updateIndex() {
+        var updateIndex = function () {
             var active   = getActiveEntry();
             if (!active) { return; }
             var activeId = active.id;
@@ -456,10 +456,10 @@
                 var linkTarget = link.dataset.target || (link.getAttribute('href') || '').replace('#', '');
                 link.classList.toggle('active', linkTarget === activeId);
             }
-        }
+        };
 
         obsScroll.addEventListener('scroll', updateIndex, { passive: true });
-        window.addEventListener('scroll', updateIndex, { passive: true }); // mobile body-scroll
+        window.addEventListener('scroll', updateIndex, { passive: true });
         updateIndex();
 
         // On iOS Safari, IntersectionObserver with a custom root (a scrolling div)
@@ -535,22 +535,19 @@
         obsIndexEl.appendChild(progressBar);
 
         var obsScrollEl = document.getElementById('obsScroll');
-        function updateProgress() {
+        var updateProgress = function () {
             var s, h, pct;
             if (window.innerWidth <= 600) {
-                // mobile: body scrolls
                 s = window.pageYOffset || document.documentElement.scrollTop;
                 h = document.body.scrollHeight - window.innerHeight;
-            } else if (obsScrollEl) {
-                s = obsScrollEl.scrollTop;
-                h = obsScrollEl.scrollHeight - obsScrollEl.clientHeight;
+            } else {
+                s = obsScrollEl ? obsScrollEl.scrollTop : 0;
+                h = obsScrollEl ? obsScrollEl.scrollHeight - obsScrollEl.clientHeight : 0;
             }
             pct = h > 0 ? (s / h * 100) : 0;
             progressBar.style.height = pct + '%';
-        }
-        if (obsScrollEl) {
-            obsScrollEl.addEventListener('scroll', updateProgress, { passive: true });
-        }
+        };
+        if (obsScrollEl) { obsScrollEl.addEventListener('scroll', updateProgress, { passive: true }); }
         window.addEventListener('scroll', updateProgress, { passive: true });
     }
 

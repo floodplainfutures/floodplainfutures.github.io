@@ -280,7 +280,7 @@
                         The season had shifted noticeably since earlier visits. Things were drier, the water lower. The bird presence was different too, fewer waterfowl, more movement in the brush. The space felt less dense, more open. This time around also we heard some interesting frog noises! 
                     </p>
                     <div class="obs-audio-wrap">
-                        <button class="obs-audio-btn" id="obs4-btn" aria-label="Play audio recording">
+                        <button class="obs-audio-btn" id="obs4-btn" data-src="media/audio/observation4.mp3" aria-label="Play audio recording">
                             <span class="bird-audio-icon">
                                 <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M3 2l9 5-9 5V2z"/></svg>
                                 <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="2" width="4" height="10"/><rect x="8" y="2" width="4" height="10"/></svg>
@@ -298,24 +298,7 @@
                             <span class="bird-audio-credit">Yolo Bypass Wildlife Area · Apr 29, 2026</span>
                         </div>
                     </div>
-                    <script>
-                    (function() {
-                        var _btn = document.getElementById('obs4-btn');
-                        var _audio = null;
-                        _btn.onclick = function() {
-                            if (_audio && !_audio.paused) {
-                                _audio.pause();
-                                _audio.currentTime = 0;
-                                _btn.classList.remove('playing');
-                                return;
-                            }
-                            _audio = new Audio('media/audio/observation4.mp3');
-                            _audio.play();
-                            _btn.classList.add('playing');
-                            _audio.onended = function() { _btn.classList.remove('playing'); };
-                        };
-                    })();
-                    </script>
+
 
                     <div class="observation-photos observation-photos--polaroid">
                         <figure>
