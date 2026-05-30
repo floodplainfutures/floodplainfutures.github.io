@@ -2880,9 +2880,15 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dv
     .obs-entries-fab { display: flex; align-items: center; justify-content: center; }
     /* position:fixed + absolute child is the ONLY layout iOS Safari
        reliably scrolls. height:100% on a grid child inside fixed = 0 on iOS. */
+<<<<<<< HEAD
     /* ── OBSERVATIONS: unlock body scroll on mobile ──────────────
        html:has(body.observations-page) sets overflow:hidden globally.
        Override it here so iOS Safari can scroll the page naturally.
+=======
+    /* ── OBSERVATIONS: body-scroll on mobile ──────────────────────
+       iOS Safari cannot scroll a fixed div when html/body are overflow:hidden.
+       Unlock html+body and let the page scroll naturally instead.
+>>>>>>> parent of 4e107f7 (Update styles.css)
     ─────────────────────────────────────────────────────────── */
     html:has(body.observations-page),
     body.observations-page {
@@ -2891,7 +2897,10 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dv
         height: auto !important;
         min-height: 100% !important;
     }
+<<<<<<< HEAD
     /* obs-main: plain block, no clipping */
+=======
+>>>>>>> parent of 4e107f7 (Update styles.css)
     body.observations-page .obs-main {
         position: static !important;
         display: block !important;
@@ -2900,7 +2909,10 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dv
         width: 100% !important;
         padding-top: 56px !important;
     }
+<<<<<<< HEAD
     /* obs-scroll: plain block flow, body handles scrolling */
+=======
+>>>>>>> parent of 4e107f7 (Update styles.css)
     body.observations-page .obs-scroll {
         position: static !important;
         height: auto !important;
@@ -5041,14 +5053,14 @@ body.systems-page {
     .entry-img-slot img,
     .entry-img-wrap img { max-width: 100%; height: auto; }
 
-    /* Tag pills: wrap on mobile (body overflow-x:hidden clips horizontal scroll) */
+    /* Tag pills: scroll horizontally */
     .entry-tags {
-        flex-wrap: wrap;
-        overflow-x: visible;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         padding-bottom: .25rem;
-        gap: .4rem;
     }
-    .etag { flex-shrink: 0; }
+    .entry-tag { flex-shrink: 0; }
 }
 
 /* ── HOME: safe-area padding ─────────────────────────────────── */
@@ -6103,19 +6115,6 @@ body.systems-page {
         height: auto;
         display: block;
     }
-    /* Polaroid pair: stack vertically on mobile so both images show */
-    .observation-photos--polaroid {
-        flex-direction: column;
-        flex-wrap: wrap;
-        max-width: 100%;
-    }
-    .observation-photos--polaroid figure {
-        width: 100%;
-    }
-    .observation-photos--polaroid figure img {
-        max-height: none;
-        height: auto;
-    }
 }
 
 /* ── Global: ensure no child can create horizontal scroll ──── */
@@ -6124,5 +6123,11 @@ body.systems-page {
     .systems-page,
     .observations-page {
         overflow-x: hidden;
+    }
+}
+/* ── Systems: clip chart SVG overflow on mobile so it doesn't bleed into the legend ── */
+@media (max-width: 700px) {
+    .sys-chart-wrap {
+        overflow: hidden;
     }
 }
