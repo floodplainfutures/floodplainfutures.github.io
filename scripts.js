@@ -391,11 +391,16 @@
                 var target = document.getElementById(targetId);
                 if (!target) { return; }
                 closeMobileDrawer();
-                // scrollIntoView scrolls the document on mobile (where the page
-                // isn't body-scrolling). Scroll within the obsScroll container
-                // directly so it works regardless of layout mode.
-                var offset = target.offsetTop - obsScroll.offsetTop;
-                obsScroll.scrollTo({ top: offset, behavior: 'smooth' });
+                // On mobile, body scrolls naturally. On desktop, obsScroll is the container.
+                if (window.innerWidth <= 600) {
+                    var headerH = 56;
+                    var rect = target.getBoundingClientRect();
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    window.scrollTo({ top: rect.top + scrollTop - headerH - 8, behavior: 'smooth' });
+                } else {
+                    var offset = target.offsetTop - obsScroll.offsetTop;
+                    obsScroll.scrollTo({ top: offset, behavior: 'smooth' });
+                }
             });
         }
 
@@ -422,6 +427,7 @@
         }
 
         obsScroll.addEventListener('scroll', updateIndex, { passive: true });
+        window.addEventListener('scroll', updateIndex, { passive: true }); // mobile body-scroll
         updateIndex();
 
         function openMobileDrawer() {
@@ -532,14 +538,23 @@
         obsIndexEl.appendChild(progressBar);
 
         var obsScrollEl = document.getElementById('obsScroll');
-        if (obsScrollEl) {
-            obsScrollEl.addEventListener('scroll', function() {
-                var s = obsScrollEl.scrollTop;
-                var h = obsScrollEl.scrollHeight - obsScrollEl.clientHeight;
-                var pct = h > 0 ? (s / h * 100) : 0;
-                progressBar.style.height = pct + '%';
-            }, { passive: true });
+        function updateProgress() {
+            var s, h, pct;
+            if (window.innerWidth <= 600) {
+                // mobile: body scrolls
+                s = window.pageYOffset || document.documentElement.scrollTop;
+                h = document.body.scrollHeight - window.innerHeight;
+            } else if (obsScrollEl) {
+                s = obsScrollEl.scrollTop;
+                h = obsScrollEl.scrollHeight - obsScrollEl.clientHeight;
+            }
+            pct = h > 0 ? (s / h * 100) : 0;
+            progressBar.style.height = pct + '%';
         }
+        if (obsScrollEl) {
+            obsScrollEl.addEventListener('scroll', updateProgress, { passive: true });
+        }
+        window.addEventListener('scroll', updateProgress, { passive: true });
     }
 
     // 3. Tag filtering
