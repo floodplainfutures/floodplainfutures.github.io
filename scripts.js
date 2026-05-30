@@ -380,6 +380,7 @@
         var mobDrawer  = document.getElementById('mobDrawer');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Define drawer functions FIRST — used by index links below
         var openMobileDrawer = function () {
             if (mobOverlay) { mobOverlay.classList.add('visible'); }
@@ -413,6 +414,8 @@
             }, { passive: true });
         }
 
+=======
+>>>>>>> parent of 339cec4 (Update scripts.js)
 =======
 >>>>>>> parent of 339cec4 (Update scripts.js)
         if (!obsScroll) { return; }
