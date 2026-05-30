@@ -2880,31 +2880,32 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dv
     .obs-entries-fab { display: flex; align-items: center; justify-content: center; }
     /* position:fixed + absolute child is the ONLY layout iOS Safari
        reliably scrolls. height:100% on a grid child inside fixed = 0 on iOS. */
-    /* ── OBSERVATIONS: body-scroll on mobile ──────────────────────
-       iOS Safari cannot scroll a fixed div when html/body are overflow:hidden.
-       Unlock html+body and let the page scroll naturally instead.
-    ─────────────────────────────────────────────────────────── */
-    html:has(body.observations-page),
-    body.observations-page {
-        overflow: auto !important;
-        overflow-x: hidden !important;
-        height: auto !important;
-        min-height: 100% !important;
-    }
-    body.observations-page .obs-main {
-        position: static !important;
+    /* obs-main: invisible pass-through on mobile */
+    .obs-main {
         display: block !important;
-        overflow: visible !important;
-        height: auto !important;
-        width: 100% !important;
-        padding-top: 56px !important;
-    }
-    body.observations-page .obs-scroll {
         position: static !important;
-        height: auto !important;
         overflow: visible !important;
+        height: auto !important;
+        width: auto !important;
+    }
+    /* obsScroll IS the full-screen scroll container on mobile.
+       position:fixed + explicit height is the only thing iOS Safari reliably scrolls. */
+    .obs-scroll {
+        position: fixed !important;
+        top: 56px !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: calc(100vh - 56px) !important;
+        height: calc(100dvh - 56px) !important;
+        overflow-x: hidden !important;
+        overflow-y: scroll !important;
+        -webkit-overflow-scrolling: touch !important;
+        touch-action: pan-y !important;
         padding: 1.5rem 5vw 5rem !important;
         box-sizing: border-box !important;
+        z-index: 2 !important;
     }
     .entry-num { font-size: 2rem; }
     .entry-title { font-size: 1.5rem; }
@@ -5039,14 +5040,14 @@ body.systems-page {
     .entry-img-slot img,
     .entry-img-wrap img { max-width: 100%; height: auto; }
 
-    /* Tag pills: scroll horizontally */
+    /* Tag pills: wrap on mobile (body overflow-x:hidden clips horizontal scroll) */
     .entry-tags {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        flex-wrap: wrap;
+        overflow-x: visible;
         padding-bottom: .25rem;
+        gap: .4rem;
     }
-    .entry-tag { flex-shrink: 0; }
+    .etag { flex-shrink: 0; }
 }
 
 /* ── HOME: safe-area padding ─────────────────────────────────── */
@@ -6100,6 +6101,19 @@ body.systems-page {
         width: 100%;
         height: auto;
         display: block;
+    }
+    /* Polaroid pair: stack vertically on mobile so both images show */
+    .observation-photos--polaroid {
+        flex-direction: column;
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+    .observation-photos--polaroid figure {
+        width: 100%;
+    }
+    .observation-photos--polaroid figure img {
+        max-height: none;
+        height: auto;
     }
 }
 
