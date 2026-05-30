@@ -6139,11 +6139,9 @@ body.systems-page {
     }
 }
 
-/* ── Observations mobile drawer: ensure index-nav shows its links ── */
+/* ── Observations mobile drawer: index-nav collapses to 0 when flex:1 has no flex parent ── */
 .mob-index-drawer .index-nav {
-    display: block;
     flex: none;
     height: auto;
-    overflow-y: auto;
-    max-height: calc(70vh - 80px);
+    overflow-y: visible;
 }
