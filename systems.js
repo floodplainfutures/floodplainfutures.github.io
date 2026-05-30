@@ -272,9 +272,13 @@ function renderChart() {
     chart.removeAttribute('role');
     chart.removeAttribute('aria-label');
 
-    // Chart dimensions (SVG viewBox — scales responsively)
-    var W = 900, H = 340;
-    var padL = 60, padR = 28, padT = 36, padB = 48;
+    // Chart dimensions — tighter on mobile to prevent label overlap
+    var isMobileChart = window.innerWidth <= 600;
+    var W = 900, H = isMobileChart ? 300 : 340;
+    var padL = isMobileChart ? 12 : 60;
+    var padR = isMobileChart ? 12 : 28;
+    var padT = 36;
+    var padB = isMobileChart ? 52 : 48;
     var chartW = W - padL - padR;
     var chartH = H - padT - padB;
 
@@ -425,15 +429,23 @@ function renderChart() {
     crosshair.classList.add('chart-crosshair');
     svg.appendChild(crosshair);
 
-    // Year labels
+    // Year labels — on mobile rotate and show all, on desktop normal
     var labelsG = document.createElementNS(ns, 'g');
     YEARS.forEach(function(y, i) {
         var t = document.createElementNS(ns, 'text');
-        t.setAttribute('x', xPos(i));
-        t.setAttribute('y', padT + chartH + 20);
+        var lx = xPos(i);
+        var ly = padT + chartH + (isMobileChart ? 14 : 20);
+        t.setAttribute('x', lx);
+        t.setAttribute('y', ly);
         t.classList.add('chart-year-label');
         t.dataset.year = y;
         t.textContent = y;
+        if (isMobileChart) {
+            // Rotate labels 45° to prevent overlap
+            t.setAttribute('transform', 'rotate(-45,' + lx + ',' + ly + ')');
+            t.setAttribute('text-anchor', 'end');
+            t.style.fontSize = '0.72em';
+        }
         labelsG.appendChild(t);
     });
     svg.appendChild(labelsG);
@@ -1247,6 +1259,13 @@ renderLegend();
 renderWheel();
 renderBirdGrid();
 renderRiceTable();
+
+// Redraw chart on resize so mobile/desktop label layout stays correct
+var _chartResizeTimer;
+window.addEventListener('resize', function() {
+    clearTimeout(_chartResizeTimer);
+    _chartResizeTimer = setTimeout(renderChart, 150);
+});
 
 
 
