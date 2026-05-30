@@ -379,6 +379,38 @@
         var mobOverlay = document.getElementById('mobOverlay');
         var mobDrawer  = document.getElementById('mobDrawer');
 
+        function openMobileDrawer() {
+            if (mobOverlay) { mobOverlay.classList.add('visible'); }
+            if (mobDrawer)  { mobDrawer.classList.add('open'); }
+        }
+        function closeMobileDrawer() {
+            if (mobOverlay) { mobOverlay.classList.remove('visible'); }
+            if (mobDrawer)  { mobDrawer.classList.remove('open'); }
+        }
+
+        // Wire FAB and overlay BEFORE any early-return guards
+        var entriesFab = document.getElementById('obsEntriesFab');
+        if (entriesFab) { entriesFab.addEventListener('click', openMobileDrawer); }
+        if (mobOverlay) { mobOverlay.addEventListener('click', closeMobileDrawer); }
+
+        if (mobDrawer) {
+            var dragStart = 0;
+            mobDrawer.addEventListener('touchstart', function (e) {
+                dragStart = e.touches[0].clientY;
+                mobDrawer.style.transition = 'none';
+            }, { passive: true });
+            mobDrawer.addEventListener('touchmove', function (e) {
+                var dy = e.touches[0].clientY - dragStart;
+                if (dy > 0) { mobDrawer.style.transform = 'translateY(' + dy + 'px)'; }
+            }, { passive: true });
+            mobDrawer.addEventListener('touchend', function (e) {
+                mobDrawer.style.transition = '';
+                var dy = e.changedTouches[0].clientY - dragStart;
+                if (dy > 80) { closeMobileDrawer(); mobDrawer.style.transform = ''; }
+                else { mobDrawer.style.transform = ''; }
+            }, { passive: true });
+        }
+
         if (!obsScroll) { return; }
 
         // Include BOTH sidebar links AND mob-drawer links
@@ -429,41 +461,6 @@
         obsScroll.addEventListener('scroll', updateIndex, { passive: true });
         window.addEventListener('scroll', updateIndex, { passive: true }); // mobile body-scroll
         updateIndex();
-
-        function openMobileDrawer() {
-            if (mobOverlay) { mobOverlay.classList.add('visible'); }
-            if (mobDrawer)  { mobDrawer.classList.add('open'); }
-            /* Never set body overflow — it breaks iOS scroll on obs-scroll */
-        }
-        function closeMobileDrawer() {
-            if (mobOverlay) { mobOverlay.classList.remove('visible'); }
-            if (mobDrawer)  { mobDrawer.classList.remove('open'); }
-            /* Never set body overflow — it breaks iOS scroll on obs-scroll */
-        }
-
-        // Wire the FAB button (mobile floating "≡ entries" button)
-        var entriesFab = document.getElementById('obsEntriesFab');
-        if (entriesFab) { entriesFab.addEventListener('click', openMobileDrawer); }
-
-        if (mobOverlay) { mobOverlay.addEventListener('click', closeMobileDrawer); }
-
-        if (mobDrawer) {
-            var dragStart = 0;
-            mobDrawer.addEventListener('touchstart', function (e) {
-                dragStart = e.touches[0].clientY;
-                mobDrawer.style.transition = 'none';
-            }, { passive: true });
-            mobDrawer.addEventListener('touchmove', function (e) {
-                var dy = e.touches[0].clientY - dragStart;
-                if (dy > 0) { mobDrawer.style.transform = 'translateY(' + dy + 'px)'; }
-            }, { passive: true });
-            mobDrawer.addEventListener('touchend', function (e) {
-                mobDrawer.style.transition = '';
-                var dy = e.changedTouches[0].clientY - dragStart;
-                if (dy > 80) { closeMobileDrawer(); mobDrawer.style.transform = ''; }
-                else { mobDrawer.style.transform = ''; }
-            }, { passive: true });
-        }
 
         // On iOS Safari, IntersectionObserver with a custom root (a scrolling div)
         // is unreliable — the composited native scroll layer can prevent observations
