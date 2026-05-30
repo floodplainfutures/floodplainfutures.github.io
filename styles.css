@@ -6131,3 +6131,9 @@ body.systems-page {
         overflow: hidden;
     }
 }
+/* ── Systems: clip chart SVG overflow on mobile so it doesn't bleed into the legend ── */
+@media (max-width: 700px) {
+    .sys-chart-wrap {
+        overflow: hidden;
+    }
+}
