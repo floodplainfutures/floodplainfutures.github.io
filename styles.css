@@ -2876,7 +2876,8 @@ html:has(body.observations-page) { overflow: hidden; height: 100%; height: 100dv
     .obs-main { display: block; }
     .obs-index { display: none; }
     .oh-index-btn { display: block; }
-    .mob-index-overlay, .mob-index-drawer { display: block; }
+    .mob-index-overlay.visible { display: block; }
+    .mob-index-drawer.open { display: block; }
     .obs-entries-fab { display: flex; align-items: center; justify-content: center; }
     /* position:fixed + absolute child is the ONLY layout iOS Safari
        reliably scrolls. height:100% on a grid child inside fixed = 0 on iOS. */
