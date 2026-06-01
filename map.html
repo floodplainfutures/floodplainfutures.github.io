@@ -254,6 +254,66 @@
         .pf-val.accent-pink  { color: var(--pink); }
     </style>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 -960 960 960%27%3E%3Cpath fill=%27%23f06896%27 d=%27m334-80-74-30 58-141q-106-28-172-114T80-560v-160q0-66 47-113t113-47q22 0 42 7.5t40 15.5l238 97-160 60v60l440 280 40 200h-80l-40-80H560v160h-80v-160h-80L334-80Zm66-240h353l-63-40H400q-66 0-113-47t-47-113h80q0 33 23.5 56.5T400-440h165L320-596v-124q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720v160q0 100 70 170t170 70ZM211.5-691.5Q200-703 200-720t11.5-28.5Q223-760 240-760t28.5 11.5Q280-737 280-720t-11.5 28.5Q257-680 240-680t-28.5-11.5ZM400-360Z%27/%3E%3C/svg%3E">
+    <style>
+        /* ── Offline overlay ── */
+        #offlineOverlay {
+            display: none;
+            position: fixed;
+            top: 56px; left: 0; right: 0; bottom: 0;
+            z-index: 8998; /* below ff-header (9000) so nav stays visible */
+            background: var(--whitebeige, #f5f0e8);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.4rem;
+            text-align: center;
+            padding: 2rem;
+        }
+        #offlineOverlay.visible {
+            display: flex;
+        }
+        .offline-icon {
+            opacity: .18;
+        }
+        .offline-title {
+            font-family: "Inter", sans-serif;
+            font-size: 1.35rem;
+            font-weight: 300;
+            letter-spacing: -.02em;
+            color: var(--blackblue, #0f1b3d);
+            line-height: 1.2;
+        }
+        .offline-sub {
+            font-family: "DM Mono", monospace;
+            font-size: .7rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--blackblue, #0f1b3d);
+            opacity: .35;
+        }
+        .offline-pulse {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: "DM Mono", monospace;
+            font-size: .65rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--blackblue, #0f1b3d);
+            opacity: .4;
+        }
+        .offline-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--blackblue, #0f1b3d);
+            animation: offlinePulse 1.8s ease-in-out infinite;
+        }
+        @keyframes offlinePulse {
+            0%, 100% { opacity: .2; transform: scale(1); }
+            50%       { opacity: .8; transform: scale(1.35); }
+        }
+    </style>
 </head>
 <body class="map-page">
 
@@ -523,8 +583,84 @@
 
 </div>
 
+<!-- Offline overlay -->
+<div id="offlineOverlay">
+    <svg xmlns="http://www.w3.org/2000/svg" height="72px" viewBox="0 -960 960 960" width="72px" fill="#0f1b3d"><path d="M790-56 414-434q-47 11-87.5 33T254-346l-84-86q32-32 69-56t79-42l-90-90q-41 21-76.5 46.5T84-516L0-602q32-32 66.5-57.5T140-708l-84-84 56-56 736 736-58 56Zm-381-93.5Q380-179 380-220q0-42 29-71t71-29q42 0 71 29t29 71q0 41-29 70.5T480-120q-42 0-71-29.5ZM716-358l-29-29-29-29-144-144q81 8 151.5 41T790-432l-74 74Zm160-158q-77-77-178.5-120.5T480-680q-21 0-40.5 1.5T400-674L298-776q44-12 89.5-18t92.5-6q142 0 265 53t215 145l-84 86Z"/></svg>
+    <span class="offline-title">waiting to connect</span>
+    <span class="offline-sub">the basin map requires an internet connection</span>
+    <div class="offline-pulse">
+        <div class="offline-dot"></div>
+        checking for connection
+    </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="map.js"></script>
 <script src="scripts.js"></script>
+
+<script>
+(function () {
+    var overlay = document.getElementById('offlineOverlay');
+    var mapEl   = document.getElementById('leafletMap');
+    var mapLoaded = false;
+
+    function showOverlay() {
+        overlay.classList.add('visible');
+    }
+    function hideOverlay() {
+        overlay.classList.remove('visible');
+    }
+
+    // Watch for any tile image inside the map to load successfully —
+    // that's the real proof the network and tile server are reachable.
+    function watchTiles() {
+        var observer = new MutationObserver(function () {
+            var tiles = mapEl.querySelectorAll('img.leaflet-tile');
+            tiles.forEach(function (img) {
+                if (img._offlineWatched) return;
+                img._offlineWatched = true;
+                img.addEventListener('load', function () {
+                    mapLoaded = true;
+                    hideOverlay();
+                });
+                img.addEventListener('error', function () {
+                    if (!mapLoaded) showOverlay();
+                });
+            });
+        });
+        if (mapEl) observer.observe(mapEl, { childList: true, subtree: true });
+    }
+
+    // Show immediately if browser already knows it's offline
+    if (!navigator.onLine) showOverlay();
+
+    window.addEventListener('offline', showOverlay);
+
+    // When coming back online, probe a real tile to confirm before hiding
+    window.addEventListener('online', function () {
+        var img = new Image();
+        img.onload  = function () { hideOverlay(); };
+        img.onerror = function () { showOverlay(); };
+        img.src = 'https://tile.openstreetmap.org/10/163/395.png?_=' + Date.now();
+    });
+
+    // Start watching tile load events once DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', watchTiles);
+    } else {
+        watchTiles();
+    }
+
+    // After a short delay, if no tiles have loaded yet and we're "online"
+    // per navigator but map is empty, probe the tile server directly
+    setTimeout(function () {
+        if (mapLoaded) return;
+        var img = new Image();
+        img.onload  = function () { /* tile server reachable, map should load */ };
+        img.onerror = function () { showOverlay(); };
+        img.src = 'https://tile.openstreetmap.org/10/163/395.png?_=' + Date.now();
+    }, 3000);
+})();
+</script>
 </body>
 </html>
