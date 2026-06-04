@@ -8,6 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
     <link href="styles.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+    <script src="map.js" defer></script>
+    <script src="scripts.js" defer></script>
     <style>
 
         /* ── Disable all Leaflet attribution links for kiosk ── */
@@ -595,14 +598,10 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="map.js"></script>
-<script src="scripts.js"></script>
-
 <script>
 (function () {
-    var overlay = document.getElementById('offlineOverlay');
-    var mapEl   = document.getElementById('leafletMap');
+    var overlay = document.querySelector('#offlineOverlay');
+    var mapEl   = document.querySelector('#leafletMap');
     var mapLoaded = false;
 
     function showOverlay() {

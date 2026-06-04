@@ -12,6 +12,7 @@
 
 (function () {
     'use strict';
+    console.log('js is running! yipee!');
 
     var body = document.body;
 
@@ -137,11 +138,11 @@
    1. HOME PAGE
 ─────────────────────────────────────────────────────────── */
 	if (body.classList.contains('home-page')) {
-		var loading = document.getElementById('loadingScreen');
-		var landing = document.getElementById('landing');
-		var myVideo = document.getElementById('myVideo');
-		var textEl  = document.getElementById('loadingText');
-		var percentEl = document.getElementById('loadingPercent');
+		var loading = document.querySelector('#loadingScreen');
+		var landing = document.querySelector('#landing');
+		var myVideo = document.querySelector('#myVideo');
+		var textEl  = document.querySelector('#loadingText');
+		var percentEl = document.querySelector('#loadingPercent');
 
 		var hasVisited = sessionStorage.getItem('hasVisited');
 
@@ -166,10 +167,10 @@
             if (percent < 99) {
                 percent += Math.random() * 1.5;
                 percent  = Math.min(99, percent);
-                loadingPercent.innerHTML = Math.floor(percent) + '%';
+                percentEl.innerHTML = Math.floor(percent) + '%';
                 requestAnimationFrame(animatePercent);
             } else {
-                loadingText.innerHTML = 'almost there';
+                textEl.innerHTML = 'almost there';
                 setTimeout(finishLoading, 2000);
             }
         }
@@ -179,7 +180,7 @@
             function fin() {
                 if (fp < 100) {
                     fp += 1;
-                    loadingPercent.innerHTML = Math.floor(fp) + '%';
+                    percentEl.innerHTML = Math.floor(fp) + '%';
                     requestAnimationFrame(fin);
                 } else {
                     loading.classList.add('hidden');
@@ -201,10 +202,13 @@
             myVideo.play().catch(function () {});
         });
 
-        beginBtn.addEventListener('click', function () {
-            landing.classList.add('state-open');
-            sessionStorage.setItem('hasVisited', 'true');
-        });
+        var beginBtn = document.querySelector('#beginBtn');
+        if (beginBtn) {
+            beginBtn.addEventListener('click', function () {
+                landing.classList.add('state-open');
+                sessionStorage.setItem('hasVisited', 'true');
+            });
+        }
     }
 
 
@@ -213,8 +217,8 @@
     ─────────────────────────────────────────────────────────── */
     if (body.classList.contains('context-page')) {
 
-        var nav      = document.getElementById('ctxNav');
-        var progress = document.getElementById('ctxProgress');
+        var nav      = document.querySelector('#ctxNav');
+        var progress = document.querySelector('#ctxProgress');
         var navLinks = document.querySelectorAll('.ctx-nav-link');
         var sections = document.querySelectorAll('.ctx-section');
         var reveals  = document.querySelectorAll('[data-reveal]');
@@ -293,9 +297,9 @@
         el = document.querySelector('#cFlood');   if (el) { el.textContent = floods[m]; }
         el = document.querySelector('#cSpecies'); if (el) { el.textContent = spp[m]; }
 
-        var panel      = document.getElementById('mapPanel');
-        var toggleBtn  = document.getElementById('panelToggle');
-        var dragHandle = document.getElementById('dragHandle');
+        var panel      = document.querySelector('#mapPanel');
+        var toggleBtn  = document.querySelector('#panelToggle');
+        var dragHandle = document.querySelector('#dragHandle');
 
         if (panel && toggleBtn) {
             toggleBtn.addEventListener('click', function () {
@@ -357,7 +361,7 @@
     ─────────────────────────────────────────────────────────── */
     if (body.classList.contains('systems-page')) {
 
-        var sysProgress = document.getElementById('sysProgress');
+        var sysProgress = document.querySelector('#sysProgress');
         function updateSysProgress() {
             var scrollTop = window.scrollY;
             var docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -374,10 +378,10 @@
     ─────────────────────────────────────────────────────────── */
     if (body.classList.contains('observations-page')) {
 
-        var obsScroll  = document.getElementById('obsScroll');
+        var obsScroll  = document.querySelector('#obsScroll');
         var entries    = document.querySelectorAll('.entry');
-        var mobOverlay = document.getElementById('mobOverlay');
-        var mobDrawer  = document.getElementById('mobDrawer');
+        var mobOverlay = document.querySelector('#mobOverlay');
+        var mobDrawer  = document.querySelector('#mobDrawer');
 
         // Define drawer functions FIRST — used by index links below
         var openMobileDrawer = function () {
@@ -390,7 +394,7 @@
         };
 
         // Wire FAB and drawer BEFORE any early-return guards
-        var entriesFab = document.getElementById('obsEntriesFab');
+        var entriesFab = document.querySelector('#obsEntriesFab');
         if (entriesFab) { entriesFab.addEventListener('click', openMobileDrawer); }
         if (mobOverlay) { mobOverlay.addEventListener('click', closeMobileDrawer); }
 
@@ -421,7 +425,7 @@
             indexLinks[il].addEventListener('click', function (e) {
                 e.preventDefault();
                 var targetId = this.dataset.target || (this.getAttribute('href') || '').replace('#', '');
-                var target = document.getElementById(targetId);
+                var target = document.querySelector('#' + targetId);
                 if (!target) { return; }
                 closeMobileDrawer();
                 // On mobile, body scrolls. On desktop, obsScroll is the container.
@@ -496,7 +500,7 @@
             if (obsAudioBtn) { obsAudioBtn.classList.remove('playing'); obsAudioBtn = null; }
         }
 
-        var obsBtn = document.getElementById('obs4-btn');
+        var obsBtn = document.querySelector('#obs4-btn');
         if (obsBtn) {
             obsBtn.addEventListener('click', function () {
                 if (obsBtn.classList.contains('playing')) { obsStopAudio(); return; }
@@ -534,7 +538,7 @@
         obsIndexEl.style.position = 'relative';
         obsIndexEl.appendChild(progressBar);
 
-        var obsScrollEl = document.getElementById('obsScroll');
+        var obsScrollEl = document.querySelector('#obsScroll');
         var updateProgress = function () {
             var s, h, pct;
             if (window.innerWidth <= 600) {
@@ -556,7 +560,7 @@
     var filterChip = document.createElement('div');
     filterChip.className = 'obs-filter-active';
     filterChip.innerHTML = '<span class="fc-label"></span><span class="fc-clear">✕ clear</span>';
-    var obsIndexNav = document.getElementById('indexNav');
+    var obsIndexNav = document.querySelector('#indexNav');
     if (obsIndexNav) { obsIndexNav.parentNode.insertBefore(filterChip, obsIndexNav.nextSibling); }
 
     filterChip.addEventListener('click', function() { clearFilter(); });
@@ -607,8 +611,8 @@
    WAFFLE NAV — mobile sub-page navigation
 ───────────────────────────────────────────────────────────── */
 (function() {
-    var btn = document.getElementById('waffleBtn');
-    var menu = document.getElementById('waffleMenu');
+    var btn = document.querySelector('#waffleBtn');
+    var menu = document.querySelector('#waffleMenu');
     if (!btn || !menu) return;
 
     function openMenu() {
