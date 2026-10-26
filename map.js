@@ -25,10 +25,9 @@
         scrollWheelZoom: true
     });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png?key=cb1_4ve3_1_027b65d5ca72c7cb6a859124', {
         /* KIOSK: attribution links disabled via CSS pointer-events:none in map.html */
         attribution: '© OpenStreetMap · © CARTO',
-        subdomains: 'abcd',
         maxZoom: 19
     }).addTo(map);
     
